@@ -7,7 +7,7 @@
   --grey:  #888;
   --hover: #e8e6e2;
   --gap:   clamp(1rem, 2vw, 1.5rem);
-  --pad:   calc(clamp(1.25rem, 4vw, 3rem) - 20px);
+  --pad:   calc(clamp(1.25rem, 4vw, 3rem) - 15px);
   --header-h: 86px;
 }
 
