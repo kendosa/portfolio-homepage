@@ -152,42 +152,26 @@ a { color: inherit; text-decoration: none; }
   cursor: pointer;
 }
 
+.card-link:hover .img-wrap img {
+  transform: scale(1.02);
+  filter: brightness(.93);
+}
+
 .img-wrap {
   width: 100%;
   aspect-ratio: 16 / 10;
   overflow: hidden;
   background: #e0ddd8;
-  clip-path: inset(10% 15% 0% 15% round 20px);
-  transition: clip-path 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .project-card.large .img-wrap { aspect-ratio: 16 / 7; }
-
-.project-card.card-revealed .img-wrap {
-  clip-path: inset(0% 0% 0% 0% round 2px);
-}
 
 .img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transform: scale(1.1);
-  transition: transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter .35s ease;
-}
-
-.project-card.card-revealed .img-wrap img {
-  transform: scale(1);
-}
-
-/* Restore fast hover transition once reveal is done */
-.project-card.card-post-reveal .img-wrap img {
   transition: transform .45s ease, filter .35s ease;
-}
-
-.project-card.card-post-reveal .card-link:hover .img-wrap img {
-  transform: scale(1.02);
-  filter: brightness(.93);
 }
 
 .card-meta {

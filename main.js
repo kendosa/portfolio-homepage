@@ -17,37 +17,25 @@ mobileLinks.forEach(link => {
   });
 });
 
-/* ── Project card clip-path reveal ───────────────────────────── */
-const cardObserver = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const card = entry.target;
-        card.classList.add('card-revealed');
-        setTimeout(() => card.classList.add('card-post-reveal'), 1400);
-        cardObserver.unobserve(card);
-      }
-    });
-  },
-  { threshold: 0.08 }
+/* ── Scroll-reveal ────────────────────────────────────────────── */
+const revealTargets = document.querySelectorAll(
+  '.project-card, .info-inner, .site-footer'
 );
 
-document.querySelectorAll('.project-card').forEach(el => cardObserver.observe(el));
 
-/* ── Scroll-reveal (info + footer) ───────────────────────────── */
-const revealTargets = document.querySelectorAll('.info-inner, .site-footer');
 revealTargets.forEach(el => el.classList.add('reveal'));
 
-const revealObserver = new IntersectionObserver(
+const observer = new IntersectionObserver(
   entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
+        observer.unobserve(entry.target);
       }
     });
   },
   { threshold: 0.08 }
 );
 
-revealTargets.forEach(el => revealObserver.observe(el));
+revealTargets.forEach(el => observer.observe(el));
+
