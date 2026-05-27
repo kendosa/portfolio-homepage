@@ -37,7 +37,7 @@ a { color: inherit; text-decoration: none; }
 .logo {
   font-size: 34px;
   font-weight: 500;
-  letter-spacing: -.01em;
+  letter-spacing: 0em;
   color: #292828;
 }
 
