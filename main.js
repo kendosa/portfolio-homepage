@@ -39,11 +39,3 @@ const observer = new IntersectionObserver(
 
 revealTargets.forEach(el => observer.observe(el));
 
-/* ── Header shadow on scroll ──────────────────────────────────── */
-const header = document.querySelector('.site-header');
-
-window.addEventListener('scroll', () => {
-  header.style.boxShadow = window.scrollY > 10
-    ? '0 1px 12px rgba(0,0,0,.07)'
-    : 'none';
-}, { passive: true });
