@@ -14,7 +14,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: var(--white);
   color: var(--black);
   font-size: 15px;
