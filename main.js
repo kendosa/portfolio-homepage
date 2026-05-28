@@ -31,12 +31,12 @@ let lastWidth = window.innerWidth;
 window.addEventListener('resize', () => {
   const w = window.innerWidth;
   if (toggle.classList.contains('open') && w >= lastWidth + 2) {
-    mobileMenu.style.transition = 'none';
+    mobileMenu.style.display = 'none';
     toggle.classList.remove('open');
     mobileMenu.classList.remove('open');
     document.body.style.overflow = '';
     setToggleLabel('Menu');
-    requestAnimationFrame(() => { mobileMenu.style.transition = ''; });
+    requestAnimationFrame(() => { mobileMenu.style.display = ''; });
   }
   lastWidth = w;
 });
