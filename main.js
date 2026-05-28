@@ -19,25 +19,24 @@ mobileLinks.forEach(link => {
   });
 });
 
-/* ── Custom cursor (hover: hover devices only) ─────────────────── */
-if (window.matchMedia('(hover: hover)').matches) {
-  const dot = document.createElement('div');
-  dot.id = 'cursor-dot';
-  document.body.appendChild(dot);
+/* ── Custom cursor ─────────────────────────────────────────────── */
+/* Always create the element; CSS @media (hover:hover) controls visibility */
+const dot = document.createElement('div');
+dot.id = 'cursor-dot';
+document.body.appendChild(dot);
 
-  document.addEventListener('mousemove', e => {
-    dot.style.left = e.clientX + 'px';
-    dot.style.top  = e.clientY + 'px';
-    dot.classList.add('visible');
-  });
+document.addEventListener('mousemove', e => {
+  dot.style.left = e.clientX + 'px';
+  dot.style.top  = e.clientY + 'px';
+  dot.classList.add('visible');
+});
 
-  document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
+document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
 
-  /* Expand on card-link hover */
-  document.querySelectorAll('.card-link').forEach(link => {
-    link.addEventListener('mouseenter', () => dot.classList.add('expanded'));
-    link.addEventListener('mouseleave', () => dot.classList.remove('expanded'));
-  });
-}
+/* Expand on card-link hover */
+document.querySelectorAll('.card-link').forEach(link => {
+  link.addEventListener('mouseenter', () => dot.classList.add('expanded'));
+  link.addEventListener('mouseleave', () => dot.classList.remove('expanded'));
+});
 
 
