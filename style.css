@@ -276,7 +276,7 @@ a { color: inherit; text-decoration: none; }
 /* ─── Responsive ────────────────────────────────────────────────── */
 @media (max-width: 700px) {
   :root {
-    --pad: calc(clamp(1.25rem, 4vw, 3rem) - 10px);
+    --pad: calc(clamp(1.25rem, 4vw, 3rem) - 5px);
   }
 
   .nav-links { display: none; }
