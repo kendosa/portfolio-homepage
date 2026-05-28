@@ -25,14 +25,20 @@ mobileLinks.forEach(link => {
   });
 });
 
-/* Close mobile menu when viewport widens past the mobile breakpoint */
-window.matchMedia('(max-width: 700px)').addEventListener('change', e => {
-  if (!e.matches) {
+/* Close mobile menu instantly after 2px of browser widening */
+let lastWidth = window.innerWidth;
+
+window.addEventListener('resize', () => {
+  const w = window.innerWidth;
+  if (toggle.classList.contains('open') && w >= lastWidth + 2) {
+    mobileMenu.style.transition = 'none';
     toggle.classList.remove('open');
     mobileMenu.classList.remove('open');
     document.body.style.overflow = '';
     setToggleLabel('Menu');
+    requestAnimationFrame(() => { mobileMenu.style.transition = ''; });
   }
+  lastWidth = w;
 });
 
 /* ── Nav collapse: (W) default → (Work) on hover ──────────────── */
