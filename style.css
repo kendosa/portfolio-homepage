@@ -294,13 +294,3 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-/* ─── Scroll-reveal ─────────────────────────────────────────────── */
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity .55s ease, transform .55s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: none;
-}
