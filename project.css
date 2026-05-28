@@ -47,7 +47,10 @@
 }
 
 .project-desc {
-  font-size: clamp(.95rem, 1.4vw, 1.05rem);
+  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: .010em;
   line-height: 1.75;
   color: #3a3a3a;
   max-width: 600px;
@@ -71,7 +74,12 @@
   color: var(--grey);
 }
 
-.meta-value { font-size: 13px; }
+.meta-value {
+  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: .010em;
+}
 
 /* Content */
 .project-content {
@@ -126,7 +134,10 @@
 }
 
 .sub-desc {
-  font-size: 15px;
+  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: .010em;
   line-height: 1.75;
   color: #3a3a3a;
   max-width: 580px;
