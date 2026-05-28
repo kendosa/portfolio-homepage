@@ -2,7 +2,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --black: #0d0d0d;
+  --black: #292828;
   --white: #f5f4f2;
   --grey:  #888;
   --hover: #e8e6e2;
