@@ -4,19 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Superbrewed Food — Kenny Phillips</title>
+  <link rel="stylesheet" href="https://use.typekit.net/eux7kam.css" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="project.css" />
 </head>
 <body>
 
-  <header class="proj-header">
-    <div class="proj-header-left">
-      <a href="index.html">Kenny Phillips</a>
-    </div>
-    <div class="proj-header-right">
-      <a href="https://www.superbrewedfood.com" target="_blank" rel="noopener">superbrewedfood.com ↗</a>
-    </div>
+  <header class="site-header">
+    <a href="index.html" class="logo">Kenny Phillips</a>
+    <nav class="nav-links">
+      <a href="index.html#work">Work</a>
+      <a href="info.html">Info</a>
+      <a href="woodwork.html">Woodwork</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Toggle menu">Menu</button>
   </header>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu" id="mobileMenu">
+    <nav class="mobile-nav">
+      <a href="index.html#work" class="mobile-link">Work</a>
+      <a href="info.html" class="mobile-link">Info</a>
+      <a href="woodwork.html" class="mobile-link">Woodwork</a>
+    </nav>
+  </div>
 
   <section class="project-hero">
     <p class="project-label">Brand Identity</p>
@@ -63,6 +74,7 @@
     <a href="keeptruckin.html" class="proj-nav-link next">Next: KeepTruckin →</a>
   </footer>
 
+  <script src="main.js"></script>
   <script src="project.js"></script>
 </body>
 </html>
