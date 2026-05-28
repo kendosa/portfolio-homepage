@@ -77,8 +77,41 @@
     const trigger = document.querySelector('.hover-reveal');
     const img = document.getElementById('cursor-img');
 
-    trigger.addEventListener('mouseenter', () => img.classList.add('visible'));
-    trigger.addEventListener('mouseleave', () => img.classList.remove('visible'));
+    const brandImages = [
+      'images/wing-ming.jpg',
+      'images/endeavor-health.jpg',
+      'images/Studio-Glagola.jpg',
+      'images/Kohls.jpg',
+      'images/superbrewed-food.jpg'
+    ];
+
+    let cycleInterval = null;
+    let currentIndex = 0;
+    let isHovered = false;
+
+    function nextImage() {
+      img.classList.remove('visible');
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % brandImages.length;
+        img.src = brandImages[currentIndex];
+        if (isHovered) img.classList.add('visible');
+      }, 200);
+    }
+
+    trigger.addEventListener('mouseenter', () => {
+      isHovered = true;
+      currentIndex = 0;
+      img.src = brandImages[currentIndex];
+      img.classList.add('visible');
+      cycleInterval = setInterval(nextImage, 700);
+    });
+
+    trigger.addEventListener('mouseleave', () => {
+      isHovered = false;
+      img.classList.remove('visible');
+      clearInterval(cycleInterval);
+      cycleInterval = null;
+    });
 
     document.addEventListener('mousemove', e => {
       img.style.left = e.clientX + 'px';
