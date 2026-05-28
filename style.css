@@ -127,6 +127,16 @@ a { color: inherit; text-decoration: none; }
   font-style: normal;
 }
 
+/* ─── Squiggle Rule ─────────────────────────────────────────────── */
+.squiggle-rule {
+  padding: 0 var(--pad) clamp(1.5rem, 3vw, 2.5rem);
+}
+.squiggle-rule img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* ─── Portfolio Grid ────────────────────────────────────────────── */
 .portfolio {
   padding: 0 var(--pad) clamp(3rem, 6vw, 5rem);
