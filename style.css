@@ -175,13 +175,15 @@ a { color: inherit; text-decoration: none; }
 
 .card-title {
   font-size: 17px;
-  font-weight: 500;
+  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
   letter-spacing: .025em;
 }
 
 .card-tag {
   font-size: 17px;
-  font-weight: 500;
+  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
   letter-spacing: .025em;
   color: var(--grey);
   flex-shrink: 0;
