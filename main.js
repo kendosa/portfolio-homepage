@@ -61,12 +61,14 @@ document.addEventListener('mousemove', e => {
 
 document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
 
-/* Grow on link, button, or image hover — delegation handles overlay elements */
+/* Grow on link, button, or image hover — exclude squiggle tracks */
 document.addEventListener('mouseover', e => {
+  if (e.target.closest('.squiggle-track')) return;
   if (e.target.closest('a, button, img')) dot.classList.add('hovered');
 });
 document.addEventListener('mouseout', e => {
-  if (!e.relatedTarget || !e.relatedTarget.closest('a, button, img')) dot.classList.remove('hovered');
+  const to = e.relatedTarget;
+  if (!to || to.closest('.squiggle-track') || !to.closest('a, button, img')) dot.classList.remove('hovered');
 });
 
 
