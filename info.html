@@ -85,32 +85,51 @@
       'images/superbrewed-food.jpg'
     ];
 
-    let cycleInterval = null;
     let currentIndex = 0;
     let isHovered = false;
+    let lastX = null;
+    let accumulated = 0;
+    const THRESHOLD = 28; // px of horizontal travel to flip image
 
-    function nextImage() {
+    function showImage(index) {
       img.classList.remove('visible');
       setTimeout(() => {
-        currentIndex = (currentIndex + 1) % brandImages.length;
-        img.src = brandImages[currentIndex];
+        img.src = brandImages[index];
         if (isHovered) img.classList.add('visible');
-      }, 200);
+      }, 150);
     }
 
-    trigger.addEventListener('mouseenter', () => {
+    trigger.addEventListener('mouseenter', e => {
       isHovered = true;
+      lastX = e.clientX;
+      accumulated = 0;
       currentIndex = 0;
       img.src = brandImages[currentIndex];
       img.classList.add('visible');
-      cycleInterval = setInterval(nextImage, 700);
+    });
+
+    trigger.addEventListener('mousemove', e => {
+      if (lastX === null) { lastX = e.clientX; return; }
+      const delta = e.clientX - lastX;
+      lastX = e.clientX;
+      accumulated += delta;
+
+      if (accumulated > THRESHOLD) {
+        accumulated = 0;
+        currentIndex = (currentIndex + 1) % brandImages.length;
+        showImage(currentIndex);
+      } else if (accumulated < -THRESHOLD) {
+        accumulated = 0;
+        currentIndex = (currentIndex - 1 + brandImages.length) % brandImages.length;
+        showImage(currentIndex);
+      }
     });
 
     trigger.addEventListener('mouseleave', () => {
       isHovered = false;
       img.classList.remove('visible');
-      clearInterval(cycleInterval);
-      cycleInterval = null;
+      lastX = null;
+      accumulated = 0;
     });
 
     document.addEventListener('mousemove', e => {
