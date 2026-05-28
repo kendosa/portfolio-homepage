@@ -330,9 +330,13 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ─── Responsive ────────────────────────────────────────────────── */
+/* desktop-show: hidden by default, only appears above 1100px */
+.desktop-show { display: none; }
+
 /* Desktop: hide the break before "in New York", widen hero frame */
 @media (min-width: 1101px) {
   .desktop-hide { display: none; }
+  .desktop-show { display: block; }
   .hero { max-width: 1200px; }
 }
 
