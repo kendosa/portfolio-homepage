@@ -6,6 +6,24 @@
   <title>Info — Kenny Phillips</title>
   <link rel="stylesheet" href="https://use.typekit.net/eux7kam.css" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .hover-reveal {
+      cursor: default;
+    }
+    #cursor-img {
+      position: fixed;
+      width: 272px;
+      height: auto;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .2s ease;
+      z-index: 1000;
+      transform: translate(16px, 16px);
+    }
+    #cursor-img.visible {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
 
@@ -32,9 +50,12 @@
   <!-- INFO -->
   <section class="hero" style="max-width: 66vw;">
     <p class="hero-text">
-      Kenny Phillips is a designer based in <em style="white-space: nowrap;">New York</em>, specialising in brand identity, visual systems, and art direction.
+      Kenny Phillips is a designer based in <em style="white-space: nowrap;">New York</em>, specialising in <span class="hover-reveal">brand identity</span>, visual systems, and art direction.
     </p>
   </section>
+
+  <!-- Cursor image -->
+  <img id="cursor-img" src="images/wing-ming.jpg" alt="" />
 
   <!-- FOOTER -->
   <footer class="site-footer">
@@ -45,5 +66,17 @@
   </footer>
 
   <script src="main.js"></script>
+  <script>
+    const trigger = document.querySelector('.hover-reveal');
+    const img = document.getElementById('cursor-img');
+
+    trigger.addEventListener('mouseenter', () => img.classList.add('visible'));
+    trigger.addEventListener('mouseleave', () => img.classList.remove('visible'));
+
+    document.addEventListener('mousemove', e => {
+      img.style.left = e.clientX + 'px';
+      img.style.top  = e.clientY + 'px';
+    });
+  </script>
 </body>
 </html>
