@@ -297,9 +297,9 @@ a { color: inherit; text-decoration: none; }
 
   #cursor-dot.visible  { opacity: 1; }
 
-  #cursor-dot.expanded {
-    width: 68px;
-    height: 68px;
+  #cursor-dot.hovered {
+    width: 28px;
+    height: 28px;
   }
 }
 

@@ -33,10 +33,10 @@ document.addEventListener('mousemove', e => {
 
 document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
 
-/* Expand on card-link hover */
-document.querySelectorAll('.card-link').forEach(link => {
-  link.addEventListener('mouseenter', () => dot.classList.add('expanded'));
-  link.addEventListener('mouseleave', () => dot.classList.remove('expanded'));
+/* Grow on link or image hover */
+document.querySelectorAll('a, img').forEach(el => {
+  el.addEventListener('mouseenter', () => dot.classList.add('hovered'));
+  el.addEventListener('mouseleave', () => dot.classList.remove('hovered'));
 });
 
 
