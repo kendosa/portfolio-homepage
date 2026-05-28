@@ -140,7 +140,8 @@ a { color: inherit; text-decoration: none; }
 }
 .squiggle-track img {
   width: 50%;
-  height: auto;
+  height: 0.5435vw;   /* natural ratio × 1.05 */
+  min-height: 7.83px; /* locks at the 1440px desktop value on smaller screens */
   display: block;
   flex-shrink: 0;
 }
