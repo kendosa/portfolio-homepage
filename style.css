@@ -375,7 +375,7 @@ a { color: inherit; text-decoration: none; }
   }
 
   .hero {
-    min-height: calc(84svh - var(--header-h));
+    min-height: calc(100svh - var(--header-h) - 9.375rem);
     padding-bottom: 20svh;
   }
 
