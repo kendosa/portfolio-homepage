@@ -61,10 +61,12 @@ document.addEventListener('mousemove', e => {
 
 document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
 
-/* Grow on link or image hover */
-document.querySelectorAll('a, img').forEach(el => {
-  el.addEventListener('mouseenter', () => dot.classList.add('hovered'));
-  el.addEventListener('mouseleave', () => dot.classList.remove('hovered'));
+/* Grow on link or image hover — delegation handles overlay elements */
+document.addEventListener('mouseover', e => {
+  if (e.target.closest('a, img')) dot.classList.add('hovered');
+});
+document.addEventListener('mouseout', e => {
+  if (!e.relatedTarget || !e.relatedTarget.closest('a, img')) dot.classList.remove('hovered');
 });
 
 
