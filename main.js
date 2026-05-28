@@ -25,6 +25,16 @@ mobileLinks.forEach(link => {
   });
 });
 
+/* Close mobile menu when viewport widens past the mobile breakpoint */
+window.matchMedia('(max-width: 700px)').addEventListener('change', e => {
+  if (!e.matches) {
+    toggle.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+    setToggleLabel('Menu');
+  }
+});
+
 /* ── Nav collapse: (W) default → (Work) on hover ──────────────── */
 document.querySelectorAll('.nav-links a').forEach(link => {
   const text = link.textContent.trim();
