@@ -130,7 +130,7 @@ a { color: inherit; text-decoration: none; }
 /* ─── Squiggle Rule ─────────────────────────────────────────────── */
 .squiggle-rule {
   overflow: hidden;
-  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  padding-bottom: clamp(2rem, 5vw, 4rem);
 }
 .squiggle-track {
   display: flex;
