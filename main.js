@@ -22,7 +22,7 @@ mobileLinks.forEach(link => {
 /* ── Nav collapse: (W) default → (Work) on hover ──────────────── */
 document.querySelectorAll('.nav-links a').forEach(link => {
   const text = link.textContent.trim();
-  link.innerHTML = `(<span class="nav-first">${text[0]}</span><span class="nav-rest">${text.slice(1)}</span>)`;
+  link.innerHTML = `<span class="nav-paren">(</span><span class="nav-first">${text[0]}</span><span class="nav-rest">${text.slice(1)}</span><span class="nav-paren">)</span>`;
 });
 
 /* ── Custom cursor ─────────────────────────────────────────────── */
