@@ -19,6 +19,12 @@ mobileLinks.forEach(link => {
   });
 });
 
+/* ── Nav collapse: (W) default → (Work) on hover ──────────────── */
+document.querySelectorAll('.nav-links a').forEach(link => {
+  const text = link.textContent.trim();
+  link.innerHTML = `(<span class="nav-first">${text[0]}</span><span class="nav-rest">${text.slice(1)}</span>)`;
+});
+
 /* ── Custom cursor ─────────────────────────────────────────────── */
 /* Always create the element; CSS @media (hover:hover) controls visibility */
 const dot = document.createElement('div');
