@@ -134,20 +134,18 @@ a { color: inherit; text-decoration: none; }
 }
 .squiggle-track {
   display: flex;
-  width: 200%;
   animation: squiggle-scroll 18s linear infinite;
   will-change: transform;
 }
 .squiggle-track img {
-  width: 50%;
-  height: 0.5435vw;   /* natural ratio × 1.05 */
-  min-height: 7.83px; /* locks at the 1440px desktop value on smaller screens */
+  height: 8px;  /* fixed pixel height — waves stay the same size at all viewports */
+  width: auto;
   display: block;
   flex-shrink: 0;
 }
 @keyframes squiggle-scroll {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  to   { transform: translateX(-33.333%); } /* moves by exactly one copy width */
 }
 
 /* ─── Portfolio Grid ────────────────────────────────────────────── */
