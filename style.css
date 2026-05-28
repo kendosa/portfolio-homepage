@@ -56,7 +56,7 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-links a:hover { color: var(--black); }
 .nav-links a.nav-active { color: var(--black); }
-.mobile-link.nav-active { color: var(--black); }
+.mobile-link.nav-active { color: #f5f4f2; }
 
 .nav-contact {
 }
@@ -105,6 +105,9 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: -.03em;
   color: #f5f4f2;
 }
+.mobile-link:hover,
+.mobile-link:visited,
+.mobile-link:active { color: #f5f4f2; }
 
 /* ─── Hero ──────────────────────────────────────────────────────── */
 .hero {
