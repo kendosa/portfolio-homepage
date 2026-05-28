@@ -114,7 +114,7 @@ a { color: inherit; text-decoration: none; }
 /* ─── Hero ──────────────────────────────────────────────────────── */
 .hero {
   padding: calc(clamp(3rem, 8vw, 6rem) + 10px) var(--pad) clamp(2rem, 5vw, 4rem);
-  max-width: 910px;
+  max-width: 905px;
 }
 
 .hero-text {
