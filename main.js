@@ -7,6 +7,7 @@ toggle.addEventListener('click', () => {
   const open = toggle.classList.toggle('open');
   mobileMenu.classList.toggle('open', open);
   document.body.style.overflow = open ? 'hidden' : '';
+  toggle.textContent = open ? 'Close' : 'Menu';
 });
 
 mobileLinks.forEach(link => {
@@ -14,6 +15,7 @@ mobileLinks.forEach(link => {
     toggle.classList.remove('open');
     mobileMenu.classList.remove('open');
     document.body.style.overflow = '';
+    toggle.textContent = 'Menu';
   });
 });
 
