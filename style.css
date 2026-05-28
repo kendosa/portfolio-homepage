@@ -278,8 +278,8 @@ a { color: inherit; text-decoration: none; }
     position: fixed;
     top: 0;
     left: 0;
-    width: 16px;
-    height: 16px;
+    width: 32px;
+    height: 32px;
     background: #292828;
     border-radius: 50%;
     border: 1.5px solid transparent;
