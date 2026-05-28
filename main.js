@@ -3,11 +3,17 @@ const toggle = document.querySelector('.menu-toggle');
 const mobileMenu = document.getElementById('mobileMenu');
 const mobileLinks = document.querySelectorAll('.mobile-link');
 
+function setToggleLabel(label) {
+  toggle.innerHTML = `<span class="nav-paren">(</span><span class="nav-first">${label[0]}</span><span class="nav-rest">${label.slice(1)}</span><span class="nav-paren">)</span>`;
+}
+
+setToggleLabel('Menu');
+
 toggle.addEventListener('click', () => {
   const open = toggle.classList.toggle('open');
   mobileMenu.classList.toggle('open', open);
   document.body.style.overflow = open ? 'hidden' : '';
-  toggle.textContent = open ? 'Close' : 'Menu';
+  setToggleLabel(open ? 'Close' : 'Menu');
 });
 
 mobileLinks.forEach(link => {
@@ -15,7 +21,7 @@ mobileLinks.forEach(link => {
     toggle.classList.remove('open');
     mobileMenu.classList.remove('open');
     document.body.style.overflow = '';
-    toggle.textContent = 'Menu';
+    setToggleLabel('Menu');
   });
 });
 
