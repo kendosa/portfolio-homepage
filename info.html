@@ -154,7 +154,7 @@
         };
 
         p.draw = function () {
-          p.background(245, 244, 242);
+          p.clear();
           for (const pt of particles) {
             const d = p.dist(pt.ox, pt.oy, p.mouseX, p.mouseY);
             pt.tx = p.map(d, 0, maxD, p.mouseX, pt.ox, true);
