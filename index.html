@@ -10,6 +10,7 @@
     body {
       background-image:
         radial-gradient(circle 130px at var(--mx, -50%) var(--my, -50%), rgba(245, 244, 242, 0.82) 0%, transparent 100%),
+        radial-gradient(ellipse 150% 40% at 50% 50%, rgba(245, 244, 242, var(--ct, 0)) 0%, transparent 100%),
         radial-gradient(ellipse 72% 52% at var(--g1x, 8%) var(--g1y, 2%), rgba(194, 237, 130, 0.38) 0%, transparent 70%),
         radial-gradient(ellipse 68% 50% at var(--g2x, 93%) var(--g2y, 3%), rgba(185, 231, 113, 0.48) 0%, transparent 65%);
       background-attachment: fixed;
@@ -185,12 +186,24 @@
   <script>
     (function () {
       let scrollY = 0, targetScrollY = 0;
-      // Blob drift — slow lerp
       let mx = 0.5, my = 0.5, tmx = 0.5, tmy = 0.5;
-      // Cursor erase circle — faster lerp, starts off-screen
       let cx = -50, cy = -50, tcx = -50, tcy = -50;
+      let ct = 0, targetCt = 0;
       const body = document.body;
+      const covers = Array.from(document.querySelectorAll('.img-wrap'));
       function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function updateCenter() {
+        const mid = window.innerHeight / 2;
+        const threshold = window.innerHeight * 0.32;
+        let minDist = Infinity;
+        covers.forEach(el => {
+          const r = el.getBoundingClientRect();
+          const dist = Math.abs((r.top + r.height / 2) - mid);
+          if (dist < minDist) minDist = dist;
+        });
+        targetCt = Math.max(0, 1 - minDist / threshold) * 0.88;
+      }
 
       function tick() {
         scrollY = lerp(scrollY, targetScrollY, 0.07);
@@ -198,6 +211,7 @@
         my = lerp(my, tmy, 0.04);
         cx = lerp(cx, tcx, 0.18);
         cy = lerp(cy, tcy, 0.18);
+        ct = lerp(ct, targetCt, 0.06);
 
         const p = scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
 
@@ -207,11 +221,12 @@
         body.style.setProperty('--g2y', (3  + my * 2 + p * 18).toFixed(2) + '%');
         body.style.setProperty('--mx',  cx.toFixed(2) + '%');
         body.style.setProperty('--my',  cy.toFixed(2) + '%');
+        body.style.setProperty('--ct',  ct.toFixed(3));
 
         requestAnimationFrame(tick);
       }
 
-      window.addEventListener('scroll', () => { targetScrollY = window.scrollY; }, { passive: true });
+      window.addEventListener('scroll', () => { targetScrollY = window.scrollY; updateCenter(); }, { passive: true });
       document.addEventListener('mousemove', e => {
         tmx = e.clientX / window.innerWidth;
         tmy = e.clientY / window.innerHeight;
@@ -220,6 +235,7 @@
       });
       document.addEventListener('mouseleave', () => { tcx = -50; tcy = -50; });
 
+      updateCenter();
       tick();
     }());
   </script>
