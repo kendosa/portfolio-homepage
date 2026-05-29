@@ -19,7 +19,7 @@
       display: flex;
       align-items: flex-start;
       gap: clamp(2rem, 5vw, 5rem);
-      padding: calc(clamp(3rem, 8vw, 6rem) + 10px) var(--pad) clamp(4rem, 8vw, 7rem);
+      padding: 30px var(--pad);
     }
     .info-layout .hero {
       flex: 1;
@@ -31,7 +31,8 @@
       flex-shrink: 0;
     }
     #portrait-sketch {
-      width: clamp(300px, 38vw, 640px);
+      height: calc(100vh - var(--header-h) - 60px);
+      width: calc((100vh - var(--header-h) - 60px) * 520 / 518);
     }
     #portrait-sketch canvas {
       display: block;
@@ -55,8 +56,10 @@
     @media (max-width: 900px) {
       .info-layout {
         flex-direction: column;
+        padding: calc(clamp(3rem, 8vw, 6rem) + 10px) var(--pad) clamp(4rem, 8vw, 7rem);
       }
       #portrait-sketch {
+        height: auto;
         width: min(520px, 100%);
       }
     }
@@ -121,8 +124,8 @@
         const spd = 0.05;
 
         p.setup = function () {
-          sz = Math.min(el.getBoundingClientRect().width, SRC_W);
-          ht = Math.round(SRC_H * sz / SRC_W);
+          ht = Math.round(el.getBoundingClientRect().height) || (window.innerHeight - 146);
+          sz = Math.round(ht * SRC_W / SRC_H);
           sc = sz / SRC_W;
           maxD = 190 * sc;
 
