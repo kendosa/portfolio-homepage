@@ -6,6 +6,7 @@
   <title>Info — Kenny Phillips</title>
   <link rel="stylesheet" href="https://use.typekit.net/eux7kam.css" />
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
   <style>
     body {
       min-height: 100vh;
@@ -29,6 +30,16 @@
     }
     #cursor-img.visible {
       opacity: 1;
+    }
+
+    .portrait-section {
+      padding: 0 var(--pad) clamp(4rem, 8vw, 7rem);
+    }
+    #portrait-sketch {
+      width: min(520px, 100%);
+    }
+    #portrait-sketch canvas {
+      display: block;
     }
   </style>
 </head>
@@ -61,6 +72,11 @@
     </p>
   </section>
 
+  <!-- PORTRAIT SKETCH -->
+  <section class="portrait-section">
+    <div id="portrait-sketch"></div>
+  </section>
+
   <!-- Cursor image -->
   <img id="cursor-img" src="images/wing-ming.jpg" alt="" />
   <!-- FOOTER -->
@@ -72,6 +88,68 @@
   </footer>
 
   <script src="main.js"></script>
+  <script>
+    document.fonts.ready.then(function () {
+      const el = document.getElementById('portrait-sketch');
+
+      new p5(function (p) {
+        let particles = [];
+        const word = 'KENNY PHILLIPS ';
+        let wIdx = 0;
+        let portrait;
+        let sz, sc, maxD;
+        const spd = 0.05;
+
+        p.preload = function () {
+          portrait = p.loadImage('images/kenny-portrait.png');
+        };
+
+        p.setup = function () {
+          sz = Math.min(el.getBoundingClientRect().width, 520);
+          sc = sz / 520;
+          maxD = 190 * sc;
+
+          portrait.resize(sz, 0); // width to sz, height auto (preserves aspect ratio)
+          portrait.loadPixels();
+
+          p.createCanvas(sz, portrait.height);
+          p.textAlign(p.CENTER, p.CENTER);
+          p.textFont('neue-haas-grotesk-display');
+          p.noStroke();
+
+          const step = 9;
+          for (let y = 0; y < p.height; y += step) {
+            for (let x = 0; x < p.width; x += step) {
+              const i = (x + y * p.width) * 4;
+              const bright = (portrait.pixels[i] + portrait.pixels[i + 1] + portrait.pixels[i + 2]) / 3;
+              if (bright < 128) {
+                particles.push({
+                  x, y,
+                  ox: x, oy: y,
+                  tx: x, ty: y,
+                  ch: word[wIdx++ % word.length]
+                });
+              }
+            }
+          }
+        };
+
+        p.draw = function () {
+          p.background(245, 244, 242);
+          for (const pt of particles) {
+            const d = p.dist(pt.ox, pt.oy, p.mouseX, p.mouseY);
+            pt.tx = p.map(d, 0, maxD, p.mouseX, pt.ox, true);
+            pt.ty = p.map(d, 0, maxD, p.mouseY, pt.oy, true);
+            pt.x += (pt.tx - pt.x) * spd;
+            pt.y += (pt.ty - pt.y) * spd;
+            p.textSize(p.map(d, 0, maxD, 1.5 * sc, 9 * sc, true));
+            p.fill(41, 40, 40);
+            p.text(pt.ch, pt.x, pt.y);
+          }
+        };
+      }, el);
+    });
+  </script>
   <script>
     const trigger = document.querySelector('.hover-reveal');
     const img = document.getElementById('cursor-img');
