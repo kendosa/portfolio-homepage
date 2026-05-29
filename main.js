@@ -71,20 +71,4 @@ document.addEventListener('mouseout', e => {
   if (!to || to.closest('.squiggle-track') || !to.closest('a, button, img')) dot.classList.remove('hovered');
 });
 
-/* ── Italic type on slow rightward mouse movement ──────────── */
-(function () {
-  let lastX = 0, velX = 0, timer = null;
-
-  document.addEventListener('mousemove', e => {
-    velX += (e.clientX - lastX - velX) * 0.2;
-    lastX = e.clientX;
-
-    if (velX > 1.0 && velX < 7) {
-      document.body.classList.add('type-italic');
-      clearTimeout(timer);
-      timer = setTimeout(() => document.body.classList.remove('type-italic'), 320);
-    }
-  });
-}());
-
 
