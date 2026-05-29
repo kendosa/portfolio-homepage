@@ -68,6 +68,7 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
     ['rgba(194, 237, 130, 0.38)', 'rgba(185, 231, 113, 0.48)'],  // 1: chartreuse green
     ['rgba(131, 131, 131, 0.34)', 'rgba(170, 170, 170, 0.32)'],  // 2: grayscale
     ['rgba(80, 140, 220, 0.48)',  'rgba(230, 130, 35, 0.45)' ],  // 3: dark sunset
+    ['rgba(31, 68, 46, 0.38)',   'rgba(244, 242, 229, 0.72)'],  // 4: forest + cream
   ];
   let state = 0;
 
