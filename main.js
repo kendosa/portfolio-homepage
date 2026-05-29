@@ -65,24 +65,85 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
 (function () {
   const palettes = [
     ['rgba(90, 140, 190, 0.34)',  'rgba(240, 158, 52, 0.32)' ],  // 0: sunset (default)
-    ['rgba(194, 237, 130, 0.38)', 'rgba(185, 231, 113, 0.48)'],  // 1: chartreuse green
-    ['rgba(131, 131, 131, 0.34)', 'rgba(170, 170, 170, 0.32)'],  // 2: grayscale
-    ['rgba(80, 140, 220, 0.48)',  'rgba(230, 130, 35, 0.45)' ],  // 3: dark sunset
-    ['rgba(31, 68, 46, 0.38)',   'rgba(244, 242, 229, 0.72)'],  // 4: forest + cream
+    ['rgba(131, 131, 131, 0.34)', 'rgba(170, 170, 170, 0.32)'],  // 1: grayscale
+    null,                                                          // 2: dark lava (blobs handle color)
+    ['rgba(31, 68, 46, 0.38)',    'rgba(244, 242, 229, 0.72)'],  // 3: forest + cream
   ];
   let state = 0;
+  let lavaRaf = null;
+  let lavaBlobs = null;
 
   const circle = document.createElement('span');
   circle.id = 'grad-toggle';
   const navLinks = document.querySelector('.nav-links');
   if (navLinks) navLinks.insertBefore(circle, navLinks.firstChild);
 
+  function startLava() {
+    if (lavaRaf) return;
+    const bg = document.getElementById('lava-bg');
+    if (!bg) return;
+
+    if (!lavaBlobs) {
+      ['lb1', 'lb2', 'lb3', 'lb4'].forEach(id => {
+        const el = document.createElement('div');
+        el.className = 'lava-blob';
+        el.id = id;
+        bg.appendChild(el);
+      });
+      lavaBlobs = Array.from(bg.querySelectorAll('.lava-blob'));
+    }
+
+    function tick(t) {
+      if (!document.body.classList.contains('dark')) { lavaRaf = null; return; }
+      const vw = window.innerWidth, vh = window.innerHeight;
+
+      // Blob 1 — blue, center-left drifter
+      let x = 0.35 + Math.sin(t * 0.00025) * 0.30 + Math.cos(t * 0.00047) * 0.08;
+      let y = 0.40 + Math.cos(t * 0.00031) * 0.35 + Math.sin(t * 0.00041) * 0.10;
+      let w = (0.44 + Math.sin(t * 0.00037) * 0.14) * vh;
+      let h = (0.38 + Math.cos(t * 0.00029) * 0.12) * vh;
+      lavaBlobs[0].style.cssText = `width:${w|0}px;height:${h|0}px;left:${(x*vw-w/2)|0}px;top:${(y*vh-h/2)|0}px`;
+
+      // Blob 2 — amber, center-right drifter
+      x = 0.65 + Math.sin(t * 0.00033 + 2.0) * 0.26 + Math.cos(t * 0.00053) * 0.07;
+      y = 0.55 + Math.cos(t * 0.00027 + 1.4) * 0.30 + Math.sin(t * 0.00039) * 0.09;
+      w = (0.40 + Math.cos(t * 0.00041 + 0.8) * 0.13) * vh;
+      h = (0.34 + Math.sin(t * 0.00035 + 1.1) * 0.12) * vh;
+      lavaBlobs[1].style.cssText = `width:${w|0}px;height:${h|0}px;left:${(x*vw-w/2)|0}px;top:${(y*vh-h/2)|0}px`;
+
+      // Blob 3 — blue, upper traveler
+      x = 0.55 + Math.sin(t * 0.00041 + 3.5) * 0.24 + Math.cos(t * 0.00029) * 0.09;
+      y = 0.22 + Math.cos(t * 0.00045 + 2.2) * 0.28 + Math.sin(t * 0.00021) * 0.12;
+      w = (0.38 + Math.sin(t * 0.00031 + 2.0) * 0.15) * vh;
+      h = (0.42 + Math.cos(t * 0.00047 + 0.4) * 0.14) * vh;
+      lavaBlobs[2].style.cssText = `width:${w|0}px;height:${h|0}px;left:${(x*vw-w/2)|0}px;top:${(y*vh-h/2)|0}px`;
+
+      // Blob 4 — amber, lower wanderer
+      x = 0.42 + Math.cos(t * 0.00047 + 1.0) * 0.22 + Math.sin(t * 0.00059) * 0.07;
+      y = 0.75 + Math.sin(t * 0.00035 + 0.7) * 0.20 + Math.cos(t * 0.00023) * 0.09;
+      w = (0.36 + Math.cos(t * 0.00027 + 1.4) * 0.12) * vh;
+      h = (0.38 + Math.sin(t * 0.00039 + 1.8) * 0.14) * vh;
+      lavaBlobs[3].style.cssText = `width:${w|0}px;height:${h|0}px;left:${(x*vw-w/2)|0}px;top:${(y*vh-h/2)|0}px`;
+
+      lavaRaf = requestAnimationFrame(tick);
+    }
+    lavaRaf = requestAnimationFrame(tick);
+  }
+
+  function stopLava() {
+    if (lavaRaf) { cancelAnimationFrame(lavaRaf); lavaRaf = null; }
+  }
+
   circle.addEventListener('mouseenter', () => {
     state = (state + 1) % palettes.length;
-    document.body.style.setProperty('--blob1', palettes[state][0]);
-    document.body.style.setProperty('--blob2', palettes[state][1]);
-    document.body.classList.toggle('dark', state === 3);
-    document.body.classList.toggle('forest', state === 4);
+    if (palettes[state]) {
+      document.body.style.setProperty('--blob1', palettes[state][0]);
+      document.body.style.setProperty('--blob2', palettes[state][1]);
+    }
+    const isDark = state === 2;
+    document.body.classList.toggle('dark', isDark);
+    document.body.classList.toggle('forest', state === 3);
+    if (isDark) startLava(); else stopLava();
   });
 }());
 

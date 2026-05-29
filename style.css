@@ -366,20 +366,39 @@ a { color: inherit; text-decoration: none; }
   align-self: center;
 }
 
-/* ─── Dark mode (toggled by grad-toggle palette 3) ──────────────── */
+/* ─── Dark mode (toggled by grad-toggle palette 2) ──────────────── */
+html:has(body.dark) { background: #1c1b1a; }
 body.dark {
   --black: #f5f4f2;
   --white: #1c1b1a;
   --grey:  rgba(245, 244, 242, 0.42);
   --hover: #2e2c2a;
   color: #f5f4f2;
-  background-color: #1c1b1a;
-  background-image:
-    radial-gradient(circle 130px at var(--mx, -50%) var(--my, -50%), rgba(28, 27, 26, 0.88) 0%, transparent 100%),
-    radial-gradient(ellipse 150% 40% at 50% 50%, rgba(28, 27, 26, var(--ct, 0)) 0%, transparent 100%),
-    radial-gradient(ellipse 72% 52% at var(--g1x, 8%) var(--g1y, 2%), var(--blob1) 0%, transparent 70%),
-    radial-gradient(ellipse 68% 50% at var(--g2x, 93%) var(--g2y, 3%), var(--blob2) 0%, transparent 65%);
+  background: transparent;
 }
+
+/* ─── Lava background layer ─────────────────────────────────────── */
+#lava-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: #1c1b1a;
+  overflow: hidden;
+  filter: contrast(12) blur(4px);
+  pointer-events: none;
+}
+body.dark #lava-bg { display: block; }
+.lava-blob {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  filter: blur(65px);
+  will-change: transform, width, height;
+}
+#lb1, #lb3 { background: rgb(80, 140, 220); }
+#lb2, #lb4 { background: rgb(230, 130, 35); }
 body.dark .logo,
 body.dark .logo:visited,
 body.dark .logo:active { color: #f5f4f2; }
