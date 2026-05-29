@@ -9,6 +9,9 @@
   --gap:   clamp(1rem, 2vw, 1.5rem);
   --pad:   calc(clamp(1.25rem, 4vw, 3rem) - 15px);
   --header-h: 86px;
+  /* gradient blob colors — cycled by #grad-toggle */
+  --blob1: rgba(90, 140, 190, 0.34);
+  --blob2: rgba(240, 158, 52, 0.32);
 }
 
 html { scroll-behavior: smooth; }
@@ -350,6 +353,17 @@ a { color: inherit; text-decoration: none; }
 }
 .site-header:has(.menu-toggle.open) .menu-toggle {
   color: #f5f4f2;
+}
+
+/* ─── Gradient toggle circle ────────────────────────────────────── */
+#grad-toggle {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--black);
+  flex-shrink: 0;
+  align-self: center;
 }
 
 /* ─── Responsive ────────────────────────────────────────────────── */

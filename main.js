@@ -61,6 +61,27 @@ document.addEventListener('mousemove', e => {
 
 document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
 
+/* ── Gradient palette toggle circle ────────────────────────────── */
+(function () {
+  const palettes = [
+    ['rgba(90, 140, 190, 0.34)',  'rgba(240, 158, 52, 0.32)' ],  // 0: sunset (default)
+    ['rgba(194, 237, 130, 0.38)', 'rgba(185, 231, 113, 0.48)'],  // 1: chartreuse green
+    ['rgba(131, 131, 131, 0.34)', 'rgba(170, 170, 170, 0.32)'],  // 2: grayscale
+  ];
+  let state = 0;
+
+  const circle = document.createElement('span');
+  circle.id = 'grad-toggle';
+  const navLinks = document.querySelector('.nav-links');
+  if (navLinks) navLinks.insertBefore(circle, navLinks.firstChild);
+
+  circle.addEventListener('mouseenter', () => {
+    state = (state + 1) % palettes.length;
+    document.body.style.setProperty('--blob1', palettes[state][0]);
+    document.body.style.setProperty('--blob2', palettes[state][1]);
+  });
+}());
+
 /* Grow on link, button, or image hover — exclude squiggle tracks */
 document.addEventListener('mouseover', e => {
   if (e.target.closest('.squiggle-track')) return;
