@@ -392,6 +392,28 @@ body.dark .clients-list li { border-bottom-color: rgba(245, 244, 242, 0.1); }
 body.dark .clients-list li:first-child { border-top-color: rgba(245, 244, 242, 0.1); }
 body.dark .site-footer { border-top-color: rgba(245, 244, 242, 0.1); }
 
+/* ─── Forest mode (grad-toggle palette 4) ───────────────────────── */
+body.forest {
+  --black: #f4f2e5;
+  --white: #1f442e;
+  --grey:  rgba(244, 242, 229, 0.45);
+  --hover: #2a5a3c;
+  color: #f4f2e5;
+  background-color: #1f442e;
+  background-image: none;
+}
+body.forest .logo,
+body.forest .logo:visited,
+body.forest .logo:active { color: #f4f2e5; }
+body.forest .hero-text { color: #f4f2e5; }
+body.forest .img-wrap { background: #2a5a3c; }
+body.forest .info-section { border-top-color: rgba(244, 242, 229, 0.15); }
+body.forest .info-bio p,
+body.forest .clients-list li { color: rgba(244, 242, 229, 0.78); }
+body.forest .clients-list li { border-bottom-color: rgba(244, 242, 229, 0.15); }
+body.forest .clients-list li:first-child { border-top-color: rgba(244, 242, 229, 0.15); }
+body.forest .site-footer { border-top-color: rgba(244, 242, 229, 0.15); }
+
 /* ─── Responsive ────────────────────────────────────────────────── */
 
 @media (max-width: 1100px) {

@@ -82,6 +82,7 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
     document.body.style.setProperty('--blob1', palettes[state][0]);
     document.body.style.setProperty('--blob2', palettes[state][1]);
     document.body.classList.toggle('dark', state === 3);
+    document.body.classList.toggle('forest', state === 4);
   });
 }());
 
