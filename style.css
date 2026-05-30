@@ -387,6 +387,14 @@ body.forest .clients-list li { color: rgba(244, 242, 229, 0.78); }
 body.forest .clients-list li { border-bottom-color: rgba(244, 242, 229, 0.15); }
 body.forest .clients-list li:first-child { border-top-color: rgba(244, 242, 229, 0.15); }
 body.forest .site-footer { border-top-color: rgba(244, 242, 229, 0.15); }
+/* project pages */
+body.forest .project-aa-body,
+body.forest .sub-desc { color: rgba(244, 242, 229, 0.85); }
+body.forest .full-img { background: #2a5a3c; }
+body.forest .proj-header { border-bottom-color: rgba(244, 242, 229, 0.15); }
+body.forest .sub-project + .sub-project,
+body.forest .project-cta,
+body.forest .project-footer { border-top-color: rgba(244, 242, 229, 0.15); }
 
 /* ─── A&A mode (grad-toggle palette 3) ──────────────────────────── */
 html:has(body.aa) { background: #1b1b1b; }
@@ -410,6 +418,14 @@ body.aa .clients-list li { color: rgba(252, 252, 252, 0.78); }
 body.aa .clients-list li { border-bottom-color: rgba(252, 252, 252, 0.1); }
 body.aa .clients-list li:first-child { border-top-color: rgba(252, 252, 252, 0.1); }
 body.aa .site-footer { border-top-color: rgba(252, 252, 252, 0.1); }
+/* project pages */
+body.aa .project-aa-body,
+body.aa .sub-desc { color: rgba(252, 252, 252, 0.78); }
+body.aa .full-img { background: #2e2e2e; }
+body.aa .proj-header { border-bottom-color: rgba(252, 252, 252, 0.1); }
+body.aa .sub-project + .sub-project,
+body.aa .project-cta,
+body.aa .project-footer { border-top-color: rgba(252, 252, 252, 0.1); }
 
 /* ─── Green mode (grad-toggle palette 4) ────────────────────────── */
 html:has(body.green) { background: #72d353; }
@@ -433,6 +449,14 @@ body.green .clients-list li { color: rgba(34, 31, 32, 0.78); }
 body.green .clients-list li { border-bottom-color: rgba(34, 31, 32, 0.15); }
 body.green .clients-list li:first-child { border-top-color: rgba(34, 31, 32, 0.15); }
 body.green .site-footer { border-top-color: rgba(34, 31, 32, 0.15); }
+/* project pages */
+body.green .project-aa-body,
+body.green .sub-desc { color: rgba(34, 31, 32, 0.85); }
+body.green .full-img { background: #5ebd3f; }
+body.green .proj-header { border-bottom-color: rgba(34, 31, 32, 0.15); }
+body.green .sub-project + .sub-project,
+body.green .project-cta,
+body.green .project-footer { border-top-color: rgba(34, 31, 32, 0.15); }
 
 /* ─── Responsive ────────────────────────────────────────────────── */
 
