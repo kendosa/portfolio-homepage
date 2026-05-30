@@ -217,7 +217,7 @@
   line-height: 1.4;
   color: var(--black);
 }
-.project-aa-eyebrow p + p { color: var(--grey); }
+.project-aa-eyebrow p + p { font-size: 32px; color: var(--grey); }
 
 /* ─── Angel & Anchor two-column hero variant ────────────────────── */
 .project-hero--aa {
