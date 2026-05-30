@@ -205,6 +205,20 @@
 }
 .p-reveal.visible { opacity: 1; transform: none; }
 
+/* ─── Project eyebrow (name + industry) ────────────────────────── */
+.project-aa-eyebrow {
+  grid-column: 1 / -1;
+  margin-bottom: 2rem;
+}
+.project-aa-eyebrow p {
+  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--black);
+}
+.project-aa-eyebrow p + p { color: var(--grey); }
+
 /* ─── Angel & Anchor two-column hero variant ────────────────────── */
 .project-hero--aa {
   display: grid;
