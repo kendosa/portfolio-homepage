@@ -80,6 +80,8 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
     state = (state + 1) % palettes.length;
     document.body.style.setProperty('--blob1', palettes[state][0]);
     document.body.style.setProperty('--blob2', palettes[state][1]);
+    // solid-color states: override the inline <style> gradient via inline style
+    document.body.style.backgroundImage = state > 0 ? 'none' : '';
     document.body.classList.toggle('forest', state === 1);
     document.body.classList.toggle('aa', state === 2);
     document.body.classList.toggle('green', state === 3);
