@@ -208,32 +208,16 @@
 /* ─── Project eyebrow (name + industry) ────────────────────────── */
 .project-aa-eyebrow {
   grid-column: 1 / -1;
-  display: flex;
-  gap: 3rem;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
 }
-.project-aa-eyebrow-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-.project-aa-eyebrow-label {
+.project-aa-eyebrow p {
   font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 500;
-  letter-spacing: -.02em;
-  line-height: 1.2;
-  color: rgb(194, 194, 194);
-}
-.project-aa-eyebrow-value {
-  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -.02em;
-  line-height: 1.2;
+  line-height: 1.4;
   color: var(--black);
 }
+.project-aa-eyebrow p + p { color: var(--grey); }
 
 /* ─── Angel & Anchor two-column hero variant ────────────────────── */
 .project-hero--aa {
