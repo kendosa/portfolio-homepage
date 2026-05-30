@@ -214,7 +214,7 @@
 }
 
 .project-aa-left {
-  padding-top: 0.65rem;
+  margin-top: calc(0.65rem - 96.5px);
 }
 
 .project-aa-deliverables {
