@@ -396,7 +396,7 @@ body.aa {
   --grey:  rgba(27, 27, 27, 0.42);
   --hover: #ebebeb;
   color: #1b1b1b;
-  background: #fcfcfc;
+  background-color: #fcfcfc;
   background-image: none;
 }
 body.aa .logo,
@@ -410,6 +410,29 @@ body.aa .clients-list li { color: rgba(27, 27, 27, 0.78); }
 body.aa .clients-list li { border-bottom-color: rgba(27, 27, 27, 0.1); }
 body.aa .clients-list li:first-child { border-top-color: rgba(27, 27, 27, 0.1); }
 body.aa .site-footer { border-top-color: rgba(27, 27, 27, 0.1); }
+
+/* ─── Green mode (grad-toggle palette 4) ────────────────────────── */
+html:has(body.green) { background: #72d353; }
+body.green {
+  --black: #221f20;
+  --white: #72d353;
+  --grey:  rgba(34, 31, 32, 0.45);
+  --hover: #5ebd3f;
+  color: #221f20;
+  background-color: #72d353;
+  background-image: none;
+}
+body.green .logo,
+body.green .logo:visited,
+body.green .logo:active { color: #221f20; }
+body.green .hero-text { color: #221f20; }
+body.green .img-wrap { background: #5ebd3f; }
+body.green .info-section { border-top-color: rgba(34, 31, 32, 0.15); }
+body.green .info-bio p,
+body.green .clients-list li { color: rgba(34, 31, 32, 0.78); }
+body.green .clients-list li { border-bottom-color: rgba(34, 31, 32, 0.15); }
+body.green .clients-list li:first-child { border-top-color: rgba(34, 31, 32, 0.15); }
+body.green .site-footer { border-top-color: rgba(34, 31, 32, 0.15); }
 
 /* ─── Responsive ────────────────────────────────────────────────── */
 

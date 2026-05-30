@@ -67,6 +67,7 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
     ['rgba(90, 140, 190, 0.34)', 'rgba(240, 158, 52, 0.32)'],  // 0: sunset gradient (default)
     ['rgba(31, 68, 46, 0.38)',   'rgba(244, 242, 229, 0.72)'],  // 1: forest + cream
     ['rgba(90, 140, 190, 0.34)', 'rgba(240, 158, 52, 0.32)'],  // 2: A&A (#fcfcfc / #1b1b1b)
+    ['rgba(114, 211, 83, 0.5)',  'rgba(34, 31, 32, 0.3)'],     // 3: green (#72d353 / #221f20)
   ];
   let state = 0;
 
@@ -81,6 +82,7 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
     document.body.style.setProperty('--blob2', palettes[state][1]);
     document.body.classList.toggle('forest', state === 1);
     document.body.classList.toggle('aa', state === 2);
+    document.body.classList.toggle('green', state === 3);
   });
 }());
 
