@@ -26,7 +26,8 @@
 /* Hero */
 .project-hero {
   margin-top: var(--header-h);
-  padding: clamp(3rem, 8vw, 6rem) var(--pad) clamp(2.5rem, 5vw, 4rem);
+  padding: clamp(3rem, 8vw, 6rem) var(--pad) 0;
+  min-height: calc(100svh - var(--header-h) - 3.75rem);
 }
 
 .project-label {
@@ -204,6 +205,15 @@
   transition: opacity .5s ease, transform .5s ease;
 }
 .p-reveal.visible { opacity: 1; transform: none; }
+
+/* When big-statement precedes the hero, remove header offset and min-height */
+.project-hero--after-statement {
+  margin-top: 0;
+  min-height: 0;
+  padding-top: clamp(1rem, 2.5vw, 1.75rem);
+}
+.project-hero--after-statement .project-aa-eyebrow { margin-bottom: 1rem; }
+.project-hero--after-statement .project-aa-title   { margin-bottom: 1rem; }
 
 /* ─── Project eyebrow (name + industry) ────────────────────────── */
 .project-aa-eyebrow {

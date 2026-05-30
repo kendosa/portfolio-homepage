@@ -438,7 +438,8 @@ body.aa .project-footer { border-top-color: rgba(252, 252, 252, 0.1); }
 
 .big-statement {
   width: 100%;
-  padding: 150px var(--pad);
+  margin-top: var(--header-h);
+  padding: clamp(2.5rem, 5vw, 4rem) var(--pad) clamp(1.5rem, 3vw, 2.5rem);
   overflow: hidden;
 }
 
@@ -486,7 +487,6 @@ body.aa .project-footer { border-top-color: rgba(252, 252, 252, 0.1); }
     grid-template-columns: 1fr;
   }
 
-  .big-statement { padding: 100px var(--pad); }
   .big-statement-text { font-size: 48px; line-height: .95em; }
 }
 
