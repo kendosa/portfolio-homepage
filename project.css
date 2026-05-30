@@ -245,7 +245,7 @@
   font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 34px;
   font-weight: 400;
-  letter-spacing: calc(-.03em + 10px);
+  letter-spacing: calc(-.03em + 2px);
   line-height: 1.17;
   color: var(--black);
   margin-bottom: 2.25rem;

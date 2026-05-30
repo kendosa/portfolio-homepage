@@ -66,10 +66,22 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
   const palettes = [
     ['rgba(90, 140, 190, 0.34)', 'rgba(240, 158, 52, 0.32)'],  // 0: sunset gradient (default)
     ['rgba(31, 68, 46, 0.38)',   'rgba(244, 242, 229, 0.72)'],  // 1: forest + cream
-    ['rgba(90, 140, 190, 0.34)', 'rgba(240, 158, 52, 0.32)'],  // 2: A&A (#fcfcfc / #1b1b1b)
+    ['rgba(90, 140, 190, 0.34)', 'rgba(240, 158, 52, 0.32)'],  // 2: A&A (#1b1b1b / #fcfcfc)
     ['rgba(114, 211, 83, 0.5)',  'rgba(34, 31, 32, 0.3)'],     // 3: green (#72d353 / #221f20)
   ];
-  let state = 0;
+
+  let state = parseInt(localStorage.getItem('palette') || '0', 10);
+
+  function applyState(s) {
+    document.body.style.setProperty('--blob1', palettes[s][0]);
+    document.body.style.setProperty('--blob2', palettes[s][1]);
+    document.body.style.backgroundImage = s > 0 ? 'none' : '';
+    document.body.classList.toggle('forest', s === 1);
+    document.body.classList.toggle('aa',     s === 2);
+    document.body.classList.toggle('green',  s === 3);
+  }
+
+  if (state > 0) applyState(state);
 
   const circle = document.createElement('span');
   circle.id = 'grad-toggle';
@@ -78,13 +90,8 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
 
   circle.addEventListener('mouseenter', () => {
     state = (state + 1) % palettes.length;
-    document.body.style.setProperty('--blob1', palettes[state][0]);
-    document.body.style.setProperty('--blob2', palettes[state][1]);
-    // solid-color states: override the inline <style> gradient via inline style
-    document.body.style.backgroundImage = state > 0 ? 'none' : '';
-    document.body.classList.toggle('forest', state === 1);
-    document.body.classList.toggle('aa', state === 2);
-    document.body.classList.toggle('green', state === 3);
+    applyState(state);
+    localStorage.setItem('palette', state);
   });
 }());
 
