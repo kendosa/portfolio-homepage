@@ -213,6 +213,10 @@
   align-items: start;
 }
 
+.project-aa-left {
+  padding-top: 0.65rem;
+}
+
 .project-aa-deliverables {
   font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 0.75rem;
