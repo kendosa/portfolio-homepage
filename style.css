@@ -436,6 +436,11 @@ body.aa .project-footer { border-top-color: rgba(252, 252, 252, 0.1); }
 
 /* ─── Big Statement ─────────────────────────────────────────────── */
 
+.big-statement-text .cjk {
+  font-size: 0.82em;
+  line-height: inherit;
+}
+
 .big-statement {
   width: 100%;
   margin-top: var(--header-h);
