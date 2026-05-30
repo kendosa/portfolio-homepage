@@ -242,7 +242,7 @@
 
 .project-aa-title {
   font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  font-size: 34px;
   font-weight: 400;
   letter-spacing: -.03em;
   line-height: 1.17;
