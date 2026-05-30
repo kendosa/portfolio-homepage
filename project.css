@@ -211,17 +211,13 @@
   margin-bottom: 2rem;
 }
 .project-aa-eyebrow p {
-  font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: clamp(1.75rem, 3.5vw, 3rem);
-  font-weight: 700;
-  letter-spacing: -.03em;
-  line-height: 1.17;
+  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
   color: var(--black);
 }
-.project-aa-eyebrow p + p {
-  font-size: clamp(1.17rem, 2.33vw, 2rem);
-  color: var(--grey);
-}
+.project-aa-eyebrow p + p { color: var(--grey); }
 
 /* ─── Angel & Anchor two-column hero variant ────────────────────── */
 .project-hero--aa {
@@ -246,8 +242,8 @@
 
 .project-aa-title {
   font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: clamp(1.17rem, 2.33vw, 2rem);
-  font-weight: 700;
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  font-weight: 400;
   letter-spacing: -.03em;
   line-height: 1.17;
   color: var(--black);
