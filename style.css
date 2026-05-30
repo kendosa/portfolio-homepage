@@ -388,6 +388,29 @@ body.forest .clients-list li { border-bottom-color: rgba(244, 242, 229, 0.15); }
 body.forest .clients-list li:first-child { border-top-color: rgba(244, 242, 229, 0.15); }
 body.forest .site-footer { border-top-color: rgba(244, 242, 229, 0.15); }
 
+/* ─── A&A mode (grad-toggle palette 3) ──────────────────────────── */
+html:has(body.aa) { background: #fcfcfc; }
+body.aa {
+  --black: #1b1b1b;
+  --white: #fcfcfc;
+  --grey:  rgba(27, 27, 27, 0.42);
+  --hover: #ebebeb;
+  color: #1b1b1b;
+  background: #fcfcfc;
+  background-image: none;
+}
+body.aa .logo,
+body.aa .logo:visited,
+body.aa .logo:active { color: #1b1b1b; }
+body.aa .hero-text { color: #1b1b1b; }
+body.aa .img-wrap { background: #e4e2de; }
+body.aa .info-section { border-top-color: rgba(27, 27, 27, 0.1); }
+body.aa .info-bio p,
+body.aa .clients-list li { color: rgba(27, 27, 27, 0.78); }
+body.aa .clients-list li { border-bottom-color: rgba(27, 27, 27, 0.1); }
+body.aa .clients-list li:first-child { border-top-color: rgba(27, 27, 27, 0.1); }
+body.aa .site-footer { border-top-color: rgba(27, 27, 27, 0.1); }
+
 /* ─── Responsive ────────────────────────────────────────────────── */
 
 @media (max-width: 1100px) {
