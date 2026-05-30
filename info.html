@@ -161,6 +161,7 @@
           p.clear();
           const bd = document.body;
           const col = bd.classList.contains('forest') ? [244, 242, 229]
+                    : bd.classList.contains('aa')     ? [252, 252, 252]
                     : bd.classList.contains('green')  ? [34, 31, 32]
                     : [41, 40, 40];
           for (const pt of particles) {
