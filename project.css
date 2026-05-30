@@ -213,10 +213,11 @@
 .project-aa-eyebrow p {
   font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 34px;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.4;
   color: var(--black);
 }
+.project-aa-eyebrow p:first-child { margin-bottom: -8px; }
 .project-aa-eyebrow p + p { font-size: 20px; color: var(--grey); }
 
 /* ─── Angel & Anchor two-column hero variant ────────────────────── */
