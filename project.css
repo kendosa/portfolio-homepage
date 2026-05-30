@@ -211,10 +211,11 @@
   margin-bottom: 2rem;
 }
 .project-aa-eyebrow p {
-  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
   font-weight: 500;
-  line-height: 1.4;
+  letter-spacing: -.03em;
+  line-height: 1.17;
   color: var(--black);
 }
 .project-aa-eyebrow p + p { color: var(--grey); }
