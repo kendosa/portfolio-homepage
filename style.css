@@ -369,6 +369,7 @@ a { color: inherit; text-decoration: none; }
   background: var(--black);
   flex-shrink: 0;
   align-self: center;
+  margin-right: 5px;
 }
 
 /* ─── Forest mode (grad-toggle palette 2) ───────────────────────── */
