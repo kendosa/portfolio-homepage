@@ -434,6 +434,37 @@ body.aa .project-cta,
 body.aa .project-footer { border-top-color: rgba(252, 252, 252, 0.1); }
 
 
+/* ─── Ember mode (grad-toggle palette 3) ────────────────────────── */
+html:has(body.ember) { background: #4f160b; }
+body.ember {
+  --black: #fdf0e3;
+  --white: #4f160b;
+  --grey:  rgba(253, 240, 227, 0.45);
+  --hover: #6b2010;
+  color: #fdf0e3;
+  background-color: #4f160b;
+  background-image: none;
+}
+body.ember .logo,
+body.ember .logo:visited,
+body.ember .logo:active { color: #fdf0e3; }
+body.ember .hero-text { color: #fdf0e3; }
+body.ember .img-wrap { background: #6b2010; }
+body.ember .info-section { border-top-color: rgba(253, 240, 227, 0.15); }
+body.ember .info-bio p,
+body.ember .clients-list li { color: rgba(253, 240, 227, 0.78); }
+body.ember .clients-list li { border-bottom-color: rgba(253, 240, 227, 0.15); }
+body.ember .clients-list li:first-child { border-top-color: rgba(253, 240, 227, 0.15); }
+body.ember .site-footer { border-top-color: rgba(253, 240, 227, 0.15); }
+/* project pages */
+body.ember .project-aa-body,
+body.ember .sub-desc { color: rgba(253, 240, 227, 0.85); }
+body.ember .full-img { background: #6b2010; }
+body.ember .proj-header { border-bottom-color: rgba(253, 240, 227, 0.15); }
+body.ember .sub-project + .sub-project,
+body.ember .project-cta,
+body.ember .project-footer { border-top-color: rgba(253, 240, 227, 0.15); }
+
 /* ─── Big Statement ─────────────────────────────────────────────── */
 
 .big-statement-text .cjk {
