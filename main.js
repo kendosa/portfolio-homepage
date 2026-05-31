@@ -68,7 +68,6 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
     ['rgba(31, 68, 46, 0.38)',   'rgba(244, 242, 229, 0.72)'],  // 1: forest + cream
     ['rgba(90, 140, 190, 0.34)', 'rgba(240, 158, 52, 0.32)'],  // 2: A&A (#1b1b1b / #fcfcfc)
     ['rgba(79, 22, 11, 0.38)',   'rgba(253, 240, 227, 0.72)'],  // 3: ember (#4f160b / #fdf0e3)
-    ['rgba(233, 78, 39, 0.38)',  'rgba(35, 35, 35, 0.72)'],     // 4: flame (#e94e27 / #232323)
   ];
 
   let state = parseInt(localStorage.getItem('palette') || '0', 10);
@@ -80,7 +79,6 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
     document.body.classList.toggle('forest', s === 1);
     document.body.classList.toggle('aa',     s === 2);
     document.body.classList.toggle('ember',  s === 3);
-    document.body.classList.toggle('flame',  s === 4);
   }
 
   if (state > 0) applyState(state);

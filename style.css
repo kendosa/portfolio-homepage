@@ -465,36 +465,6 @@ body.ember .sub-project + .sub-project,
 body.ember .project-cta,
 body.ember .project-footer { border-top-color: rgba(253, 240, 227, 0.15); }
 
-/* ─── Flame mode (grad-toggle palette 4) ────────────────────────── */
-html:has(body.flame) { background: #e94e27; }
-body.flame {
-  --black: #232323;
-  --white: #e94e27;
-  --grey:  rgba(35, 35, 35, 0.45);
-  --hover: #cf3f19;
-  color: #232323;
-  background-color: #e94e27;
-  background-image: none;
-}
-body.flame .logo,
-body.flame .logo:visited,
-body.flame .logo:active { color: #232323; }
-body.flame .hero-text { color: #232323; }
-body.flame .img-wrap { background: #cf3f19; }
-body.flame .info-section { border-top-color: rgba(35, 35, 35, 0.15); }
-body.flame .info-bio p,
-body.flame .clients-list li { color: rgba(35, 35, 35, 0.78); }
-body.flame .clients-list li { border-bottom-color: rgba(35, 35, 35, 0.15); }
-body.flame .clients-list li:first-child { border-top-color: rgba(35, 35, 35, 0.15); }
-body.flame .site-footer { border-top-color: rgba(35, 35, 35, 0.15); }
-/* project pages */
-body.flame .project-aa-body,
-body.flame .sub-desc { color: rgba(35, 35, 35, 0.85); }
-body.flame .full-img { background: #cf3f19; }
-body.flame .proj-header { border-bottom-color: rgba(35, 35, 35, 0.15); }
-body.flame .sub-project + .sub-project,
-body.flame .project-cta,
-body.flame .project-footer { border-top-color: rgba(35, 35, 35, 0.15); }
 
 /* ─── Big Statement ─────────────────────────────────────────────── */
 
