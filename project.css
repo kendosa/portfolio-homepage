@@ -289,3 +289,44 @@
   .project-desc { letter-spacing: -.01em; }
   .project-hero--aa { grid-template-columns: 1fr; }
 }
+
+/* ─── Image gallery (Carla-style) ──────────────────────── */
+.images {
+  padding: 0 var(--pad) clamp(2rem, 5vw, 4rem);
+}
+
+.images__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.images__container picture {
+  width: 100%;
+  margin-bottom: 20px;
+  line-height: 0;
+  display: block;
+}
+
+.images__container picture img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.images__half-img {
+  width: calc(50% - 10px) !important;
+}
+
+.img-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #e8e6e1;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 767px) {
+  .images__half-img {
+    width: 100% !important;
+  }
+}
