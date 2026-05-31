@@ -44,7 +44,7 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   justify-content: space-between;
   padding: 30px var(--pad) 0;
-  background: var(--white);
+  background: transparent;
 }
 
 .logo {
@@ -270,6 +270,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: transparent;
 }
 
 .footer-copy {
