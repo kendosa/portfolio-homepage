@@ -19,10 +19,20 @@ html { scroll-behavior: smooth; }
 body {
   font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: var(--white);
+  background-image:
+    radial-gradient(circle 130px at var(--mx, -50%) var(--my, -50%), rgba(245, 244, 242, 0.82) 0%, transparent 100%),
+    radial-gradient(ellipse 150% 40% at 50% 50%, rgba(245, 244, 242, var(--ct, 0)) 0%, transparent 100%),
+    radial-gradient(ellipse 72% 52% at var(--g1x, 8%) var(--g1y, 2%), var(--blob1) 0%, transparent 70%),
+    radial-gradient(ellipse 68% 50% at var(--g2x, 93%) var(--g2y, 3%), var(--blob2) 0%, transparent 65%);
+  background-attachment: fixed;
   color: var(--black);
   font-size: 15px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+}
+
+@media (max-width: 700px) {
+  body { background-attachment: scroll; }
 }
 
 a { color: inherit; text-decoration: none; }
