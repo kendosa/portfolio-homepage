@@ -303,7 +303,7 @@
 .sticky-copy {
   width: 50%;
   position: sticky;
-  top: 0;
+  top: 10px;
   height: 100%;
   padding-right: clamp(1.5rem, 3vw, 2.5rem);
 }
