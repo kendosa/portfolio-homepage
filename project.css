@@ -303,9 +303,8 @@
 .sticky-copy {
   width: 50%;
   position: sticky;
-  top: var(--header-h);
+  top: calc(var(--header-h) + 60px);
   height: 100%;
-  padding-top: clamp(2rem, 4vw, 3rem);
   padding-right: clamp(1.5rem, 3vw, 2.5rem);
 }
 
