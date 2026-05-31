@@ -301,11 +301,11 @@
 }
 
 .sticky-copy {
-  width: 50%;
+  width: 28%;
   position: sticky;
   top: 15px;
   height: 100%;
-  padding-right: clamp(1.5rem, 3vw, 2.5rem);
+  padding-right: clamp(1rem, 2vw, 1.5rem);
 }
 
 .sticky-copy-text {
@@ -318,7 +318,7 @@
 }
 
 .sticky-image-col {
-  width: 50%;
+  width: 70%;
   line-height: 0;
 }
 
