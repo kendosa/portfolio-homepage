@@ -27,7 +27,8 @@
 .project-hero {
   margin-top: var(--header-h);
   padding: clamp(3rem, 8vw, 6rem) var(--pad) 0;
-  min-height: calc(100svh - var(--header-h) - 3.75rem);
+  height: calc(100svh - var(--header-h) - 150px);
+  min-height: 0;
 }
 
 .project-label {
