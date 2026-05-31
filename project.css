@@ -29,6 +29,7 @@
   padding: clamp(3rem, 8vw, 6rem) var(--pad) 0;
   height: calc(100svh - var(--header-h) - 150px);
   min-height: 0;
+  margin-bottom: 30px;
 }
 
 .project-label {
