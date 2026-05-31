@@ -346,6 +346,10 @@
   object-fit: cover;
 }
 
+.images__phone-pair .images__no-crop img {
+  object-fit: contain;
+}
+
 @media (max-width: 767px) {
   .images__half-img {
     width: 100% !important;
