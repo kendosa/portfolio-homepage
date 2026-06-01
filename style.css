@@ -145,11 +145,11 @@ a { color: inherit; text-decoration: none; }
 /* ─── Portfolio Grid ────────────────────────────────────────────── */
 .portfolio {
   padding: 0 var(--pad) clamp(3rem, 6vw, 5rem);
-  margin-top: -40px;
+  margin-top: -80px;
 }
 
 .grid > .project-card:first-child {
-  margin-top: -50px;
+  margin-top: -80px;
 }
 
 .grid {
