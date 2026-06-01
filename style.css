@@ -3,7 +3,7 @@
 
 :root {
   --black: #292828;
-  --white: #f5f4f2;
+  --white: #ffffff;
   --grey:  #888;
   --hover: #e8e6e2;
   --gap:   clamp(1rem, 2vw, 1.5rem);
@@ -20,8 +20,8 @@ body {
   font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: var(--white);
   background-image:
-    radial-gradient(circle 130px at var(--mx, -50%) var(--my, -50%), rgba(245, 244, 242, 0.82) 0%, transparent 100%),
-    radial-gradient(ellipse 150% 40% at 50% 50%, rgba(245, 244, 242, var(--ct, 0)) 0%, transparent 100%),
+    radial-gradient(circle 130px at var(--mx, -50%) var(--my, -50%), rgba(255, 255, 255, 0.82) 0%, transparent 100%),
+    radial-gradient(ellipse 150% 40% at 50% 50%, rgba(255, 255, 255, var(--ct, 0)) 0%, transparent 100%),
     radial-gradient(ellipse 72% 52% at var(--g1x, 8%) var(--g1y, 2%), var(--blob1) 0%, transparent 70%),
     radial-gradient(ellipse 68% 50% at var(--g2x, 93%) var(--g2y, 3%), var(--blob2) 0%, transparent 65%);
   background-attachment: fixed;
