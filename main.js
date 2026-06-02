@@ -64,21 +64,19 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
 /* ── Gradient palette toggle circle ────────────────────────────── */
 (function () {
   const palettes = [
-    ['rgba(90, 140, 190, 0.34)', 'rgba(240, 158, 52, 0.32)'],  // 0: sunset gradient (default)
-    ['rgba(31, 68, 46, 0.38)',   'rgba(244, 242, 229, 0.72)'],  // 1: forest + cream
-    ['rgba(90, 140, 190, 0.34)', 'rgba(240, 158, 52, 0.32)'],  // 2: A&A (#1b1b1b / #fcfcfc)
-    ['rgba(79, 22, 11, 0.38)',   'rgba(253, 240, 227, 0.72)'],  // 3: ember (#4f160b / #fdf0e3)
+    ['rgba(90, 140, 190, 0.44)', 'rgba(240, 158, 52, 0.42)'],  // 0: sunset gradient (default)
+    ['rgba(90, 140, 190, 0.44)', 'rgba(240, 158, 52, 0.42)'],  // 1: A&A (#1b1b1b / #fcfcfc)
   ];
 
   let state = parseInt(localStorage.getItem('palette') || '0', 10);
+  if (state > palettes.length - 1) state = 0;
 
   function applyState(s) {
     document.body.style.setProperty('--blob1', palettes[s][0]);
     document.body.style.setProperty('--blob2', palettes[s][1]);
     document.body.style.backgroundImage = s > 0 ? 'none' : '';
-    document.body.classList.toggle('forest', s === 1);
-    document.body.classList.toggle('aa',     s === 2);
-    document.body.classList.toggle('ember',  s === 3);
+    document.body.classList.toggle('aa', s === 1);
+    document.body.classList.remove('forest', 'ember');
   }
 
   if (state > 0) applyState(state);
