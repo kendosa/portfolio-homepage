@@ -444,6 +444,36 @@ body.aa .sub-project + .sub-project,
 body.aa .project-cta,
 body.aa .project-footer { border-top-color: rgba(252, 252, 252, 0.1); }
 
+/* ─── Stone mode (grad-toggle palette 2) ────────────────────────── */
+html:has(body.stone) { background: #d7d5d6; }
+body.stone {
+  --black: #1b1b1b;
+  --white: #d7d5d6;
+  --grey:  rgba(27, 27, 27, 0.42);
+  --hover: #c8c6c7;
+  color: #1b1b1b;
+  background-color: #d7d5d6;
+  background-image: none;
+}
+body.stone .logo,
+body.stone .logo:visited,
+body.stone .logo:active { color: #1b1b1b; }
+body.stone .hero-text { color: #1b1b1b; }
+body.stone .img-wrap { background: #c8c6c7; }
+body.stone .info-section { border-top-color: rgba(27, 27, 27, 0.15); }
+body.stone .info-bio p,
+body.stone .clients-list li { color: rgba(27, 27, 27, 0.78); }
+body.stone .clients-list li { border-bottom-color: rgba(27, 27, 27, 0.15); }
+body.stone .clients-list li:first-child { border-top-color: rgba(27, 27, 27, 0.15); }
+body.stone .site-footer { border-top-color: rgba(27, 27, 27, 0.15); }
+/* project pages */
+body.stone .project-aa-body,
+body.stone .sub-desc { color: rgba(27, 27, 27, 0.78); }
+body.stone .full-img { background: #c8c6c7; }
+body.stone .proj-header { border-bottom-color: rgba(27, 27, 27, 0.15); }
+body.stone .sub-project + .sub-project,
+body.stone .project-cta,
+body.stone .project-footer { border-top-color: rgba(27, 27, 27, 0.15); }
 
 /* ─── Ember mode (grad-toggle palette 3) ────────────────────────── */
 html:has(body.ember) { background: #4f160b; }

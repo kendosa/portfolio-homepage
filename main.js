@@ -66,6 +66,7 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
   const palettes = [
     ['rgba(90, 140, 190, 0.44)', 'rgba(240, 158, 52, 0.42)'],  // 0: sunset gradient (default)
     ['rgba(90, 140, 190, 0.44)', 'rgba(240, 158, 52, 0.42)'],  // 1: A&A (#1b1b1b / #fcfcfc)
+    ['rgba(90, 140, 190, 0.44)', 'rgba(240, 158, 52, 0.42)'],  // 2: stone (#d7d5d6 / #1b1b1b)
   ];
 
   let state = parseInt(localStorage.getItem('palette') || '0', 10);
@@ -75,7 +76,8 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
     document.body.style.setProperty('--blob1', palettes[s][0]);
     document.body.style.setProperty('--blob2', palettes[s][1]);
     document.body.style.backgroundImage = s > 0 ? 'none' : '';
-    document.body.classList.toggle('aa', s === 1);
+    document.body.classList.toggle('aa',    s === 1);
+    document.body.classList.toggle('stone', s === 2);
     document.body.classList.remove('forest', 'ember');
   }
 
