@@ -309,6 +309,16 @@
   padding-right: clamp(1rem, 2vw, 1.5rem);
 }
 
+.sticky-forever-bright {
+  font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--black);
+  margin: 0;
+}
+
 .sticky-copy-text {
   font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: clamp(1.1rem, 1.8vw, 1.5rem);
