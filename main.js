@@ -95,6 +95,38 @@ document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
   });
 }());
 
+/* ── Gradient drift for project/info pages ─────────────────────── */
+/* index.html sets window._hasGradientAnimation = true and runs its  */
+/* own richer tick, so this only fires on pages that don't have one. */
+requestAnimationFrame(() => {
+  if (window._hasGradientAnimation) return;
+  const body = document.body;
+  let mx = 0.5, my = 0.5, tmx = 0.5, tmy = 0.5;
+  let cx = -50, cy = -50, tcx = -50, tcy = -50;
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  document.addEventListener('mousemove', e => {
+    tmx = e.clientX / window.innerWidth;
+    tmy = e.clientY / window.innerHeight;
+    tcx = e.clientX / window.innerWidth  * 100;
+    tcy = e.clientY / window.innerHeight * 100;
+  });
+  document.addEventListener('mouseleave', () => { tcx = -50; tcy = -50; });
+  (function tick() {
+    const t = Date.now() / 1000;
+    mx = lerp(mx, tmx, 0.04);
+    my = lerp(my, tmy, 0.04);
+    cx = lerp(cx, tcx, 0.18);
+    cy = lerp(cy, tcy, 0.18);
+    body.style.setProperty('--g1x', (28 + mx * 6 + Math.sin(t * 0.22) * 10).toFixed(2) + '%');
+    body.style.setProperty('--g1y', (35 + my * 8 + Math.cos(t * 0.17) * 14).toFixed(2) + '%');
+    body.style.setProperty('--g2x', (72 - mx * 6 + Math.cos(t * 0.19) * 10).toFixed(2) + '%');
+    body.style.setProperty('--g2y', (65 - my * 8 + Math.sin(t * 0.14) * 14).toFixed(2) + '%');
+    body.style.setProperty('--mx',  cx.toFixed(2) + '%');
+    body.style.setProperty('--my',  cy.toFixed(2) + '%');
+    requestAnimationFrame(tick);
+  }());
+});
+
 /* Grow on link, button, or image hover — exclude squiggle tracks */
 document.addEventListener('mouseover', e => {
   if (e.target.closest('.squiggle-track')) return;
