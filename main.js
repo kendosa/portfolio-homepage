@@ -47,51 +47,6 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   link.innerHTML = `<span class="nav-paren">(</span><span class="nav-first">${text[0]}</span><span class="nav-rest">${text.slice(1)}</span><span class="nav-paren">)</span>`;
 });
 
-/* ── Glyph scramble on header letter hover ─────────────────────── */
-(function () {
-  const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const SPEED = 40;
-
-  function attachScramble(span, orig) {
-    if (!orig.trim()) return;
-    let timer;
-    span.addEventListener('mouseenter', () => {
-      timer = setInterval(() => {
-        span.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-      }, SPEED);
-    });
-    span.addEventListener('mouseleave', () => {
-      clearInterval(timer);
-      span.textContent = orig;
-    });
-  }
-
-  function wrapAndScramble(el) {
-    const text = el.textContent;
-    el.textContent = '';
-    for (const char of text) {
-      const span = document.createElement('span');
-      span.style.display = 'inline';
-      span.textContent = char;
-      attachScramble(span, char);
-      el.appendChild(span);
-    }
-  }
-
-  // Logo
-  const logo = document.querySelector('.logo');
-  if (logo) wrapAndScramble(logo);
-
-  // Nav: nav-first is a single char; nav-rest needs splitting into chars
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    const first = link.querySelector('.nav-first');
-    if (first) attachScramble(first, first.textContent);
-
-    const rest = link.querySelector('.nav-rest');
-    if (rest) wrapAndScramble(rest);
-  });
-}());
-
 /* ── Custom cursor ─────────────────────────────────────────────── */
 /* Always create the element; CSS @media (hover:hover) controls visibility */
 const dot = document.createElement('div');
