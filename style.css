@@ -9,9 +9,6 @@
   --gap:   clamp(1rem, 2vw, 1.5rem);
   --pad:   calc(clamp(1.25rem, 4vw, 3rem) - 15px);
   --header-h: 86px;
-  /* gradient blob colors — cycled by #grad-toggle */
-  --blob1: rgba(90, 140, 190, 0.44);
-  --blob2: rgba(240, 158, 52, 0.42);
 }
 
 html { scroll-behavior: smooth; }
@@ -19,20 +16,10 @@ html { scroll-behavior: smooth; }
 body {
   font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: var(--white);
-  background-image:
-    radial-gradient(circle 130px at var(--mx, -50%) var(--my, -50%), rgba(255, 255, 255, 0.72) 0%, transparent 100%),
-    radial-gradient(ellipse 150% 40% at 50% 50%, rgba(255, 255, 255, var(--ct, 0)) 0%, transparent 100%),
-    radial-gradient(ellipse 72% 52% at var(--g1x, 8%) var(--g1y, 2%), var(--blob1) 0%, transparent 70%),
-    radial-gradient(ellipse 68% 50% at var(--g2x, 93%) var(--g2y, 3%), var(--blob2) 0%, transparent 65%);
-  background-attachment: fixed;
   color: var(--black);
   font-size: 15px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-}
-
-@media (max-width: 700px) {
-  body { background-attachment: scroll; }
 }
 
 a { color: inherit; text-decoration: none; }
@@ -370,142 +357,6 @@ a { color: inherit; text-decoration: none; }
 .site-header:has(.menu-toggle.open) .menu-toggle {
   color: #f5f4f2;
 }
-
-/* ─── Gradient toggle circle ────────────────────────────────────── */
-#grad-toggle {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--black);
-  flex-shrink: 0;
-  align-self: center;
-  margin-right: 5px;
-}
-
-/* ─── Forest mode (grad-toggle palette 2) ───────────────────────── */
-body.forest {
-  --black: #f4f2e5;
-  --white: #1f442e;
-  --grey:  rgba(244, 242, 229, 0.45);
-  --hover: #2a5a3c;
-  color: #f4f2e5;
-  background-color: #1f442e;
-  background-image: none;
-}
-body.forest .logo,
-body.forest .logo:visited,
-body.forest .logo:active { color: #f4f2e5; }
-body.forest .hero-text { color: #f4f2e5; }
-body.forest .img-wrap { background: #2a5a3c; }
-body.forest .info-section { border-top-color: rgba(244, 242, 229, 0.15); }
-body.forest .info-bio p,
-body.forest .clients-list li { color: rgba(244, 242, 229, 0.78); }
-body.forest .clients-list li { border-bottom-color: rgba(244, 242, 229, 0.15); }
-body.forest .clients-list li:first-child { border-top-color: rgba(244, 242, 229, 0.15); }
-body.forest .site-footer { border-top-color: rgba(244, 242, 229, 0.15); }
-/* project pages */
-body.forest .project-aa-body,
-body.forest .sub-desc { color: rgba(244, 242, 229, 0.85); }
-body.forest .full-img { background: #2a5a3c; }
-body.forest .proj-header { border-bottom-color: rgba(244, 242, 229, 0.15); }
-body.forest .sub-project + .sub-project,
-body.forest .project-cta,
-body.forest .project-footer { border-top-color: rgba(244, 242, 229, 0.15); }
-
-/* ─── A&A mode (grad-toggle palette 3) ──────────────────────────── */
-html:has(body.aa) { background: #1b1b1b; }
-body.aa {
-  --black: #fcfcfc;
-  --white: #1b1b1b;
-  --grey:  rgba(252, 252, 252, 0.42);
-  --hover: #2a2a2a;
-  color: #fcfcfc;
-  background-color: #1b1b1b;
-  background-image: none;
-}
-body.aa .logo,
-body.aa .logo:visited,
-body.aa .logo:active { color: #fcfcfc; }
-body.aa .hero-text { color: #fcfcfc; }
-body.aa .img-wrap { background: #2e2e2e; }
-body.aa .info-section { border-top-color: rgba(252, 252, 252, 0.1); }
-body.aa .info-bio p,
-body.aa .clients-list li { color: rgba(252, 252, 252, 0.78); }
-body.aa .clients-list li { border-bottom-color: rgba(252, 252, 252, 0.1); }
-body.aa .clients-list li:first-child { border-top-color: rgba(252, 252, 252, 0.1); }
-body.aa .site-footer { border-top-color: rgba(252, 252, 252, 0.1); }
-/* project pages */
-body.aa .project-aa-body,
-body.aa .sub-desc { color: rgba(252, 252, 252, 0.78); }
-body.aa .full-img { background: #2e2e2e; }
-body.aa .proj-header { border-bottom-color: rgba(252, 252, 252, 0.1); }
-body.aa .sub-project + .sub-project,
-body.aa .project-cta,
-body.aa .project-footer { border-top-color: rgba(252, 252, 252, 0.1); }
-
-/* ─── Stone mode (grad-toggle palette 2) ────────────────────────── */
-html:has(body.stone) { background: #ebeaeb; }
-body.stone {
-  --black: #1b1b1b;
-  --white: #ebeaeb;
-  --grey:  rgba(27, 27, 27, 0.42);
-  --hover: #d7d5d6;
-  color: #1b1b1b;
-  background-color: #ebeaeb;
-  background-image: none;
-}
-body.stone .logo,
-body.stone .logo:visited,
-body.stone .logo:active { color: #1b1b1b; }
-body.stone .hero-text { color: #1b1b1b; }
-body.stone .img-wrap { background: #d7d5d6; }
-body.stone .info-section { border-top-color: rgba(27, 27, 27, 0.15); }
-body.stone .info-bio p,
-body.stone .clients-list li { color: rgba(27, 27, 27, 0.78); }
-body.stone .clients-list li { border-bottom-color: rgba(27, 27, 27, 0.15); }
-body.stone .clients-list li:first-child { border-top-color: rgba(27, 27, 27, 0.15); }
-body.stone .site-footer { border-top-color: rgba(27, 27, 27, 0.15); }
-/* project pages */
-body.stone .project-aa-body,
-body.stone .sub-desc { color: rgba(27, 27, 27, 0.78); }
-body.stone .full-img { background: #d7d5d6; }
-body.stone .proj-header { border-bottom-color: rgba(27, 27, 27, 0.15); }
-body.stone .sub-project + .sub-project,
-body.stone .project-cta,
-body.stone .project-footer { border-top-color: rgba(27, 27, 27, 0.15); }
-
-/* ─── Ember mode (grad-toggle palette 3) ────────────────────────── */
-html:has(body.ember) { background: #4f160b; }
-body.ember {
-  --black: #fdf0e3;
-  --white: #4f160b;
-  --grey:  rgba(253, 240, 227, 0.45);
-  --hover: #6b2010;
-  color: #fdf0e3;
-  background-color: #4f160b;
-  background-image: none;
-}
-body.ember .logo,
-body.ember .logo:visited,
-body.ember .logo:active { color: #fdf0e3; }
-body.ember .hero-text { color: #fdf0e3; }
-body.ember .img-wrap { background: #6b2010; }
-body.ember .info-section { border-top-color: rgba(253, 240, 227, 0.15); }
-body.ember .info-bio p,
-body.ember .clients-list li { color: rgba(253, 240, 227, 0.78); }
-body.ember .clients-list li { border-bottom-color: rgba(253, 240, 227, 0.15); }
-body.ember .clients-list li:first-child { border-top-color: rgba(253, 240, 227, 0.15); }
-body.ember .site-footer { border-top-color: rgba(253, 240, 227, 0.15); }
-/* project pages */
-body.ember .project-aa-body,
-body.ember .sub-desc { color: rgba(253, 240, 227, 0.85); }
-body.ember .full-img { background: #6b2010; }
-body.ember .proj-header { border-bottom-color: rgba(253, 240, 227, 0.15); }
-body.ember .sub-project + .sub-project,
-body.ember .project-cta,
-body.ember .project-footer { border-top-color: rgba(253, 240, 227, 0.15); }
-
 
 /* ─── Big Statement ─────────────────────────────────────────────── */
 
