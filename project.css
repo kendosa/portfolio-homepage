@@ -290,6 +290,7 @@
   .project-meta { gap: 1.75rem; }
   .project-desc { letter-spacing: -.01em; }
   .project-hero--aa { grid-template-columns: 1fr; }
+  .project-hero { margin-bottom: 40px !important; }
 }
 
 /* ─── Sticky copy + image layout ───────────────────────── */
@@ -331,6 +332,7 @@
 @media (max-width: 767px) {
   .sticky-pair {
     flex-direction: column;
+    gap: 40px;
   }
   .sticky-copy,
   .sticky-image-col {
