@@ -47,6 +47,33 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   link.innerHTML = `<span class="nav-paren">(</span><span class="nav-first">${text[0]}</span><span class="nav-rest">${text.slice(1)}</span><span class="nav-paren">)</span>`;
 });
 
+/* ── Nav hide on scroll-down, show on scroll-up ─────────────────── */
+const siteHeader = document.querySelector('.site-header');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y > lastScrollY && y > 80 && !toggle.classList.contains('open')) {
+    siteHeader.classList.add('nav-hidden');
+  } else {
+    siteHeader.classList.remove('nav-hidden');
+  }
+  lastScrollY = y;
+}, { passive: true });
+
+/* ── One-shot scroll reveal for project cards ───────────────────── */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries
+    .filter(e => e.isIntersecting)
+    .forEach((entry, i) => {
+      entry.target.style.transitionDelay = `${i * 80}ms`;
+      entry.target.classList.add('revealed');
+      revealObserver.unobserve(entry.target);
+    });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.project-card').forEach(card => revealObserver.observe(card));
+
 /* ── Custom cursor ─────────────────────────────────────────────── */
 /* Always create the element; CSS @media (hover:hover) controls visibility */
 const dot = document.createElement('div');
