@@ -162,17 +162,7 @@ a { color: inherit; text-decoration: none; }
 .project-card.large { grid-column: 1 / -1; }
 
 /* ─── Card ──────────────────────────────────────────────────────── */
-.project-card {
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.project-card.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
+.project-card { overflow: hidden; }
 
 .card-link {
   display: block;
@@ -378,6 +368,17 @@ a { color: inherit; text-decoration: none; }
 }
 .site-header:has(.menu-toggle.open) .menu-toggle {
   color: #f5f4f2;
+}
+
+/* ─── Scroll Reveal ─────────────────────────────────────────────── */
+.p-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.p-reveal.visible {
+  opacity: 1;
+  transform: none;
 }
 
 /* ─── Big Statement ─────────────────────────────────────────────── */

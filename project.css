@@ -200,13 +200,6 @@
 .proj-nav-link:hover { color: var(--black); }
 .proj-nav-link.next { text-align: right; }
 
-/* Scroll reveal on project pages */
-.p-reveal {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity .5s ease, transform .5s ease;
-}
-.p-reveal.visible { opacity: 1; transform: none; }
 
 /* Deliverables + copy block placed at the bottom of a project page */
 .project-footer-details {

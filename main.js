@@ -61,18 +61,21 @@ window.addEventListener('scroll', () => {
   lastScrollY = y;
 }, { passive: true });
 
-/* ── One-shot scroll reveal for project cards ───────────────────── */
+/* ── One-shot scroll reveal for individual card images ──────────── */
+const imgWraps = document.querySelectorAll('.project-card .img-wrap');
+imgWraps.forEach(el => el.classList.add('p-reveal'));
+
 const revealObserver = new IntersectionObserver((entries) => {
   entries
     .filter(e => e.isIntersecting)
     .forEach((entry, i) => {
       entry.target.style.transitionDelay = `${i * 80}ms`;
-      entry.target.classList.add('revealed');
+      entry.target.classList.add('visible');
       revealObserver.unobserve(entry.target);
     });
 }, { threshold: 0.08 });
 
-document.querySelectorAll('.project-card').forEach(card => revealObserver.observe(card));
+imgWraps.forEach(el => revealObserver.observe(el));
 
 /* ── Custom cursor ─────────────────────────────────────────────── */
 /* Always create the element; CSS @media (hover:hover) controls visibility */
