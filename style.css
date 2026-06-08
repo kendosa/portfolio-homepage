@@ -49,7 +49,7 @@ a { color: inherit; text-decoration: none; }
 .logo {
   font-size: 34px;
   font-weight: 500;
-  letter-spacing: .005em;
+  letter-spacing: .02em;
   color: #292828;
 }
 .logo:visited,
