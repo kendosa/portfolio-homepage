@@ -8,7 +8,7 @@
   --hover: #e8e6e2;
   --gap:   clamp(1rem, 2vw, 1.5rem);
   --pad:   calc(clamp(1.25rem, 4vw, 3rem) - 15px);
-  --header-h: 86px;
+  --header-h: 96px;
 }
 
 html { scroll-behavior: smooth; }
@@ -61,7 +61,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .nav-links a {
-  font-size: 28px;
+  font-size: 34px;
   font-weight: 500;
   color: var(--grey);
   transition: color .2s;
