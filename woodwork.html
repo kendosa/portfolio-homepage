@@ -76,6 +76,11 @@
     body.cc-on-card #cursor-dot { opacity: 0 !important; transition: none !important; }
     .cc-card[data-label],
     .cc-card[data-label] * { cursor: none !important; }
+    /* Grabbing state during drag */
+    body.cc-dragging,
+    body.cc-dragging * { cursor: grabbing !important; }
+    body.cc-dragging #ccCursor { opacity: 0 !important; }
+    body.cc-dragging #cursor-dot { opacity: 0 !important; transition: none !important; }
     #ccCursor {
       position: fixed;
       top: 0; left: 0;
@@ -196,13 +201,17 @@
         yPct:   isText ? 0 : (Math.random() * 10 + 20) * sign(),
         rot:    isText ? 0 : (Math.random() * 10 + 10) * sign(),
         left:   0,
-        width:  0
+        width:  0,
+        dragX:  0,
+        dragY:  0,
+        baseZ:  0
       };
     });
 
     // Set z-index — earlier cards sit on top by default; data-z overrides for specific pairs
     cardData.forEach(function (d, i) {
-      d.el.style.zIndex = d.el.dataset.z !== undefined ? d.el.dataset.z : cardData.length - i;
+      d.baseZ = d.el.dataset.z !== undefined ? parseInt(d.el.dataset.z) : cardData.length - i;
+      d.el.style.zIndex = d.baseZ;
     });
 
     function measure() {
@@ -245,11 +254,21 @@
       cardData.forEach(function (d) {
         if (d.isText) return;
 
+        // Lerp drag offset back to 0 when not being dragged
+        if (!d.isDragging) {
+          d.dragX += (0 - d.dragX) * 0.12;
+          d.dragY += (0 - d.dragY) * 0.12;
+          if (Math.abs(d.dragX) < 0.3) d.dragX = 0;
+          if (Math.abs(d.dragY) < 0.3) d.dragY = 0;
+        }
+
         const viewLeft = d.left - trackX;
         var t = 1 - 2 * (viewLeft + d.width) / (vw + d.width);
         t = clamp(t, -1.3, 1.3);
 
+        // Drag offset applied first so it moves in screen space regardless of card rotation
         d.el.style.transform =
+          'translate(' + d.dragX.toFixed(2) + 'px,' + d.dragY.toFixed(2) + 'px) ' +
           'translateX(' + (t * d.xPct).toFixed(2) + '%) ' +
           'translateY(' + (t * d.yPct).toFixed(2) + '%) ' +
           'rotate('     + (t * d.rot).toFixed(2)  + 'deg)';
@@ -266,6 +285,42 @@
       setHeight();
       onScroll();
       requestAnimationFrame(tick);
+    });
+
+    // ── Drag-to-snap ────────────────────────────────────────────────────────
+    var dragCard = null, dragStartMouseX = 0, dragStartMouseY = 0;
+    var dragStartDragX = 0, dragStartDragY = 0;
+
+    cardData.forEach(function (d) {
+      if (d.isText) return;
+      d.isDragging = false;
+
+      d.el.addEventListener('mousedown', function (e) {
+        if (e.button !== 0) return;
+        e.preventDefault();
+        dragCard = d;
+        d.isDragging = true;
+        dragStartMouseX = e.clientX;
+        dragStartMouseY = e.clientY;
+        dragStartDragX  = d.dragX;
+        dragStartDragY  = d.dragY;
+        d.el.style.zIndex = 9998;
+        document.body.classList.add('cc-dragging');
+      });
+    });
+
+    document.addEventListener('mousemove', function (e) {
+      if (!dragCard) return;
+      dragCard.dragX = dragStartDragX + (e.clientX - dragStartMouseX);
+      dragCard.dragY = dragStartDragY + (e.clientY - dragStartMouseY);
+    });
+
+    document.addEventListener('mouseup', function () {
+      if (!dragCard) return;
+      dragCard.isDragging = false;
+      dragCard.el.style.zIndex = dragCard.baseZ;
+      document.body.classList.remove('cc-dragging');
+      dragCard = null;
     });
   }());
 
