@@ -3,12 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Woodwork Kenny Phillips</title>
+  <title>Personal — Kenny Phillips</title>
   <link rel="stylesheet" href="https://use.typekit.net/eux7kam.css" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    body { min-height: 100vh; display: flex; flex-direction: column; }
-    .site-footer { margin-top: auto; }
+    body { margin: 0; }
+
+    /* ── Section ── */
+    .cc-section {
+      /* height set in JS: 100vh + track travel distance */
+      height: 300vh;
+    }
+
+    .cc-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ── Scrolling track ── */
+    .cc-track {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 1.5vw, 20px);
+      padding: 0 clamp(32px, 5vw, 80px);
+      will-change: transform;
+    }
+
+    /* ── Image cards ── */
+    .cc-card {
+      flex-shrink: 0;
+      will-change: transform;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .cc-card--portrait,
+    .cc-card--landscape,
+    .cc-card--tall {
+      height: clamp(280px, 62vh, 660px);
+    }
+
+    /* placeholder fill */
+    .cc-card-fill {
+      height: 100%;
+      width: auto;
+      display: block;
+    }
+
+    /* ── Text cards (first + last track items) ── */
+    .cc-card--text {
+      overflow: visible;
+      border-radius: 0;
+      padding: 0 clamp(48px, 8vw, 120px);
+      display: flex;
+      align-items: center;
+    }
+    .cc-card--text span {
+      display: block;
+      font-size: 3rem;
+      font-weight: 400;
+      line-height: 3.5rem;
+      letter-spacing: 0em;
+      color: #292828;
+      white-space: nowrap;
+    }
+
+    /* ── Custom cursor label ── */
+    .cc-card[data-label] { cursor: none; }
+    #ccCursor {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      color: #292828;
+      opacity: 0;
+      transition: opacity 0.12s ease;
+      white-space: nowrap;
+      transform: translate(-50%, calc(-100% - 10px));
+    }
   </style>
 </head>
 <body>
@@ -32,6 +111,52 @@
       <a href="woodwork.html" class="mobile-link nav-active">Personal</a>
     </nav>
   </div>
+
+  <!-- ── Concept → Craft ───────────────────────────────────────── -->
+  <section class="cc-section" id="ccSection">
+    <div class="cc-sticky" id="ccSticky">
+      <div class="cc-track" id="ccTrack">
+
+        <!-- First element: text -->
+        <div class="cc-card cc-card--text">
+          <span>Some other things<br>I make in<br>my freetime</span>
+        </div>
+
+        <!-- Image cards -->
+        <div class="cc-card cc-card--landscape" data-label="Table">
+          <img class="cc-card-fill" src="images/woodwork-2.png" alt="Woodwork table">
+        </div>
+        <div class="cc-card cc-card--portrait" data-label="Shelf">
+          <img class="cc-card-fill" src="images/woodwork-1.png" alt="Woodwork detail">
+        </div>
+        <div class="cc-card cc-card--portrait" data-label="Detail">
+          <img class="cc-card-fill" src="images/woodwork-3.png" alt="Woodwork shelf detail">
+        </div>
+        <div class="cc-card cc-card--tall" data-label="Closet">
+          <img class="cc-card-fill" src="images/woodwork-4.png" alt="Woodwork closet">
+        </div>
+        <div class="cc-card cc-card--tall" data-label="Stool">
+          <img class="cc-card-fill" src="images/woodwork-5.png" alt="Woodwork stool">
+        </div>
+        <div class="cc-card cc-card--landscape">
+          <div class="cc-card-fill" style="background:#c2beb0;"></div>
+        </div>
+        <div class="cc-card cc-card--portrait">
+          <div class="cc-card-fill" style="background:#cac6bc;"></div>
+        </div>
+        <div class="cc-card cc-card--tall">
+          <div class="cc-card-fill" style="background:#d2cec2;"></div>
+        </div>
+
+        <!-- Last element: text -->
+        <div class="cc-card cc-card--text">
+          <span>I like to do<br>woodwork in<br>my free time</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="site-footer">
     <span class="footer-copy">© 2026 Kenny Phillips</span>
@@ -41,5 +166,109 @@
   </footer>
 
   <script src="main.js"></script>
+  <script>
+  (function () {
+    const section = document.getElementById('ccSection');
+    const track   = document.getElementById('ccTrack');
+    const cards   = Array.from(track.querySelectorAll('.cc-card'));
+    if (!section || !track || !cards.length) return;
+
+    function sign() { return Math.random() < 0.5 ? 1 : -1; }
+
+    // Text cards (first + last) get no motion — only image cards animate
+    const cardData = cards.map(function (card) {
+      const isText = card.classList.contains('cc-card--text');
+      return {
+        el:     card,
+        isText: isText,
+        xPct:   isText ? 0 : (Math.random() * 20 + 30) * sign(),
+        yPct:   isText ? 0 : (Math.random() * 10 + 20) * sign(),
+        rot:    isText ? 0 : (Math.random() * 10 + 10) * sign(),
+        left:   0,
+        width:  0
+      };
+    });
+
+    function measure() {
+      track.style.transform = 'translateX(0px)';
+      cardData.forEach(function (d) {
+        d.left  = d.el.offsetLeft;
+        d.width = d.el.offsetWidth;
+      });
+    }
+
+    function setHeight() {
+      track.style.transform = 'translateX(0px)';
+      const travel = track.scrollWidth - window.innerWidth;
+      section.style.height = (window.innerHeight + Math.max(travel, 0)) + 'px';
+      measure();
+    }
+
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+    let cur = 0, tgt = 0;
+
+    function onScroll() {
+      const top     = section.getBoundingClientRect().top;
+      const scrollH = section.offsetHeight - window.innerHeight;
+      tgt = clamp(-top / scrollH, 0, 1);
+    }
+
+    function tick() {
+      cur += (tgt - cur) * 0.08;
+
+      const travel = track.scrollWidth - window.innerWidth;
+      const trackX = travel * cur;
+
+      track.style.transform = 'translateX(' + (-trackX).toFixed(2) + 'px)';
+
+      const vw = window.innerWidth;
+
+      cardData.forEach(function (d) {
+        if (d.isText) return; // text cards stay still
+
+        const viewLeft = d.left - trackX;
+        var t = 1 - 2 * (viewLeft + d.width) / (vw + d.width);
+        t = clamp(t, -1.3, 1.3);
+
+        d.el.style.transform =
+          'translateX(' + (t * d.xPct).toFixed(2) + '%) ' +
+          'translateY(' + (t * d.yPct).toFixed(2) + '%) ' +
+          'rotate('     + (t * d.rot).toFixed(2)  + 'deg)';
+      });
+
+      requestAnimationFrame(tick);
+    }
+
+    setHeight();
+    onScroll();
+    window.addEventListener('resize', function () { setHeight(); onScroll(); }, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    requestAnimationFrame(tick);
+  }());
+
+  // ── Custom image card cursor ──────────────────────────────────────────────
+  (function () {
+    var cur = document.getElementById('ccCursor');
+    if (!cur) return;
+
+    document.addEventListener('mousemove', function (e) {
+      cur.style.left = e.clientX + 'px';
+      cur.style.top  = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('.cc-card[data-label]').forEach(function (card) {
+      card.addEventListener('mouseenter', function () {
+        cur.textContent = card.dataset.label;
+        cur.style.opacity = '1';
+      });
+      card.addEventListener('mouseleave', function () {
+        cur.style.opacity = '0';
+      });
+    });
+  }());
+  </script>
+
+  <div id="ccCursor"></div>
 </body>
 </html>
