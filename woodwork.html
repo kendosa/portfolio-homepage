@@ -254,14 +254,6 @@
       cardData.forEach(function (d) {
         if (d.isText) return;
 
-        // Lerp drag offset back to 0 when not being dragged
-        if (!d.isDragging) {
-          d.dragX += (0 - d.dragX) * 0.12;
-          d.dragY += (0 - d.dragY) * 0.12;
-          if (Math.abs(d.dragX) < 0.3) d.dragX = 0;
-          if (Math.abs(d.dragY) < 0.3) d.dragY = 0;
-        }
-
         const viewLeft = d.left - trackX;
         var t = 1 - 2 * (viewLeft + d.width) / (vw + d.width);
         t = clamp(t, -1.3, 1.3);
