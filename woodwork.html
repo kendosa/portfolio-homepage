@@ -71,10 +71,9 @@
       white-space: nowrap;
     }
 
-    /* ── Hide site-wide cursor dot entirely on this page ── */
-    #cursor-dot { display: none !important; }
-
     /* ── Custom cursor label ── */
+    /* Suppress the site-wide dot only while over an image card */
+    body.cc-on-card #cursor-dot { opacity: 0 !important; transition: none !important; }
     .cc-card[data-label],
     .cc-card[data-label] * { cursor: none !important; }
     #ccCursor {
@@ -264,9 +263,6 @@
     var cur = document.getElementById('ccCursor');
     if (!cur) return;
 
-    // The site-wide cursor dot — hide it over image cards, restore on leave
-    var dot = document.getElementById('cursor-dot');
-
     document.addEventListener('mousemove', function (e) {
       cur.style.left = e.clientX + 'px';
       cur.style.top  = e.clientY + 'px';
@@ -276,11 +272,11 @@
       card.addEventListener('mouseenter', function () {
         cur.textContent = card.dataset.label;
         cur.style.opacity = '1';
-        if (dot) { dot.classList.remove('visible'); dot.classList.remove('hovered'); }
+        document.body.classList.add('cc-on-card');
       });
       card.addEventListener('mouseleave', function () {
         cur.style.opacity = '0';
-        // mousemove on document will re-add 'visible' naturally on next move
+        document.body.classList.remove('cc-on-card');
       });
     });
   }());
