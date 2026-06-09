@@ -41,21 +41,6 @@
       display: block;
     }
 
-    #cursor-img {
-      position: fixed;
-      width: 272px;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity .2s ease;
-      z-index: 1000;
-      transform: translate(16px, 16px);
-    }
-    #cursor-img.visible {
-      opacity: 1;
-    }
-
     @media (max-width: 900px) {
       .info-layout {
         flex-direction: column;
@@ -108,7 +93,7 @@
   <div class="info-layout">
     <section class="hero">
       <p class="hero-text">
-        Kenny is a designer based in <em style="white-space: nowrap;">New York</em>, specializing in <span class="hover-reveal">brand identity</span>, visual systems, and art direction.
+        Kenny is a designer that lives and<br>works in the Hudson Valley. Things he<br>is currently working on include integrating ai<br>into his workflow, developing his motion skills,<br>and raising his first kid.
       </p>
     </section>
 
@@ -117,8 +102,6 @@
     </div>
   </div>
 
-  <!-- Cursor image -->
-  <img id="cursor-img" src="images/wing-ming.jpg" alt="" />
   <!-- FOOTER -->
   <footer class="site-footer">
     <span class="footer-copy">© 2026 Kenny Phillips</span>
@@ -177,70 +160,6 @@
         };
       }, el);
     }());
-  </script>
-  <script>
-    const trigger = document.querySelector('.hover-reveal');
-    const img = document.getElementById('cursor-img');
-
-    const brandImages = [
-      'images/wing-ming.jpg',
-      'images/endeavor-health.jpg',
-      'images/Studio-Glagola.jpg',
-      'images/Kohls.jpg',
-      'images/superbrewed-food.jpg'
-    ];
-
-    let currentIndex = 0;
-    let isHovered = false;
-    let lastX = null;
-    let accumulated = 0;
-    const THRESHOLD = 2; // px of horizontal travel to flip image
-
-    function showImage(index) {
-      img.classList.remove('visible');
-      setTimeout(() => {
-        img.src = brandImages[index];
-        if (isHovered) img.classList.add('visible');
-      }, 150);
-    }
-
-    trigger.addEventListener('mouseenter', e => {
-      isHovered = true;
-      lastX = e.clientX;
-      accumulated = 0;
-      currentIndex = 0;
-      img.src = brandImages[currentIndex];
-      img.classList.add('visible');
-    });
-
-    trigger.addEventListener('mousemove', e => {
-      if (lastX === null) { lastX = e.clientX; return; }
-      const delta = e.clientX - lastX;
-      lastX = e.clientX;
-      accumulated += delta;
-
-      if (accumulated > THRESHOLD) {
-        accumulated = 0;
-        currentIndex = (currentIndex + 1) % brandImages.length;
-        showImage(currentIndex);
-      } else if (accumulated < -THRESHOLD) {
-        accumulated = 0;
-        currentIndex = (currentIndex - 1 + brandImages.length) % brandImages.length;
-        showImage(currentIndex);
-      }
-    });
-
-    trigger.addEventListener('mouseleave', () => {
-      isHovered = false;
-      img.classList.remove('visible');
-      lastX = null;
-      accumulated = 0;
-    });
-
-    document.addEventListener('mousemove', e => {
-      img.style.left = e.clientX + 'px';
-      img.style.top  = e.clientY + 'px';
-    });
   </script>
   <script>
     (function () {

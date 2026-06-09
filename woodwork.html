@@ -262,6 +262,9 @@
     var cur = document.getElementById('ccCursor');
     if (!cur) return;
 
+    // The site-wide cursor dot — hide it over image cards, restore on leave
+    var dot = document.getElementById('cursor-dot');
+
     document.addEventListener('mousemove', function (e) {
       cur.style.left = e.clientX + 'px';
       cur.style.top  = e.clientY + 'px';
@@ -271,9 +274,11 @@
       card.addEventListener('mouseenter', function () {
         cur.textContent = card.dataset.label;
         cur.style.opacity = '1';
+        if (dot) { dot.classList.remove('visible'); dot.classList.remove('hovered'); }
       });
       card.addEventListener('mouseleave', function () {
         cur.style.opacity = '0';
+        // mousemove on document will re-add 'visible' naturally on next move
       });
     });
   }());
