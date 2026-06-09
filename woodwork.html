@@ -136,10 +136,10 @@
         <div class="cc-card cc-card--portrait" data-label="Table detail">
           <img class="cc-card-fill" src="images/woodwork-3.png" alt="Woodwork shelf detail">
         </div>
-        <div class="cc-card cc-card--tall" data-label="Closet built-in">
+        <div class="cc-card cc-card--tall" data-label="Closet built-in" data-z="5">
           <img class="cc-card-fill" src="images/woodwork-4.png" alt="Woodwork closet">
         </div>
-        <div class="cc-card cc-card--tall" data-label="Shaker-inspired stool">
+        <div class="cc-card cc-card--tall" data-label="Shaker-inspired stool" data-z="6">
           <img class="cc-card-fill" src="images/woodwork-5.png" alt="Woodwork stool">
         </div>
         <div class="cc-card cc-card--landscape">
@@ -194,9 +194,9 @@
       };
     });
 
-    // Earlier cards sit on top — reverse z-index so first image is never behind second
+    // Set z-index — earlier cards sit on top by default; data-z overrides for specific pairs
     cardData.forEach(function (d, i) {
-      d.el.style.zIndex = cardData.length - i;
+      d.el.style.zIndex = d.el.dataset.z !== undefined ? d.el.dataset.z : cardData.length - i;
     });
 
     function measure() {
