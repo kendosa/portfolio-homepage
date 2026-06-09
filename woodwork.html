@@ -194,6 +194,11 @@
       };
     });
 
+    // Earlier cards sit on top — reverse z-index so first image is never behind second
+    cardData.forEach(function (d, i) {
+      d.el.style.zIndex = cardData.length - i;
+    });
+
     function measure() {
       track.style.transform = 'translateX(0px)';
       cardData.forEach(function (d) {
