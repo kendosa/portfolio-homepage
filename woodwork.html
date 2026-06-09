@@ -206,7 +206,7 @@
 
     function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
-    let cur = 0, tgt = 0;
+    let cur = 0, tgt = 0, firstFrame = true;
 
     function onScroll() {
       const top     = section.getBoundingClientRect().top;
@@ -215,6 +215,8 @@
     }
 
     function tick() {
+      // Snap to position on first frame so there's no lerp-in jitter
+      if (firstFrame) { cur = tgt; firstFrame = false; }
       cur += (tgt - cur) * 0.08;
 
       const travel = track.scrollWidth - window.innerWidth;
@@ -225,7 +227,7 @@
       const vw = window.innerWidth;
 
       cardData.forEach(function (d) {
-        if (d.isText) return; // text cards stay still
+        if (d.isText) return;
 
         const viewLeft = d.left - trackX;
         var t = 1 - 2 * (viewLeft + d.width) / (vw + d.width);
@@ -240,11 +242,15 @@
       requestAnimationFrame(tick);
     }
 
-    setHeight();
-    onScroll();
-    window.addEventListener('resize', function () { setHeight(); onScroll(); }, { passive: true });
     window.addEventListener('scroll', onScroll, { passive: true });
-    requestAnimationFrame(tick);
+    window.addEventListener('resize', function () { setHeight(); onScroll(); }, { passive: true });
+
+    // Defer measurement until all images are loaded so dimensions are stable
+    window.addEventListener('load', function () {
+      setHeight();
+      onScroll();
+      requestAnimationFrame(tick);
+    });
   }());
 
   // ── Custom image card cursor ──────────────────────────────────────────────
