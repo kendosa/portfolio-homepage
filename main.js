@@ -111,15 +111,16 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   overlay.alt = '';
   wrap.appendChild(overlay);
 
-  const PX_PER_IMAGE = 40; // rightward pixels needed to advance one image
+  const PX_PER_IMAGE = 30;
   let currentIdx = -1;
   let lastX = null;
   let accumX = 0;
   let preloaded = false;
 
-  wrap.addEventListener('mouseenter', () => {
-    lastX = null; // first mousemove sets baseline — no image change on entry
+  wrap.addEventListener('mouseenter', e => {
+    lastX = e.clientX;
     accumX = 0;
+    currentIdx = -1;
     if (!preloaded) {
       imgs.forEach(src => { const p = new Image(); p.src = src; });
       preloaded = true;
@@ -127,13 +128,9 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   });
 
   wrap.addEventListener('mousemove', e => {
-    if (lastX === null) {
-      lastX = e.clientX; // establish baseline, don't swap
-      return;
-    }
     const deltaX = e.clientX - lastX;
     lastX = e.clientX;
-    if (deltaX <= 0) return; // only respond to rightward movement
+    if (deltaX <= 0) return;
 
     accumX += deltaX;
     const idx = Math.min(Math.floor(accumX / PX_PER_IMAGE), imgs.length - 1);
