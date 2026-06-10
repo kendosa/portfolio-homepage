@@ -166,6 +166,20 @@
             p.text(pt.ch, pt.x, pt.y);
           }
         };
+
+        p.windowResized = function () {
+          ht = Math.round(el.getBoundingClientRect().height) || (window.innerHeight - 146);
+          sz = Math.round(ht * SRC_W / SRC_H);
+          sc = sz / SRC_W;
+          maxD = 190 * sc;
+          p.resizeCanvas(sz, ht);
+          particles.forEach(function (pt, i) {
+            const ox = PTS[i][0] * sc, oy = PTS[i][1] * sc;
+            pt.ox = ox; pt.oy = oy;
+            pt.x  = ox; pt.y  = oy;
+            pt.tx = ox; pt.ty = oy;
+          });
+        };
       }, el);
     }());
   </script>
