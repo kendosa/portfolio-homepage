@@ -101,4 +101,44 @@ document.addEventListener('mouseout', e => {
   if (!to || to.closest('.squiggle-track') || !to.closest('a, button, img')) dot.classList.remove('hovered');
 });
 
+/* ── Cover image gallery scrub on hover ─────────────────────── */
+document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
+  const imgs = wrap.dataset.gallery.split(',');
+  if (imgs.length < 2) return;
+
+  const overlay = document.createElement('img');
+  overlay.className = 'gallery-overlay';
+  overlay.alt = '';
+  wrap.appendChild(overlay);
+
+  let currentIdx = -1;
+  let preloaded = false;
+
+  wrap.addEventListener('mouseenter', () => {
+    if (!preloaded) {
+      imgs.forEach(src => { const p = new Image(); p.src = src; });
+      preloaded = true;
+    }
+  });
+
+  wrap.addEventListener('mousemove', e => {
+    const rect = wrap.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(0.9999, (e.clientX - rect.left) / rect.width));
+    const idx = Math.floor(ratio * imgs.length);
+    if (idx === currentIdx) return;
+    currentIdx = idx;
+    if (idx === 0) {
+      overlay.style.opacity = '0';
+    } else {
+      overlay.src = imgs[idx];
+      overlay.style.opacity = '1';
+    }
+  });
+
+  wrap.addEventListener('mouseleave', () => {
+    currentIdx = -1;
+    overlay.style.opacity = '0';
+  });
+});
+
 

@@ -174,10 +174,22 @@ a { color: inherit; text-decoration: none; }
 }
 
 .img-wrap {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 10;
   overflow: hidden;
   background: #e0ddd8;
+}
+
+.img-wrap .gallery-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .project-card.large .img-wrap { height: calc((100vw - 2 * var(--pad)) * 0.4375 + 20px); }
