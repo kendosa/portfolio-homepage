@@ -9,6 +9,24 @@
   <style>
     body { margin: 0; }
 
+    /* ── Header: transparent so blend-mode text reads against images ── */
+    .site-header { background: transparent; }
+    .logo,
+    .nav-links a,
+    .nav-links a:hover,
+    .nav-links a.nav-active,
+    .menu-toggle {
+      color: #fff !important;
+      mix-blend-mode: difference;
+    }
+    /* Restore solid header when mobile menu is open */
+    .site-header:has(.menu-toggle.open) { background: #292828; }
+    .site-header:has(.menu-toggle.open) .logo,
+    .site-header:has(.menu-toggle.open) .menu-toggle {
+      color: #f5f4f2 !important;
+      mix-blend-mode: normal;
+    }
+
     /* ── Section ── */
     .cc-section {
       /* height set in JS: 100vh + track travel distance */
