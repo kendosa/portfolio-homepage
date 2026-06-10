@@ -18,7 +18,7 @@
       flex: 1;
       display: flex;
       align-items: flex-start;
-      gap: clamp(2rem, 5vw, 5rem);
+      gap: var(--pad);
       padding: calc(clamp(3rem, 8vw, 6rem) + 10px) var(--pad) 60px;
     }
     .info-layout .hero {
@@ -35,8 +35,8 @@
       flex-shrink: 0;
     }
     #portrait-sketch {
-      height: calc(100vh - var(--header-h) - clamp(3rem, 8vw, 6rem) - 144px);
-      width: calc((100vh - var(--header-h) - clamp(3rem, 8vw, 6rem) - 144px) * 520 / 518);
+      height: calc(100vh - var(--header-h) - clamp(3rem, 8vw, 6rem) - 80px);
+      width: calc((100vh - var(--header-h) - clamp(3rem, 8vw, 6rem) - 80px) * 520 / 518);
     }
     #portrait-sketch canvas {
       display: block;
