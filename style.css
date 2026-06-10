@@ -188,7 +188,6 @@ a { color: inherit; text-decoration: none; }
   height: 100%;
   object-fit: cover;
   display: block;
-  background: #fff;
   opacity: 0;
   pointer-events: none;
 }
@@ -200,7 +199,6 @@ a { color: inherit; text-decoration: none; }
   height: 100%;
   object-fit: cover;
   display: block;
-  background: #fff;
   transition: filter .35s ease;
 }
 
