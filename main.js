@@ -156,11 +156,11 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
     let changed = false;
     if (stepAccum >= PX_PER_STEP) {
       stepAccum = 0;
-      currentIdx = Math.min(currentIdx + 1, imgs.length - 1);
+      currentIdx = (currentIdx + 1) % imgs.length;
       changed = true;
     } else if (stepAccum <= -PX_PER_STEP) {
       stepAccum = 0;
-      currentIdx = Math.max(currentIdx - 1, 0);
+      currentIdx = (currentIdx - 1 + imgs.length) % imgs.length;
       changed = true;
     }
 
