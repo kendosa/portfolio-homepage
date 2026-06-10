@@ -117,6 +117,7 @@ window.addEventListener('load', () => {
 document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   const imgs = wrap.dataset.gallery.split(',');
   if (imgs.length < 2) return;
+  const positions = wrap.dataset.positions ? wrap.dataset.positions.split('|') : [];
 
   const overlay = document.createElement('img');
   overlay.className = 'gallery-overlay';
@@ -170,6 +171,7 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
       overlay.style.opacity = '0';
     } else {
       overlay.src = imgs[currentIdx];
+      overlay.style.objectPosition = positions[currentIdx] || 'center';
       overlay.style.opacity = '1';
     }
   });
