@@ -112,9 +112,11 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   wrap.appendChild(overlay);
 
   let currentIdx = -1;
+  let lastX = null;
   let preloaded = false;
 
-  wrap.addEventListener('mouseenter', () => {
+  wrap.addEventListener('mouseenter', e => {
+    lastX = e.clientX;
     if (!preloaded) {
       imgs.forEach(src => { const p = new Image(); p.src = src; });
       preloaded = true;
@@ -122,6 +124,10 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   });
 
   wrap.addEventListener('mousemove', e => {
+    const deltaX = lastX !== null ? e.clientX - lastX : 0;
+    lastX = e.clientX;
+    if (deltaX <= 0) return; // only respond to rightward movement
+
     const rect = wrap.getBoundingClientRect();
     const ratio = Math.max(0, Math.min(0.9999, (e.clientX - rect.left) / rect.width));
     const idx = Math.floor(ratio * imgs.length);
@@ -137,6 +143,7 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
 
   wrap.addEventListener('mouseleave', () => {
     currentIdx = -1;
+    lastX = null;
     overlay.style.opacity = '0';
   });
 });
