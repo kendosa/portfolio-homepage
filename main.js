@@ -111,12 +111,15 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   overlay.alt = '';
   wrap.appendChild(overlay);
 
+  const PX_PER_IMAGE = 40; // rightward pixels needed to advance one image
   let currentIdx = -1;
   let lastX = null;
+  let accumX = 0;
   let preloaded = false;
 
   wrap.addEventListener('mouseenter', () => {
     lastX = null; // first mousemove sets baseline — no image change on entry
+    accumX = 0;
     if (!preloaded) {
       imgs.forEach(src => { const p = new Image(); p.src = src; });
       preloaded = true;
@@ -132,9 +135,8 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
     lastX = e.clientX;
     if (deltaX <= 0) return; // only respond to rightward movement
 
-    const rect = wrap.getBoundingClientRect();
-    const ratio = Math.max(0, Math.min(0.9999, (e.clientX - rect.left) / rect.width));
-    const idx = Math.floor(ratio * imgs.length);
+    accumX += deltaX;
+    const idx = Math.min(Math.floor(accumX / PX_PER_IMAGE), imgs.length - 1);
     if (idx === currentIdx) return;
     currentIdx = idx;
     if (idx === 0) {
@@ -148,6 +150,7 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   wrap.addEventListener('mouseleave', () => {
     currentIdx = -1;
     lastX = null;
+    accumX = 0;
     overlay.style.opacity = '0';
   });
 });
