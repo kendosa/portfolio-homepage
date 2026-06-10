@@ -123,7 +123,7 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   overlay.alt = '';
   wrap.appendChild(overlay);
 
-  const PX_PER_STEP = 8;
+  const PX_PER_STEP = 20;
   let currentIdx = 0;
   let lastX = null;
   let lastY = null;
