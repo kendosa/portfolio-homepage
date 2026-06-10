@@ -102,6 +102,18 @@ document.addEventListener('mouseout', e => {
 });
 
 /* ── Cover image gallery scrub on hover ─────────────────────── */
+
+// Preload all gallery images after page load so swaps are instant
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
+      wrap.dataset.gallery.split(',').slice(1).forEach(src => {
+        const p = new Image(); p.src = src;
+      });
+    });
+  }, 800);
+});
+
 document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   const imgs = wrap.dataset.gallery.split(',');
   if (imgs.length < 2) return;
@@ -111,43 +123,62 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   overlay.alt = '';
   wrap.appendChild(overlay);
 
-  const PX_PER_IMAGE = 30;
-  let currentIdx = -1;
+  const PX_PER_STEP = 8;
+  let currentIdx = 0;
   let lastX = null;
-  let accumX = 0;
-  let preloaded = false;
+  let lastY = null;
+  let stepAccum = 0;
 
   wrap.addEventListener('mouseenter', e => {
-    lastX = e.clientX;
-    accumX = 0;
-    currentIdx = -1;
-    if (!preloaded) {
-      imgs.forEach(src => { const p = new Image(); p.src = src; });
-      preloaded = true;
-    }
+    lastX = null; // first mousemove sets baseline — prevents entry-motion trigger
+    lastY = null;
+    stepAccum = 0;
+    currentIdx = 0;
   });
 
   wrap.addEventListener('mousemove', e => {
-    const deltaX = e.clientX - lastX;
-    lastX = e.clientX;
-    if (deltaX <= 0) return;
+    if (lastX === null) {
+      lastX = e.clientX;
+      lastY = e.clientY;
+      return;
+    }
 
-    accumX += deltaX;
-    const idx = Math.min(Math.floor(accumX / PX_PER_IMAGE), imgs.length - 1);
-    if (idx === currentIdx) return;
-    currentIdx = idx;
-    if (idx === 0) {
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    lastX = e.clientX;
+    lastY = e.clientY;
+
+    if (Math.abs(dy) > Math.abs(dx)) return; // ignore vertical movement
+    if (dx === 0) return;
+
+    stepAccum += dx;
+
+    let changed = false;
+    if (stepAccum >= PX_PER_STEP) {
+      stepAccum = 0;
+      currentIdx = Math.min(currentIdx + 1, imgs.length - 1);
+      changed = true;
+    } else if (stepAccum <= -PX_PER_STEP) {
+      stepAccum = 0;
+      currentIdx = Math.max(currentIdx - 1, 0);
+      changed = true;
+    }
+
+    if (!changed) return;
+
+    if (currentIdx === 0) {
       overlay.style.opacity = '0';
     } else {
-      overlay.src = imgs[idx];
+      overlay.src = imgs[currentIdx];
       overlay.style.opacity = '1';
     }
   });
 
   wrap.addEventListener('mouseleave', () => {
-    currentIdx = -1;
+    currentIdx = 0;
     lastX = null;
-    accumX = 0;
+    lastY = null;
+    stepAccum = 0;
     overlay.style.opacity = '0';
   });
 });
