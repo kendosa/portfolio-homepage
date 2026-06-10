@@ -48,10 +48,16 @@
         gap: calc(clamp(3rem, 8vw, 6rem) + 10px);
         padding: calc(clamp(3rem, 8vw, 6rem) + 10px) var(--pad) clamp(4rem, 8vw, 7rem);
       }
+      .portrait-section {
+        width: calc(100% + 2 * var(--pad));
+        margin-left: calc(-1 * var(--pad));
+        margin-right: calc(-1 * var(--pad));
+      }
       #portrait-sketch {
-        height: auto;
-        width: min(520px, 100%);
-        max-width: 100%;
+        width: 100%;
+        max-width: none;
+        /* maintain 520:518 aspect ratio so p5 reads the right height at setup */
+        height: calc(100vw * 518 / 520);
       }
     }
 
