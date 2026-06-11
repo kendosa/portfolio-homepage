@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 635 625">
+  <!-- Generator: Adobe Illustrator 30.5.1, SVG Export Plug-In . SVG Version: 2.1.4 Build 3)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #f0ece6;
+      }
+
+      .st1 {
+        font-size: 485.1px;
+        letter-spacing: 0em;
+      }
+
+      .st1, .st2 {
+        font-family: NHaasGroteskDSPro-75Bd, 'Neue Haas Grotesk Display Pro';
+      }
+
+      .st2 {
+        font-size: 32.4px;
+        letter-spacing: 0em;
+      }
+    </style>
+  </defs>
+  <rect class="st0" x="1.8" y="0" width="632.3" height="623.8"/>
+  <text class="st1" transform="translate(22.1 596.2)"><tspan x="0" y="0">Aa </tspan></text>
+  <text class="st2" transform="translate(528.7 48)"><tspan x="0" y="0">Bold</tspan></text>
+  <text class="st2" transform="translate(21.9 48)"><tspan x="0" y="0">Neue Haas Grotesk</tspan></text>
+</svg>
