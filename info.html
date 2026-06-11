@@ -122,7 +122,7 @@
   <script>
     (function () {
       const SRC_W = 600, SRC_H = 800;
-      const GW = 150, GH = 200;
+      const GW = 300, GH = 400;
       const N = 750;
       const el = document.getElementById('portrait-sketch');
 
@@ -160,9 +160,14 @@
         }
 
         function fieldAt(x, y) {
-          const gx = Math.min(GW - 1, Math.max(0, (x / cw) | 0));
-          const gy = Math.min(GH - 1, Math.max(0, (y / ch) | 0));
-          return field[gy * GW + gx];
+          const fx = Math.min(GW - 1.001, Math.max(0, x / cw - 0.5));
+          const fy = Math.min(GH - 1.001, Math.max(0, y / ch - 0.5));
+          const gx = fx | 0, gy = fy | 0;
+          const tx = fx - gx, ty = fy - gy;
+          const i = gy * GW + gx;
+          const top = field[i] * (1 - tx) + field[i + 1] * tx;
+          const bot = field[i + GW] * (1 - tx) + field[i + GW + 1] * tx;
+          return top * (1 - ty) + bot * ty;
         }
 
         function spawn(a) {
@@ -213,8 +218,8 @@
               const ny = a.y + Math.sin(ang) * 2.4 * sc;
               const d = fieldAt(nx, ny);
               if (d <= 0) { spawn(a); continue; }
-              g.stroke(41, 40, 40, 30 + d * 70);
-              g.strokeWeight(sc * (0.45 + d * 1.05));
+              g.stroke(41, 40, 40, 34 + d * 86);
+              g.strokeWeight(sc * (0.4 + d * 1.1));
               g.line(a.x, a.y, nx, ny);
               a.x = nx; a.y = ny;
             }
