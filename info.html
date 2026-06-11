@@ -150,20 +150,10 @@
 
         p.draw = function () {
           p.clear();
-          const bd = document.body;
-          const col = bd.classList.contains('forest') ? [244, 242, 229]
-                    : bd.classList.contains('aa')     ? [252, 252, 252]
-                    : bd.classList.contains('green')  ? [34, 31, 32]
-                    : [41, 40, 40];
+          p.fill(41, 40, 40);
+          p.textSize(9 * sc);
           for (const pt of particles) {
-            const d = p.dist(pt.ox, pt.oy, p.mouseX, p.mouseY);
-            pt.tx = p.map(d, 0, maxD, p.mouseX, pt.ox, true);
-            pt.ty = p.map(d, 0, maxD, p.mouseY, pt.oy, true);
-            pt.x += (pt.tx - pt.x) * spd;
-            pt.y += (pt.ty - pt.y) * spd;
-            p.textSize(p.map(d, 0, maxD, 1.5 * sc, 9 * sc, true));
-            p.fill(col[0], col[1], col[2]);
-            p.text(pt.ch, pt.x, pt.y);
+            p.text(pt.ch, pt.ox, pt.oy);
           }
         };
 
