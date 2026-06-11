@@ -298,7 +298,8 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
 }
 
 .sticky-copy {
-  width: 28%;
+  flex: 0 0 clamp(420px, 35%, 520px);
+  width: clamp(420px, 35%, 520px);
   position: sticky;
   top: 15px;
   height: 100%;
@@ -315,7 +316,8 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
 }
 
 .sticky-image-col {
-  width: 70%;
+  flex: 1;
+  min-width: 0;
   line-height: 0;
 }
 
