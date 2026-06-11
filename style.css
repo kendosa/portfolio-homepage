@@ -205,6 +205,9 @@ a { color: inherit; text-decoration: none; }
 
 .card-meta {
   padding: calc(.65rem + 5px) 0 0;
+  display: flex;
+  align-items: baseline;
+  overflow: hidden;
 }
 
 .card-title {
@@ -225,7 +228,6 @@ a { color: inherit; text-decoration: none; }
   max-width: 0;
   opacity: 0;
   white-space: nowrap;
-  vertical-align: baseline;
   margin-left: 0.5em;
   transition: max-width 0.35s ease, opacity 0.22s ease;
 }
