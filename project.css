@@ -328,11 +328,15 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   .sticky-pair {
     flex-direction: column;
     gap: 40px;
+    padding-top: clamp(2rem, 5vw, 4rem);
   }
   .sticky-copy,
   .sticky-image-col {
     width: 100%;
     position: static;
+  }
+  .images {
+    padding-top: clamp(2rem, 5vw, 4rem);
   }
 }
 
