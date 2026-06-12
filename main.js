@@ -107,8 +107,8 @@ document.addEventListener('mouseout', e => {
 window.addEventListener('load', () => {
   setTimeout(() => {
     document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
-      wrap.dataset.gallery.split(',').slice(1).forEach(src => {
-        const p = new Image(); p.src = src;
+      wrap.dataset.gallery.split(',').slice(1).forEach(entry => {
+        entry.split('|').forEach(src => { const p = new Image(); p.src = src; });
       });
     });
   }, 800);
@@ -119,10 +119,30 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   if (imgs.length < 2) return;
   const positions = wrap.dataset.positions ? wrap.dataset.positions.split('|') : [];
 
-  const overlay = document.createElement('img');
+  const overlay = document.createElement('div');
   overlay.className = 'gallery-overlay';
-  overlay.alt = '';
   wrap.appendChild(overlay);
+
+  function showFrame(idx) {
+    if (idx === 0) { overlay.style.opacity = '0'; return; }
+    const srcs = imgs[idx].split('|');
+    overlay.innerHTML = '';
+    if (srcs.length > 1) {
+      overlay.classList.add('two-up');
+      srcs.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src; img.alt = '';
+        overlay.appendChild(img);
+      });
+    } else {
+      overlay.classList.remove('two-up');
+      const img = document.createElement('img');
+      img.src = srcs[0]; img.alt = '';
+      img.style.objectPosition = positions[idx] || 'center';
+      overlay.appendChild(img);
+    }
+    overlay.style.opacity = '1';
+  }
 
   const PX_PER_STEP = 20;
   let currentIdx = 0;
@@ -166,14 +186,7 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
     }
 
     if (!changed) return;
-
-    if (currentIdx === 0) {
-      overlay.style.opacity = '0';
-    } else {
-      overlay.src = imgs[currentIdx];
-      overlay.style.objectPosition = positions[currentIdx] || 'center';
-      overlay.style.opacity = '1';
-    }
+    showFrame(currentIdx);
   });
 
   wrap.addEventListener('mouseleave', () => {
