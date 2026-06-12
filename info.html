@@ -6,7 +6,6 @@
   <title>Info Kenny Phillips</title>
   <link rel="stylesheet" href="https://use.typekit.net/eux7kam.css" />
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
   <style>
     body {
       min-height: 100vh;
@@ -31,33 +30,10 @@
       max-width: 14em;
       text-wrap: pretty;
     }
-    .portrait-section {
-      flex-shrink: 0;
-    }
-    #portrait-sketch {
-      height: calc(100vh - var(--header-h) - clamp(3rem, 8vw, 6rem) - 80px);
-      width: calc((100vh - var(--header-h) - clamp(3rem, 8vw, 6rem) - 80px) * 600 / 800);
-    }
-    #portrait-sketch canvas {
-      display: block;
-    }
-
     @media (max-width: 900px) {
       .info-layout {
         flex-direction: column;
-        gap: calc(clamp(3rem, 8vw, 6rem) + 10px);
         padding: calc(clamp(3rem, 8vw, 6rem) + 10px) var(--pad) clamp(4rem, 8vw, 7rem);
-      }
-      .portrait-section {
-        width: calc(100% + 2 * var(--pad));
-        margin-left: calc(-1 * var(--pad));
-        margin-right: calc(-1 * var(--pad));
-      }
-      #portrait-sketch {
-        width: 100%;
-        max-width: none;
-        /* maintain 600:800 aspect ratio so p5 reads the right height at setup */
-        height: calc(100vw * 800 / 600);
       }
     }
 
@@ -105,9 +81,6 @@
       </p>
     </section>
 
-    <div class="portrait-section">
-      <div id="portrait-sketch"></div>
-    </div>
   </div>
 
   <!-- FOOTER -->
@@ -119,128 +92,6 @@
   </footer>
 
   <script src="main.js"></script>
-  <script>
-    (function () {
-      const SRC_W = 600, SRC_H = 800;
-      const GW = 300, GH = 400;
-      const N = 750;
-      const el = document.getElementById('portrait-sketch');
-
-      new p5(function (p) {
-        let img, g, field, darkCells;
-        let w, h, sc, cw, ch;
-        const agents = [];
-
-        p.preload = function () {
-          img = p.loadImage('images/portrait.png');
-        };
-
-        function measure() {
-          h = Math.round(el.getBoundingClientRect().height) || (window.innerHeight - 146);
-          w = Math.round(h * SRC_W / SRC_H);
-          sc = w / SRC_W;
-          cw = w / GW;
-          ch = h / GH;
-        }
-
-        function buildField() {
-          const im = img.get();
-          im.resize(GW, GH);
-          im.loadPixels();
-          field = new Float32Array(GW * GH);
-          darkCells = [];
-          for (let i = 0; i < GW * GH; i++) {
-            const a = im.pixels[i * 4 + 3];
-            const b = (im.pixels[i * 4] + im.pixels[i * 4 + 1] + im.pixels[i * 4 + 2]) / 3;
-            let d = a < 128 ? 0 : 1 - b / 255;
-            if (d < 0.22) d = 0;
-            field[i] = d;
-            if (d > 0) darkCells.push(i);
-          }
-        }
-
-        function fieldAt(x, y) {
-          const fx = Math.min(GW - 1.001, Math.max(0, x / cw - 0.5));
-          const fy = Math.min(GH - 1.001, Math.max(0, y / ch - 0.5));
-          const gx = fx | 0, gy = fy | 0;
-          const tx = fx - gx, ty = fy - gy;
-          const i = gy * GW + gx;
-          const top = field[i] * (1 - tx) + field[i + 1] * tx;
-          const bot = field[i + GW] * (1 - tx) + field[i + GW + 1] * tx;
-          return top * (1 - ty) + bot * ty;
-        }
-
-        function spawn(a) {
-          let i = darkCells[(Math.random() * darkCells.length) | 0];
-          for (let t = 0; t < 20; t++) {
-            const j = darkCells[(Math.random() * darkCells.length) | 0];
-            if (Math.random() < field[j]) { i = j; break; }
-          }
-          a.x = ((i % GW) + Math.random()) * cw;
-          a.y = (((i / GW) | 0) + Math.random()) * ch;
-          a.life = 30 + Math.random() * 70;
-        }
-
-        function makeBuffer() {
-          const b = p.createGraphics(w, h);
-          b.strokeCap(p.ROUND);
-          return b;
-        }
-
-        p.setup = function () {
-          measure();
-          p.createCanvas(w, h);
-          g = makeBuffer();
-          buildField();
-          for (let i = 0; i < N; i++) {
-            const a = { x: 0, y: 0, life: 0 };
-            spawn(a);
-            agents.push(a);
-          }
-        };
-
-        p.draw = function () {
-          const warm = p.frameCount < 150;
-          const steps = warm ? 6 : 3;
-          if (!warm) {
-            g.erase(2);
-            g.noStroke();
-            g.rect(0, 0, w, h);
-            g.noErase();
-          }
-          const t = p.frameCount * 0.0025;
-          const k = 0.0085 / sc;
-          for (const a of agents) {
-            for (let s = 0; s < steps; s++) {
-              if (a.life-- <= 0) { spawn(a); continue; }
-              const ang = p.noise(a.x * k, a.y * k, t) * p.TWO_PI * 2.6;
-              const nx = a.x + Math.cos(ang) * 2.4 * sc;
-              const ny = a.y + Math.sin(ang) * 2.4 * sc;
-              const d = fieldAt(nx, ny);
-              if (d <= 0) { spawn(a); continue; }
-              g.stroke(41, 40, 40, 34 + d * 86);
-              g.strokeWeight(sc * (0.4 + d * 1.1));
-              g.line(a.x, a.y, nx, ny);
-              a.x = nx; a.y = ny;
-            }
-          }
-          p.clear();
-          p.image(g, 0, 0, w, h);
-        };
-
-        p.windowResized = function () {
-          const ow = w, oh = h, og = g;
-          measure();
-          p.resizeCanvas(w, h);
-          g = makeBuffer();
-          g.image(og, 0, 0, w, h);
-          og.remove();
-          const rx = w / ow, ry = h / oh;
-          for (const a of agents) { a.x *= rx; a.y *= ry; }
-        };
-      }, el);
-    }());
-  </script>
   <script>
     (function () {
       let scrollY = 0, targetScrollY = 0;
