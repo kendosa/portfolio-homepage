@@ -497,7 +497,9 @@ a { color: inherit; text-decoration: none; }
 
   .big-statement-text { font-size: 48px; line-height: .95em; }
   .hero-text { font-size: 48px; }
+}
 
+@media (max-width: 1124px) {
   .card-meta { flex-direction: column; align-items: flex-start; }
   .card-desc { margin-left: 0; }
 }
