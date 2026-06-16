@@ -489,7 +489,7 @@ a { color: inherit; text-decoration: none; }
   .grid > .project-card:first-child { margin-top: 0; }
 
   .project-card.large { grid-column: auto; }
-  .project-card.large .img-wrap { aspect-ratio: 16 / 10; }
+  .project-card.large .img-wrap { aspect-ratio: 16 / 10; height: auto; }
 
   .info-inner {
     grid-template-columns: 1fr;
