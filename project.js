@@ -1,49 +1,93 @@
 
-/* Magazine marquee — JS-driven so hover can control speed & direction */
+/* Magazine marquee — JS RAF with hover speed/direction + click-drag */
 (function () {
   const wrap  = document.querySelector('.rc-marquee-wrap');
   const track = document.querySelector('.rc-marquee-track');
   if (!wrap || !track) return;
 
-  const DEFAULT_SPEED = 88; // px/sec — matches previous 60s CSS duration
-  let pos         = 0;
-  let speed       = DEFAULT_SPEED;
-  let targetSpeed = DEFAULT_SPEED;
-  let lastTime    = null;
+  const DEFAULT_SPEED = 88; // px/sec
+  let pos          = 0;
+  let speed        = DEFAULT_SPEED;
+  let targetSpeed  = DEFAULT_SPEED;
+  let lastTime     = null;
+
+  let isDragging   = false;
+  let dragStartX   = 0;
+  let dragStartPos = 0;
+  let lastDragX    = 0;
+  let lastDragTime = 0;
+  let dragVelocity = 0;
+
+  function wrap_pos(p) {
+    const half = track.scrollWidth / 2;
+    if (p >= half) return p - half;
+    if (p < 0)     return p + half;
+    return p;
+  }
 
   function tick(now) {
     if (lastTime === null) lastTime = now;
-    const dt = Math.min((now - lastTime) / 1000, 0.05); // cap at 50ms
+    const dt = Math.min((now - lastTime) / 1000, 0.05);
     lastTime = now;
 
-    speed += (targetSpeed - speed) * Math.min(1, dt * 5); // ease
-    pos   += speed * dt;
-
-    const half = track.scrollWidth / 2;
-    if (pos >= half) pos -= half;
-    if (pos <  0)    pos += half;
+    if (!isDragging) {
+      speed += (targetSpeed - speed) * Math.min(1, dt * 5);
+      pos    = wrap_pos(pos + speed * dt);
+    }
 
     track.style.transform = `translateX(${-pos}px)`;
     requestAnimationFrame(tick);
   }
 
+  /* hover: scrub speed & direction */
   wrap.addEventListener('mousemove', function (e) {
-    const rect  = wrap.getBoundingClientRect();
-    const ratio = (e.clientX - rect.left) / rect.width; // 0=left 1=right
+    if (isDragging) {
+      const now   = performance.now();
+      const dtDrag = Math.max((now - lastDragTime) / 1000, 0.001);
+      pos          = wrap_pos(dragStartPos - (e.clientX - dragStartX));
+      dragVelocity = -(e.clientX - lastDragX) / dtDrag;
+      lastDragX    = e.clientX;
+      lastDragTime = now;
+      return;
+    }
 
+    const rect  = wrap.getBoundingClientRect();
+    const ratio = (e.clientX - rect.left) / rect.width;
     if (ratio < 0.5) {
-      const t = (0.5 - ratio) / 0.5;          // 0 at centre → 1 at left edge
-      targetSpeed = -DEFAULT_SPEED * 3 * t;   // up to 3× speed backward
+      targetSpeed = -DEFAULT_SPEED * 3 * ((0.5 - ratio) / 0.5);
     } else {
-      const t = (ratio - 0.5) / 0.5;          // 0 at centre → 1 at right edge
-      targetSpeed = DEFAULT_SPEED * (1 + 3 * t); // up to 4× speed forward
+      targetSpeed = DEFAULT_SPEED * (1 + 3 * ((ratio - 0.5) / 0.5));
     }
   });
 
   wrap.addEventListener('mouseleave', function () {
+    if (!isDragging) targetSpeed = DEFAULT_SPEED;
+  });
+
+  /* drag start */
+  wrap.addEventListener('mousedown', function (e) {
+    isDragging    = true;
+    dragStartX    = e.clientX;
+    dragStartPos  = pos;
+    lastDragX     = e.clientX;
+    lastDragTime  = performance.now();
+    dragVelocity  = 0;
+    wrap.style.cursor            = 'grabbing';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+
+  /* drag end — release with momentum then ease to default */
+  document.addEventListener('mouseup', function () {
+    if (!isDragging) return;
+    isDragging                     = false;
+    wrap.style.cursor              = 'grab';
+    document.body.style.userSelect = '';
+    speed       = dragVelocity;
     targetSpeed = DEFAULT_SPEED;
   });
 
+  wrap.style.cursor = 'grab';
   requestAnimationFrame(tick);
 })();
 
