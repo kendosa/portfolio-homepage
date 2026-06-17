@@ -409,9 +409,10 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
 
 .rc-marquee-track {
   display: flex;
+  align-items: flex-start;
   gap: 16px;
   width: max-content;
-  animation: rc-scroll 55s linear infinite;
+  animation: rc-scroll 60s linear infinite;
 }
 
 .rc-marquee-wrap:hover .rc-marquee-track {
@@ -422,6 +423,19 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   height: clamp(320px, 38vw, 520px);
   width: auto;
   flex-shrink: 0;
+  display: block;
+}
+
+.rc-marquee-spread {
+  display: flex;
+  height: clamp(320px, 38vw, 520px);
+  flex-shrink: 0;
+  gap: 0;
+}
+
+.rc-marquee-spread img {
+  height: 100%;
+  width: auto;
   display: block;
 }
 
