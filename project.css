@@ -418,7 +418,8 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   animation-play-state: paused;
 }
 
-.rc-marquee-card {
+.rc-marquee-card,
+.rc-marquee-wrap img {
   height: clamp(320px, 38vw, 520px);
   width: auto;
   flex-shrink: 0;
