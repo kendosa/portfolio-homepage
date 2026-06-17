@@ -49,48 +49,6 @@
     }
     .site-header { background: transparent; }
     .site-footer  { background: transparent; }
-
-    /* ── Hire Me animation ──────────────────────────────── */
-    .hire-vert {
-      width: 100%;
-      height: 90vh;
-      background: #050405;
-      display: flex;
-      overflow: hidden;
-      user-select: none;
-    }
-
-    .hire-col {
-      overflow: hidden;
-      min-width: 0;
-    }
-
-    .hire-col-inner {
-      display: flex;
-      flex-direction: column;
-      /* all columns scroll upward — speed variation is the only variable */
-      animation: hire-col-scroll var(--dur, 14s) linear var(--delay, 0s) infinite;
-      will-change: transform;
-    }
-
-    .hire-col-inner span {
-      display: block;
-      font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-weight: 900;
-      font-size: 160vh;
-      line-height: 0.88;
-      color: #fff;
-      text-align: center;
-    }
-
-    @keyframes hire-col-scroll {
-      from { transform: translateY(0); }
-      to   { transform: translateY(-50%); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .hire-col-inner { animation: none; }
-    }
   </style>
 </head>
 <body>
@@ -122,74 +80,6 @@
         Kenny is a designer based in<br>the Hudson Valley, currently<br>integrating AI into his workflow<br>and raising his first kid.
       </p>
     </section>
-
-  </div>
-
-  <!-- Hire Me — each column scrolls UP, only speed varies -->
-  <div class="hire-vert" aria-label="Hire Me">
-
-    <!-- H — flex proportional to letter width — medium-slow -->
-    <div class="hire-col" style="flex:72; --dur:18s; --delay:-4s">
-      <div class="hire-col-inner">
-        <span>H</span><span>H</span><span>H</span><span>H</span><span>H</span>
-        <span>H</span><span>H</span><span>H</span><span>H</span><span>H</span>
-        <span>H</span><span>H</span><span>H</span><span>H</span><span>H</span>
-        <span>H</span><span>H</span><span>H</span><span>H</span><span>H</span>
-      </div>
-    </div>
-
-    <!-- I — narrow column — fast -->
-    <div class="hire-col" style="flex:26; --dur:8s; --delay:-1.2s">
-      <div class="hire-col-inner">
-        <span>I</span><span>I</span><span>I</span><span>I</span><span>I</span>
-        <span>I</span><span>I</span><span>I</span><span>I</span><span>I</span>
-        <span>I</span><span>I</span><span>I</span><span>I</span><span>I</span>
-        <span>I</span><span>I</span><span>I</span><span>I</span><span>I</span>
-      </div>
-    </div>
-
-    <!-- R — very slow -->
-    <div class="hire-col" style="flex:68; --dur:24s; --delay:-9s">
-      <div class="hire-col-inner">
-        <span>R</span><span>R</span><span>R</span><span>R</span><span>R</span>
-        <span>R</span><span>R</span><span>R</span><span>R</span><span>R</span>
-        <span>R</span><span>R</span><span>R</span><span>R</span><span>R</span>
-        <span>R</span><span>R</span><span>R</span><span>R</span><span>R</span>
-      </div>
-    </div>
-
-    <!-- E — medium -->
-    <div class="hire-col" style="flex:62; --dur:13s; --delay:-2s">
-      <div class="hire-col-inner">
-        <span>E</span><span>E</span><span>E</span><span>E</span><span>E</span>
-        <span>E</span><span>E</span><span>E</span><span>E</span><span>E</span>
-        <span>E</span><span>E</span><span>E</span><span>E</span><span>E</span>
-        <span>E</span><span>E</span><span>E</span><span>E</span><span>E</span>
-      </div>
-    </div>
-
-    <!-- word space -->
-    <div class="hire-col" style="flex:24"></div>
-
-    <!-- M — wide column — slow -->
-    <div class="hire-col" style="flex:84; --dur:20s; --delay:-6s">
-      <div class="hire-col-inner">
-        <span>M</span><span>M</span><span>M</span><span>M</span><span>M</span>
-        <span>M</span><span>M</span><span>M</span><span>M</span><span>M</span>
-        <span>M</span><span>M</span><span>M</span><span>M</span><span>M</span>
-        <span>M</span><span>M</span><span>M</span><span>M</span><span>M</span>
-      </div>
-    </div>
-
-    <!-- E — fast -->
-    <div class="hire-col" style="flex:62; --dur:10s; --delay:-7s">
-      <div class="hire-col-inner">
-        <span>E</span><span>E</span><span>E</span><span>E</span><span>E</span>
-        <span>E</span><span>E</span><span>E</span><span>E</span><span>E</span>
-        <span>E</span><span>E</span><span>E</span><span>E</span><span>E</span>
-        <span>E</span><span>E</span><span>E</span><span>E</span><span>E</span>
-      </div>
-    </div>
 
   </div>
 
