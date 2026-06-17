@@ -403,7 +403,6 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   overflow: hidden;
   background: #000;
   padding: 48px 0;
-  margin-bottom: clamp(2rem, 5vw, 4rem);
   width: 100%;
 }
 
