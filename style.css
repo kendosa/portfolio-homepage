@@ -209,7 +209,6 @@ a { color: inherit; text-decoration: none; }
   object-fit: contain;
 }
 
-.project-card.large .img-wrap { height: calc((100vw - 2 * var(--pad)) * 0.4375 + 20px); }
 
 .img-wrap img {
   width: 100%;
