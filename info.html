@@ -49,6 +49,52 @@
     }
     .site-header { background: transparent; }
     .site-footer  { background: transparent; }
+
+    /* ── Hire Me animation ──────────────────────────────── */
+    .hire-marquee {
+      width: 100%;
+      overflow: hidden;
+      background: #050405;
+      line-height: 0.86;
+      padding: 0.18em 0;
+      user-select: none;
+    }
+
+    .hire-row {
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .hire-inner {
+      display: inline-flex;
+      white-space: nowrap;
+      width: max-content;
+      animation: hire-scroll var(--dur, 24s) linear infinite;
+      animation-direction: var(--dir, 1) > 0 ? normal : reverse;
+    }
+
+    .hire-row[style*="--dir:1"]  .hire-inner { animation-direction: normal; }
+    .hire-row[style*="--dir:-1"] .hire-inner { animation-direction: reverse; }
+
+    .hire-track {
+      display: inline-block;
+      font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 900;
+      font-size: clamp(64px, 10.5vw, 160px);
+      letter-spacing: -0.025em;
+      color: #fff;
+      text-transform: uppercase;
+      padding-right: 0.25em;
+    }
+
+    @keyframes hire-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hire-inner { animation: none; }
+    }
   </style>
 </head>
 <body>
@@ -81,6 +127,34 @@
       </p>
     </section>
 
+  </div>
+
+  <!-- Hire Me -->
+  <div class="hire-marquee" aria-label="Hire Me">
+    <div class="hire-row" style="--dir:1; --dur:20s">
+      <div class="hire-inner">
+        <span class="hire-track">HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · </span>
+        <span class="hire-track" aria-hidden="true">HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · </span>
+      </div>
+    </div>
+    <div class="hire-row" style="--dir:-1; --dur:27s">
+      <div class="hire-inner">
+        <span class="hire-track">HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · </span>
+        <span class="hire-track" aria-hidden="true">HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · </span>
+      </div>
+    </div>
+    <div class="hire-row" style="--dir:1; --dur:15s">
+      <div class="hire-inner">
+        <span class="hire-track">HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · </span>
+        <span class="hire-track" aria-hidden="true">HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · </span>
+      </div>
+    </div>
+    <div class="hire-row" style="--dir:-1; --dur:32s">
+      <div class="hire-inner">
+        <span class="hire-track">HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · </span>
+        <span class="hire-track" aria-hidden="true">HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · HIRE ME · </span>
+      </div>
+    </div>
   </div>
 
   <!-- FOOTER -->
