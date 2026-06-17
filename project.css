@@ -411,11 +411,7 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   align-items: flex-start;
   gap: 16px;
   width: max-content;
-  animation: rc-scroll 60s linear infinite;
-}
-
-.rc-marquee-wrap:hover .rc-marquee-track {
-  animation-play-state: paused;
+  will-change: transform;
 }
 
 .rc-marquee-card,
@@ -437,11 +433,6 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   height: 100%;
   width: auto;
   display: block;
-}
-
-@keyframes rc-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
