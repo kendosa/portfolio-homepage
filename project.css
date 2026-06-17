@@ -401,7 +401,7 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
 /* ─── Magazine marquee ──────────────────────────────────── */
 .rc-marquee-wrap {
   overflow: hidden;
-  background: #000;
+  background: #2c2c2c;
   padding: 48px 0;
   width: 100%;
 }
