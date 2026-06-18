@@ -450,3 +450,26 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
 @media (prefers-reduced-motion: reduce) {
   .rc-marquee-track { animation: none; }
 }
+
+/* ─── Wing Ming guidelines marquee ──────────────────────── */
+.wm-marquee-wrap {
+  overflow: hidden;
+  background: #050405;
+  padding: 48px 0;
+  width: 100%;
+}
+
+.wm-marquee-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: max-content;
+  will-change: transform;
+}
+
+.wm-marquee-card {
+  height: clamp(320px, 38vw, 520px);
+  width: auto;
+  flex-shrink: 0;
+  display: block;
+}
