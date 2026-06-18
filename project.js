@@ -12,11 +12,14 @@
   let lastTime     = null;
 
   let isDragging   = false;
+  let isHovering   = false;
   let dragStartX   = 0;
   let dragStartPos = 0;
   let lastDragX    = 0;
   let lastDragTime = 0;
   let dragVelocity = 0;
+
+  function getCur() { return document.getElementById('ccCursor'); }
 
   function wrap_pos(p) {
     const half = track.scrollWidth / 2;
@@ -39,7 +42,14 @@
     requestAnimationFrame(tick);
   }
 
-  /* hover: scrub speed & direction */
+  /* hover: scrub speed & direction + show cursor */
+  wrap.addEventListener('mouseenter', function () {
+    isHovering = true;
+    const cur = getCur();
+    if (cur) { cur.textContent = 'click & drag'; cur.style.opacity = '1'; }
+    document.body.classList.add('cc-on-card');
+  });
+
   wrap.addEventListener('mousemove', function (e) {
     if (isDragging) {
       const now   = performance.now();
@@ -61,6 +71,10 @@
   });
 
   wrap.addEventListener('mouseleave', function () {
+    isHovering = false;
+    const cur = getCur();
+    if (cur) cur.style.opacity = '0';
+    document.body.classList.remove('cc-on-card');
     if (!isDragging) targetSpeed = DEFAULT_SPEED;
   });
 
@@ -72,7 +86,8 @@
     lastDragX     = e.clientX;
     lastDragTime  = performance.now();
     dragVelocity  = 0;
-    wrap.style.cursor            = 'grabbing';
+    const cur = getCur();
+    if (cur) cur.style.opacity = '0';
     document.body.style.userSelect = 'none';
     e.preventDefault();
   });
@@ -81,13 +96,16 @@
   document.addEventListener('mouseup', function () {
     if (!isDragging) return;
     isDragging                     = false;
-    wrap.style.cursor              = 'grab';
     document.body.style.userSelect = '';
+    if (isHovering) {
+      const cur = getCur();
+      if (cur) cur.style.opacity = '1';
+    }
     speed       = dragVelocity;
     targetSpeed = DEFAULT_SPEED;
   });
 
-  wrap.style.cursor = 'grab';
+  wrap.style.cursor = 'none';
   requestAnimationFrame(tick);
 })();
 

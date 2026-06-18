@@ -416,6 +416,7 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   background: #050405;
   padding: 48px 0;
   width: 100%;
+  cursor: none;
 }
 
 .rc-marquee-track {
@@ -457,6 +458,7 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   background: #050405;
   padding: 48px 0;
   width: 100%;
+  cursor: none;
 }
 
 .wm-marquee-track {
