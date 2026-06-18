@@ -333,7 +333,7 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   line-height: 0;
 }
 
-.sticky-image-col img:not(.wm-marquee-card) {
+.sticky-image-col img:not(.wm-marquee-card):not(.rc-marquee-card) {
   width: 100%;
   display: block;
 }
