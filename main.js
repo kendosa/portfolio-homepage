@@ -119,6 +119,17 @@ if (window.matchMedia('(hover: hover)').matches) {
       span.style.setProperty('--td', `${i * perChar}ms`);
       title.appendChild(span);
     });
+
+    card.addEventListener('mouseenter', () => {
+      title.classList.remove('char-reset');
+      title.classList.add('char-animate');
+    });
+
+    card.addEventListener('mouseleave', () => {
+      title.classList.add('char-reset');
+      title.classList.remove('char-animate');
+      requestAnimationFrame(() => title.classList.remove('char-reset'));
+    });
   });
 }
 

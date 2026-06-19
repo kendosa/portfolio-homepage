@@ -260,8 +260,12 @@ a { color: inherit; text-decoration: none; }
   transition: transform 0.28s ease var(--td, 0ms);
 }
 
-.project-card:hover .card-title .char::before { transform: translateY(-100%); }
-.project-card:hover .card-title .char::after  { transform: translateY(0); }
+.card-title.char-animate .char::before { transform: translateY(-100%); }
+.card-title.char-animate .char::after  { transform: translateY(0); }
+
+/* Instant reset on mouse-leave — no reverse animation */
+.card-title.char-reset .char::before,
+.card-title.char-reset .char::after  { transition: none !important; }
 
 .card-desc {
   display: inline-block;
