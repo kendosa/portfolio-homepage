@@ -499,3 +499,27 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   flex-shrink: 0;
   display: block;
 }
+
+/* ─── Endeavor Health guidelines marquee ─────────────────── */
+.eh-marquee-wrap {
+  overflow: hidden;
+  background: #050405;
+  padding: 48px 0;
+  width: 100%;
+  cursor: none;
+}
+
+.eh-marquee-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: max-content;
+  will-change: transform;
+}
+
+.eh-marquee-card {
+  height: clamp(240px, 28vw, 400px);
+  width: auto;
+  flex-shrink: 0;
+  display: block;
+}

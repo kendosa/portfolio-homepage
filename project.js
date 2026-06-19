@@ -1,8 +1,8 @@
 
 /* Magazine marquee — JS RAF with hover speed/direction + click-drag */
-(function () {
-  const wrap  = document.querySelector('.rc-marquee-wrap');
-  const track = document.querySelector('.rc-marquee-track');
+function initMarquee(wrapSel, trackSel) {
+  const wrap  = document.querySelector(wrapSel);
+  const track = document.querySelector(trackSel);
   if (!wrap || !track) return;
 
   const DEFAULT_SPEED = 88; // px/sec
@@ -107,7 +107,12 @@
 
   wrap.style.cursor = 'none';
   requestAnimationFrame(tick);
-})();
+}
+
+initMarquee('.rc-marquee-wrap',  '.rc-marquee-track');
+initMarquee('.ffd-marquee-wrap', '.ffd-marquee-track');
+initMarquee('.wm-marquee-wrap',  '.wm-marquee-track');
+initMarquee('.eh-marquee-wrap',  '.eh-marquee-track');
 
 /* Scroll reveal */
 const textEls = document.querySelectorAll('.content-block, .project-hero, .sub-project, .project-cta');
