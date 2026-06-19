@@ -109,35 +109,15 @@ if (window.matchMedia('(hover: hover)').matches) {
   document.querySelectorAll('.project-card').forEach(card => {
     const title = card.querySelector('.card-title');
     if (!title) return;
-
-    const text = title.textContent;
-    title.innerHTML = [...text].map(ch =>
-      `<span class="char">${ch === ' ' ? '&nbsp;' : ch}</span>`
-    ).join('');
-    const chars = [...title.querySelectorAll('.char')];
-
-    const dur    = 280;
-    const spread = 180;
-    const perChar = spread / Math.max(chars.length, 1);
-    let resetTimer = null;
-
-    card.addEventListener('mouseenter', () => {
-      if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
-      chars.forEach((span, i) => {
-        span.style.transitionDelay = `${i * perChar}ms`;
-        span.style.transform = 'translateY(-76%)';
-      });
-      resetTimer = setTimeout(() => {
-        chars.forEach(span => {
-          span.style.transition = 'none';
-          span.style.transitionDelay = '';
-          span.style.transform = '';
-        });
-        requestAnimationFrame(() => {
-          chars.forEach(span => { span.style.transition = ''; });
-        });
-        resetTimer = null;
-      }, dur + spread + 20);
+    const chars = [...title.textContent];
+    const perChar = 160 / Math.max(chars.length, 1);
+    title.innerHTML = '';
+    chars.forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.dataset.char = ch === ' ' ? ' ' : ch;
+      span.style.setProperty('--td', `${i * perChar}ms`);
+      title.appendChild(span);
     });
   });
 }

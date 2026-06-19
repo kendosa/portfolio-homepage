@@ -231,14 +231,37 @@ a { color: inherit; text-decoration: none; }
   font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   letter-spacing: .010em;
+  vertical-align: bottom;
+}
+
+/* Each char clips its own ::before (exits top) and ::after (enters from bottom) */
+.card-title .char {
+  display: inline-block;
+  position: relative;
   overflow: hidden;
   vertical-align: bottom;
 }
 
-.card-title .char {
-  display: inline-block;
-  transition: transform 0.28s ease;
+.card-title .char::before,
+.card-title .char::after {
+  content: attr(data-char);
+  display: block;
+  white-space: pre;
 }
+
+.card-title .char::before {
+  transition: transform 0.28s ease var(--td, 0ms);
+}
+
+.card-title .char::after {
+  position: absolute;
+  top: 0; left: 0;
+  transform: translateY(100%);
+  transition: transform 0.28s ease var(--td, 0ms);
+}
+
+.project-card:hover .card-title .char::before { transform: translateY(-100%); }
+.project-card:hover .card-title .char::after  { transform: translateY(0); }
 
 .card-desc {
   display: inline-block;
