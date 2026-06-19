@@ -205,7 +205,6 @@
 /* Inline "Role: Name" credits, byarce-style */
 .project-credits {
   padding: clamp(2rem, 5vw, 4rem) var(--pad);
-  border-top: 1px solid rgba(0,0,0,.08);
   font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
