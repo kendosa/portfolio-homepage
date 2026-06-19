@@ -544,11 +544,11 @@ a { color: inherit; text-decoration: none; }
     height: 0;
     order: 1;
   }
-  .card-title { order: 0; }
+  .card-title { order: 0; margin-left: 2px; }
   .card-desc { order: 0; margin-left: 0.75em; }
   .card-tag {
     order: 2;
-    margin-left: -1px;
+    margin-left: 0;
     margin-right: 6px;
     margin-top: 8px;
   }
