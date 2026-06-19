@@ -153,6 +153,8 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   });
 
   let currentIdx = 0;
+  let lastX = 0;
+  let lastY = 0;
 
   function getZone(clientX) {
     const { left, width } = wrap.getBoundingClientRect();
@@ -166,11 +168,20 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   }
 
   wrap.addEventListener('mouseenter', e => {
-    currentIdx = getZone(e.clientX);
-    showFrame(currentIdx);
+    lastX = e.clientX;
+    lastY = e.clientY;
+    currentIdx = 0;
+    // don't show a frame on entry — wait for horizontal movement
   });
 
   wrap.addEventListener('mousemove', e => {
+    const dx = Math.abs(e.clientX - lastX);
+    const dy = Math.abs(e.clientY - lastY);
+    lastX = e.clientX;
+    lastY = e.clientY;
+
+    if (dx <= dy) return; // vertical-dominant move, don't swap
+
     const idx = getZone(e.clientX);
     if (idx === currentIdx) return;
     currentIdx = idx;
