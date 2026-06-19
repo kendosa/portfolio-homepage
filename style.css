@@ -235,8 +235,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* Each char clips its own ::before (exits top) and ::after (enters from bottom) */
-.card-title .char,
-.logo .char {
+/* Card title char-shift (staggered, pseudo-element approach) */
+.card-title .char {
   display: inline-block;
   position: relative;
   overflow: hidden;
@@ -244,37 +244,54 @@ a { color: inherit; text-decoration: none; }
 }
 
 .card-title .char::before,
-.card-title .char::after,
-.logo .char::before,
-.logo .char::after {
+.card-title .char::after {
   content: attr(data-char);
   display: block;
   white-space: pre;
 }
 
-.card-title .char::before,
-.logo .char::before {
+.card-title .char::before {
   transition: transform 0.28s ease var(--td, 0ms);
 }
 
-.card-title .char::after,
-.logo .char::after {
+.card-title .char::after {
   position: absolute;
   top: 0; left: 0;
   transform: translateY(100%);
   transition: transform 0.28s ease var(--td, 0ms);
 }
 
-.card-title.char-animate .char::before,
-.logo.char-animate .char::before { transform: translateY(-100%); }
-.card-title.char-animate .char::after,
-.logo.char-animate .char::after  { transform: translateY(0); }
+.card-title.char-animate .char::before { transform: translateY(-100%); }
+.card-title.char-animate .char::after  { transform: translateY(0); }
 
-/* Instant reset on mouse-leave — no reverse animation */
 .card-title.char-reset .char::before,
-.card-title.char-reset .char::after,
-.logo.char-reset .char::before,
-.logo.char-reset .char::after { transition: none !important; }
+.card-title.char-reset .char::after { transition: none !important; }
+
+/* Logo char-shift (proximity-based, inner span approach) */
+.logo .char {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.logo .char-top {
+  display: block;
+  white-space: pre;
+  transition: transform 0.18s ease;
+}
+
+.logo .char-bot {
+  display: block;
+  position: absolute;
+  top: 0; left: 0;
+  transform: translateY(100%);
+  white-space: pre;
+  transition: transform 0.18s ease;
+}
+
+.logo .char.no-transition .char-top,
+.logo .char.no-transition .char-bot { transition: none !important; }
 
 .card-desc {
   display: inline-block;

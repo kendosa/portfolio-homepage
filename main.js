@@ -132,27 +132,54 @@ if (window.matchMedia('(hover: hover)').matches) {
     });
   });
 
-  // Logo char-shift
+  // Logo: proximity-based independent char shift
   const logo = document.querySelector('.logo');
   if (logo) {
-    const logoChars = [...logo.textContent];
-    const logoPerChar = 160 / Math.max(logoChars.length, 1);
+    const logoText = [...logo.textContent];
     logo.innerHTML = '';
-    logoChars.forEach((ch, i) => {
+    const charData = logoText.map(ch => {
       const span = document.createElement('span');
       span.className = 'char';
-      span.dataset.char = ch === ' ' ? ' ' : ch;
-      span.style.setProperty('--td', `${i * logoPerChar}ms`);
+      const top = document.createElement('span');
+      top.className = 'char-top';
+      top.textContent = ch === ' ' ? '\u00a0' : ch;
+      const bot = document.createElement('span');
+      bot.className = 'char-bot';
+      bot.textContent = ch === ' ' ? '\u00a0' : ch;
+      span.appendChild(top);
+      span.appendChild(bot);
       logo.appendChild(span);
+      return { span, top, bot };
     });
+
+    let rects = [];
+
     logo.addEventListener('mouseenter', () => {
-      logo.classList.remove('char-reset');
-      logo.classList.add('char-animate');
+      rects = charData.map(({ span }) => span.getBoundingClientRect());
     });
+
+    logo.addEventListener('mousemove', e => {
+      const mx = e.clientX;
+      const influence = 90; // px radius of full-to-zero falloff
+      charData.forEach(({ top, bot }, i) => {
+        const r = rects[i];
+        if (!r) return;
+        const cx = r.left + r.width / 2;
+        const dx = Math.abs(mx - cx);
+        const t = Math.max(0, 1 - dx / influence);
+        const ease = t * t * (3 - 2 * t); // smoothstep
+        top.style.transform = `translateY(${-ease * 100}%)`;
+        bot.style.transform = `translateY(${(1 - ease) * 100}%)`;
+      });
+    });
+
     logo.addEventListener('mouseleave', () => {
-      logo.classList.add('char-reset');
-      logo.classList.remove('char-animate');
-      requestAnimationFrame(() => logo.classList.remove('char-reset'));
+      charData.forEach(({ span, top, bot }) => {
+        span.classList.add('no-transition');
+        top.style.transform = '';
+        bot.style.transform = '';
+        requestAnimationFrame(() => span.classList.remove('no-transition'));
+      });
     });
   }
 }
