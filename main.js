@@ -104,6 +104,44 @@ document.addEventListener('mouseout', e => {
   if (!to || to.closest('.squiggle-track') || !to.closest('a, button, img')) dot.classList.remove('hovered');
 });
 
+/* ── Card title char-shift on hover (hover-capable devices only) ── */
+if (window.matchMedia('(hover: hover)').matches) {
+  document.querySelectorAll('.project-card').forEach(card => {
+    const title = card.querySelector('.card-title');
+    if (!title) return;
+
+    const text = title.textContent;
+    title.innerHTML = [...text].map(ch =>
+      `<span class="char">${ch === ' ' ? '&nbsp;' : ch}</span>`
+    ).join('');
+    const chars = [...title.querySelectorAll('.char')];
+
+    const dur    = 280;
+    const spread = 180;
+    const perChar = spread / Math.max(chars.length, 1);
+    let resetTimer = null;
+
+    card.addEventListener('mouseenter', () => {
+      if (resetTimer) { clearTimeout(resetTimer); resetTimer = null; }
+      chars.forEach((span, i) => {
+        span.style.transitionDelay = `${i * perChar}ms`;
+        span.style.transform = 'translateY(-76%)';
+      });
+      resetTimer = setTimeout(() => {
+        chars.forEach(span => {
+          span.style.transition = 'none';
+          span.style.transitionDelay = '';
+          span.style.transform = '';
+        });
+        requestAnimationFrame(() => {
+          chars.forEach(span => { span.style.transition = ''; });
+        });
+        resetTimer = null;
+      }, dur + spread + 20);
+    });
+  });
+}
+
 /* ── Tag filter: drag-to-scroll on desktop ──────────────────── */
 (function () {
   const tf = document.querySelector('.tag-filter');
