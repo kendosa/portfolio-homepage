@@ -46,7 +46,7 @@ function initMarquee(wrapSel, trackSel) {
   wrap.addEventListener('mouseenter', function () {
     isHovering = true;
     const cur = getCur();
-    if (cur) { cur.textContent = 'click & drag'; cur.style.opacity = '1'; }
+    if (cur) { cur.textContent = 'Click & drag'; cur.style.opacity = '1'; }
     document.body.classList.add('cc-on-card');
   });
 
