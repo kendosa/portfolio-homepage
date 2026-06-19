@@ -7,6 +7,25 @@
   <link rel="stylesheet" href="https://use.typekit.net/eux7kam.css" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="project.css" />
+  <style>
+    body.cc-on-card #cursor-dot { opacity: 0 !important; transition: none !important; }
+    #ccCursor {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, sans-serif;
+      font-size: 3rem;
+      font-weight: 400;
+      line-height: 1;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      opacity: 0;
+      transition: opacity 0.12s ease;
+      white-space: nowrap;
+      transform: translate(-50%, -50%);
+    }
+  </style>
 </head>
 <body>
 
@@ -83,6 +102,37 @@
     </div>
   </div>
 
+  <!-- FFD campaign booklet scrolling marquee -->
+  <div class="ffd-marquee-wrap">
+    <div class="ffd-marquee-track">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-01.jpg" alt="Page 1">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-02.jpg" alt="Page 2">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-03.jpg" alt="Page 3">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-04.jpg" alt="Page 4">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-05.jpg" alt="Page 5">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-06.jpg" alt="Page 6">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-07.jpg" alt="Page 7">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-08.jpg" alt="Page 8">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-09.jpg" alt="Page 9">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-10.jpg" alt="Page 10">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-11.jpg" alt="Page 11">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-12.jpg" alt="Page 12">
+      <!-- duplicate set for seamless loop -->
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-01.jpg" alt="Page 1">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-02.jpg" alt="Page 2">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-03.jpg" alt="Page 3">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-04.jpg" alt="Page 4">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-05.jpg" alt="Page 5">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-06.jpg" alt="Page 6">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-07.jpg" alt="Page 7">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-08.jpg" alt="Page 8">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-09.jpg" alt="Page 9">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-10.jpg" alt="Page 10">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-11.jpg" alt="Page 11">
+      <img class="ffd-marquee-card" src="images/ffd-campaign/p-12.jpg" alt="Page 12">
+    </div>
+  </div>
+
   <footer class="site-footer">
     <span class="footer-copy">© 2026 Kenny Phillips</span>
     <div class="footer-social">
@@ -90,7 +140,122 @@
     </div>
   </footer>
 
+  <div id="ccCursor"></div>
   <script src="main.js"></script>
   <script src="project.js"></script>
+  <script>
+  /* ccCursor mouse tracking */
+  (function () {
+    var cur = document.getElementById('ccCursor');
+    if (!cur) return;
+    document.addEventListener('mousemove', function (e) {
+      cur.style.left = e.clientX + 'px';
+      cur.style.top  = e.clientY + 'px';
+    });
+  }());
+
+  /* FFD marquee — RAF with hover scrub + click-drag + ccCursor */
+  (function () {
+    var wrap  = document.querySelector('.ffd-marquee-wrap');
+    var track = document.querySelector('.ffd-marquee-track');
+    if (!wrap || !track) return;
+
+    var DEFAULT_SPEED = 88;
+    var pos          = 0;
+    var speed        = DEFAULT_SPEED;
+    var targetSpeed  = DEFAULT_SPEED;
+    var lastTime     = null;
+    var isDragging   = false;
+    var isHovering   = false;
+    var dragStartX   = 0;
+    var dragStartPos = 0;
+    var lastDragX    = 0;
+    var lastDragTime = 0;
+    var dragVelocity = 0;
+
+    function getCur() { return document.getElementById('ccCursor'); }
+
+    function wrapPos(p) {
+      var half = track.scrollWidth / 2;
+      if (p >= half) return p - half;
+      if (p < 0)     return p + half;
+      return p;
+    }
+
+    function tick(now) {
+      if (lastTime === null) lastTime = now;
+      var dt = Math.min((now - lastTime) / 1000, 0.05);
+      lastTime = now;
+      if (!isDragging) {
+        speed += (targetSpeed - speed) * Math.min(1, dt * 5);
+        pos    = wrapPos(pos + speed * dt);
+      }
+      track.style.transform = 'translateX(' + (-pos).toFixed(2) + 'px)';
+      requestAnimationFrame(tick);
+    }
+
+    wrap.addEventListener('mouseenter', function () {
+      isHovering = true;
+      var cur = getCur();
+      if (cur) { cur.textContent = 'click & drag'; cur.style.opacity = '1'; }
+      document.body.classList.add('cc-on-card');
+    });
+
+    wrap.addEventListener('mousemove', function (e) {
+      if (isDragging) {
+        var now   = performance.now();
+        var dtDrag = Math.max((now - lastDragTime) / 1000, 0.001);
+        pos          = wrapPos(dragStartPos - (e.clientX - dragStartX));
+        dragVelocity = -(e.clientX - lastDragX) / dtDrag;
+        lastDragX    = e.clientX;
+        lastDragTime = now;
+        return;
+      }
+      var rect  = wrap.getBoundingClientRect();
+      var ratio = (e.clientX - rect.left) / rect.width;
+      if (ratio < 0.5) {
+        targetSpeed = -DEFAULT_SPEED * 3 * ((0.5 - ratio) / 0.5);
+      } else {
+        targetSpeed = DEFAULT_SPEED * (1 + 3 * ((ratio - 0.5) / 0.5));
+      }
+    });
+
+    wrap.addEventListener('mouseleave', function () {
+      isHovering = false;
+      var cur = getCur();
+      if (cur) cur.style.opacity = '0';
+      document.body.classList.remove('cc-on-card');
+      if (!isDragging) targetSpeed = DEFAULT_SPEED;
+    });
+
+    wrap.addEventListener('mousedown', function (e) {
+      isDragging   = true;
+      dragStartX   = e.clientX;
+      dragStartPos = pos;
+      lastDragX    = e.clientX;
+      lastDragTime = performance.now();
+      dragVelocity = 0;
+      var cur = getCur();
+      if (cur) cur.style.opacity = '0';
+      document.body.style.userSelect = 'none';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mouseup', function () {
+      if (!isDragging) return;
+      isDragging = false;
+      document.body.style.userSelect = '';
+      if (isHovering) {
+        var cur = getCur();
+        if (cur) cur.style.opacity = '1';
+      }
+      speed       = dragVelocity;
+      targetSpeed = DEFAULT_SPEED;
+    });
+
+    wrap.style.cursor = 'none';
+    requestAnimationFrame(tick);
+  }());
+  </script>
 </body>
 </html>

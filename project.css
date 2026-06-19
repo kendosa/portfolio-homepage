@@ -452,6 +452,30 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   .rc-marquee-track { animation: none; }
 }
 
+/* ─── Finding Form Design campaign booklet marquee ───────────── */
+.ffd-marquee-wrap {
+  overflow: hidden;
+  background: #050405;
+  padding: 48px 0;
+  width: 100%;
+  cursor: none;
+}
+
+.ffd-marquee-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: max-content;
+  will-change: transform;
+}
+
+.ffd-marquee-card {
+  height: clamp(320px, 38vw, 520px);
+  width: auto;
+  flex-shrink: 0;
+  display: block;
+}
+
 /* ─── Wing Ming guidelines marquee ──────────────────────── */
 .wm-marquee-wrap {
   overflow: hidden;
