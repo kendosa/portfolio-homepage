@@ -225,46 +225,38 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
     frames.forEach(frame => { if (frame) frame.classList.remove('active'); });
   });
 
-  // Touch: swipe left/right scrubs through the same frames
+  // Touch: swipe left/right to step through frames one at a time
   let touchStartX = 0;
   let touchStartY = 0;
   let touchDirLocked = false;
-  let touchScrubbing = false;
+  let touchIsHorizontal = false;
 
   wrap.addEventListener('touchstart', e => {
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
     touchDirLocked = false;
-    touchScrubbing = false;
-    currentIdx = 0;
+    touchIsHorizontal = false;
   }, { passive: true });
 
   wrap.addEventListener('touchmove', e => {
     const dx = Math.abs(e.touches[0].clientX - touchStartX);
     const dy = Math.abs(e.touches[0].clientY - touchStartY);
-
     if (!touchDirLocked) {
-      if (dx < 8 && dy < 8) return; // wait for clear intent
+      if (dx < 8 && dy < 8) return;
       touchDirLocked = true;
-      touchScrubbing = dx > dy; // commit to horizontal or vertical
+      touchIsHorizontal = dx > dy;
     }
-
-    if (!touchScrubbing) return; // vertical — let the page scroll
-
-    e.preventDefault();
-
-    const idx = getZone(e.touches[0].clientX);
-    if (idx !== currentIdx) {
-      currentIdx = idx;
-      showFrame(idx);
-    }
+    if (touchIsHorizontal) e.preventDefault();
   }, { passive: false });
 
-  wrap.addEventListener('touchend', () => {
-    touchDirLocked = false;
-    touchScrubbing = false;
-    currentIdx = 0;
-    frames.forEach(frame => { if (frame) frame.classList.remove('active'); });
+  wrap.addEventListener('touchend', e => {
+    if (!touchDirLocked || !touchIsHorizontal) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) < 30) return;
+    currentIdx = dx < 0
+      ? Math.min(imgs.length - 1, currentIdx + 1)
+      : Math.max(0, currentIdx - 1);
+    showFrame(currentIdx);
   });
 });
 
