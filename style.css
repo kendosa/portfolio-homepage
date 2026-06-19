@@ -162,6 +162,9 @@ a { color: inherit; text-decoration: none; }
 /* Large cards span full width */
 .project-card.large { grid-column: 1 / -1; }
 
+/* When filtering, all cards are equal size */
+.grid.filtered .project-card.large { grid-column: auto; }
+
 /* ─── Card ──────────────────────────────────────────────────────── */
 .project-card { overflow: hidden; }
 

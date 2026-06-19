@@ -102,11 +102,13 @@ document.addEventListener('mouseout', e => {
 });
 
 /* ── Category tag filter ─────────────────────────────────────── */
+const grid = document.querySelector('.grid');
 document.querySelectorAll('.tag-filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tag-filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const filter = btn.dataset.filter;
+    grid.classList.toggle('filtered', filter !== 'all');
     document.querySelectorAll('.project-card').forEach(card => {
       card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
     });
