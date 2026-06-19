@@ -63,7 +63,6 @@ window.addEventListener('scroll', () => {
 
 /* ── One-shot scroll reveal for individual card images ──────────── */
 const imgWraps = document.querySelectorAll('.project-card .img-wrap');
-imgWraps.forEach(el => el.classList.add('p-reveal'));
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries
@@ -75,7 +74,11 @@ const revealObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.08 });
 
-imgWraps.forEach(el => revealObserver.observe(el));
+imgWraps.forEach((el, i) => {
+  if (i === 0) return; // first card stays visible on load
+  el.classList.add('p-reveal');
+  revealObserver.observe(el);
+});
 
 /* ── Custom cursor ─────────────────────────────────────────────── */
 /* Always create the element; CSS @media (hover:hover) controls visibility */
