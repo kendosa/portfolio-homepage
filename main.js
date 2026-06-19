@@ -104,6 +104,38 @@ document.addEventListener('mouseout', e => {
   if (!to || to.closest('.squiggle-track') || !to.closest('a, button, img')) dot.classList.remove('hovered');
 });
 
+/* ── Tag filter: drag-to-scroll on desktop ──────────────────── */
+(function () {
+  const tf = document.querySelector('.tag-filter');
+  if (!tf) return;
+  let dragging = false, startX = 0, scrollStart = 0, moved = false;
+
+  tf.addEventListener('mousedown', e => {
+    dragging = true; moved = false;
+    startX = e.clientX;
+    scrollStart = tf.scrollLeft;
+    tf.classList.add('is-dragging');
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 3) moved = true;
+    tf.scrollLeft = scrollStart - dx;
+  });
+
+  window.addEventListener('mouseup', () => {
+    dragging = false;
+    tf.classList.remove('is-dragging');
+  });
+
+  // Swallow clicks that were actually drags so filters don't fire
+  tf.addEventListener('click', e => {
+    if (moved) { e.stopPropagation(); moved = false; }
+  }, true);
+}());
+
 /* ── Category tag filter ─────────────────────────────────────── */
 const grid = document.querySelector('.grid');
 document.querySelectorAll('.tag-filter-btn').forEach(btn => {
