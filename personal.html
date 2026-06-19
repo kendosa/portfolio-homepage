@@ -344,6 +344,22 @@
     });
   }());
 
+  // ── Suppress link navigation after drag ──────────────────────────────────
+  (function () {
+    document.querySelectorAll('a.cc-card').forEach(function (link) {
+      var startX = 0, startY = 0;
+      link.addEventListener('mousedown', function (e) {
+        startX = e.clientX;
+        startY = e.clientY;
+      });
+      link.addEventListener('click', function (e) {
+        if (Math.abs(e.clientX - startX) > 5 || Math.abs(e.clientY - startY) > 5) {
+          e.preventDefault();
+        }
+      });
+    });
+  }());
+
   // ── Custom image card cursor ──────────────────────────────────────────────
   (function () {
     var cur = document.getElementById('ccCursor');
