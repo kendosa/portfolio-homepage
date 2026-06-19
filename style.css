@@ -574,7 +574,7 @@ a { color: inherit; text-decoration: none; }
   .hero { min-height: 0; }
 
   .portfolio { margin-top: 0; }
-  .grid > .project-card:first-child { margin-top: 1.25rem; }
+  .grid > .project-card:first-child { margin-top: 2.5rem; }
 
   .project-card.large { grid-column: auto; }
   .project-card.large .img-wrap { aspect-ratio: 16 / 10; height: auto; }
