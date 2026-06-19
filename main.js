@@ -110,7 +110,8 @@ document.querySelectorAll('.tag-filter-btn').forEach(btn => {
     const filter = btn.dataset.filter;
     grid.classList.toggle('filtered', filter !== 'all');
     document.querySelectorAll('.project-card').forEach(card => {
-      card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
+      const cats = (card.dataset.category || '').split(',').map(s => s.trim());
+      card.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
     });
   });
 });
