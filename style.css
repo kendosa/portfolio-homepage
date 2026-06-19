@@ -539,16 +539,17 @@ a { color: inherit; text-decoration: none; }
     padding-top: 0.6rem;
     padding-bottom: 2rem;
   }
-  /* Zero-height flex break: forces tags to their own row
-     while keeping title + desc together on row 1 */
-  .card-meta::after {
-    content: '';
-    flex: 0 0 100%;
-    height: 0;
+  .card-meta::after { display: none; }
+  .card-title { order: 0; flex: 0 0 100%; margin-left: 2px; }
+  .card-desc {
     order: 1;
+    flex: 0 0 100%;
+    margin-left: 2px;
+    margin-top: 4px;
+    max-width: 80em;
+    opacity: 1;
+    white-space: normal;
   }
-  .card-title { order: 0; margin-left: 2px; }
-  .card-desc { order: 0; margin-left: 0.75em; }
   .card-tag {
     order: 2;
     margin-left: 2px;
