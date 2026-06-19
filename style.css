@@ -181,29 +181,31 @@ a { color: inherit; text-decoration: none; }
   background: #e0ddd8;
 }
 
-.img-wrap .gallery-overlay {
+.img-wrap .gallery-frame {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
   display: block;
-  background: #fff;
   opacity: 0;
   pointer-events: none;
+  transition: opacity 0.18s ease;
 }
 
-.img-wrap .gallery-overlay img {
+.img-wrap .gallery-frame.active {
+  opacity: 1;
+}
+
+.img-wrap .gallery-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.img-wrap .gallery-overlay.two-up {
+.img-wrap .gallery-frame.two-up {
   display: flex;
 }
 
-.img-wrap .gallery-overlay.two-up img {
+.img-wrap .gallery-frame.two-up img {
   width: 50%;
   object-fit: contain;
 }

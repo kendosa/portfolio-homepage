@@ -119,100 +119,67 @@ document.querySelectorAll('.tag-filter-btn').forEach(btn => {
   });
 });
 
-/* ── Cover image gallery scrub on hover ─────────────────────── */
-
-// Preload all gallery images after page load so swaps are instant
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
-      wrap.dataset.gallery.split(',').slice(1).forEach(entry => {
-        entry.split('|').forEach(src => { const p = new Image(); p.src = src; });
-      });
-    });
-  }, 800);
-});
+/* ── Cover image gallery — position-based zone hover (Fuzzco-style) ── */
 
 document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   const imgs = wrap.dataset.gallery.split(',');
   if (imgs.length < 2) return;
   const positions = wrap.dataset.positions ? wrap.dataset.positions.split('|') : [];
 
-  const overlay = document.createElement('div');
-  overlay.className = 'gallery-overlay';
-  wrap.appendChild(overlay);
+  // Pre-render one absolutely-positioned frame per image (index 0 = base img already in DOM)
+  const frames = imgs.map((src, i) => {
+    if (i === 0) return null;
 
-  function showFrame(idx) {
-    if (idx === 0) { overlay.style.opacity = '0'; return; }
-    const srcs = imgs[idx].split('|');
-    overlay.innerHTML = '';
+    const frame = document.createElement('div');
+    frame.className = 'gallery-frame';
+
+    const srcs = src.split('|');
     if (srcs.length > 1) {
-      overlay.classList.add('two-up');
-      srcs.forEach(src => {
+      frame.classList.add('two-up');
+      srcs.forEach(s => {
         const img = document.createElement('img');
-        img.src = src; img.alt = '';
-        overlay.appendChild(img);
+        img.src = s; img.alt = '';
+        frame.appendChild(img);
       });
     } else {
-      overlay.classList.remove('two-up');
       const img = document.createElement('img');
       img.src = srcs[0]; img.alt = '';
-      img.style.objectPosition = positions[idx] || 'center';
-      overlay.appendChild(img);
+      img.style.objectPosition = positions[i] || 'center';
+      frame.appendChild(img);
     }
-    overlay.style.opacity = '1';
+
+    wrap.appendChild(frame);
+    return frame;
+  });
+
+  let currentIdx = 0;
+
+  function getZone(clientX) {
+    const { left, width } = wrap.getBoundingClientRect();
+    return Math.min(imgs.length - 1, Math.max(0, Math.floor((clientX - left) / width * imgs.length)));
   }
 
-  const PX_PER_STEP = 20;
-  let currentIdx = 0;
-  let lastX = null;
-  let lastY = null;
-  let stepAccum = 0;
+  function showFrame(idx) {
+    frames.forEach((frame, i) => {
+      if (frame) frame.classList.toggle('active', i === idx);
+    });
+  }
 
   wrap.addEventListener('mouseenter', e => {
-    lastX = null; // first mousemove sets baseline — prevents entry-motion trigger
-    lastY = null;
-    stepAccum = 0;
-    currentIdx = 0;
+    currentIdx = getZone(e.clientX);
+    showFrame(currentIdx);
   });
 
   wrap.addEventListener('mousemove', e => {
-    if (lastX === null) {
-      lastX = e.clientX;
-      lastY = e.clientY;
-      return;
-    }
-
-    const dx = e.clientX - lastX;
-    const dy = e.clientY - lastY;
-    lastX = e.clientX;
-    lastY = e.clientY;
-
-    if (Math.abs(dy) > Math.abs(dx)) return; // ignore vertical movement
-    if (dx === 0) return;
-
-    stepAccum += dx;
-
-    let changed = false;
-    if (stepAccum >= PX_PER_STEP) {
-      stepAccum = 0;
-      currentIdx = (currentIdx + 1) % imgs.length;
-      changed = true;
-    } else if (stepAccum <= -PX_PER_STEP) {
-      stepAccum = 0;
-      currentIdx = (currentIdx - 1 + imgs.length) % imgs.length;
-      changed = true;
-    }
-
-    if (!changed) return;
-    showFrame(currentIdx);
+    const idx = getZone(e.clientX);
+    if (idx === currentIdx) return;
+    currentIdx = idx;
+    showFrame(idx);
   });
 
   wrap.addEventListener('mouseleave', () => {
     currentIdx = 0;
-    lastX = null;
-    lastY = null;
-    stepAccum = 0;
-    overlay.style.opacity = '0';
+    frames.forEach(frame => { if (frame) frame.classList.remove('active'); });
   });
 });
 
