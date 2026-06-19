@@ -547,8 +547,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 @media (max-width: 1124px) {
-  .card-meta { flex-direction: column; align-items: flex-start; }
-  .card-desc { margin-left: 0; }
+  .card-meta { align-items: center; }
 }
 
 @media (min-width: 500px) and (max-width: 698px) {
