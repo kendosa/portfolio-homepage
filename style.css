@@ -531,13 +531,28 @@ a { color: inherit; text-decoration: none; }
 
   .card-meta {
     flex-wrap: wrap;
-    align-items: flex-start;
-    row-gap: 8px;
+    align-items: baseline;
+    row-gap: 0;
     padding-top: 0.6rem;
     padding-bottom: 2rem;
   }
-  .card-title { flex: 0 0 100%; }
-  .card-tag { margin-left: 0; }
+  /* Zero-height flex break: forces tags to their own row
+     while keeping title + desc together on row 1 */
+  .card-meta::after {
+    content: '';
+    flex: 0 0 100%;
+    height: 0;
+    order: 1;
+  }
+  .card-title { order: 0; }
+  .card-desc { order: 0; margin-left: 0; }
+  .card-tag {
+    order: 2;
+    margin-left: 0;
+    margin-right: 6px;
+    margin-top: 8px;
+  }
+  .card-tag:last-child { margin-right: 0; }
 
   .mobile-br { display: block; }
 
