@@ -228,7 +228,8 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
 
   function getZone(clientX) {
     const { left, width } = wrap.getBoundingClientRect();
-    return Math.min(imgs.length - 1, Math.max(0, Math.floor((clientX - left) / width * imgs.length)));
+    const n = imgs.length - 1; // gallery frames only, skip cover at index 0
+    return Math.min(n, Math.max(1, Math.floor((clientX - left) / width * n) + 1));
   }
 
   function showFrame(idx) {
@@ -303,7 +304,7 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
       swipeDir = dir;
       const candidate = dir === -1
         ? Math.min(imgs.length - 1, currentIdx + 1)
-        : Math.max(0, currentIdx - 1);
+        : Math.max(1, currentIdx - 1); // never swipe back to the cover (idx 0)
       if (candidate === currentIdx) return; // at boundary
       incomingIdx = candidate;
 
