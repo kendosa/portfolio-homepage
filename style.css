@@ -269,6 +269,37 @@ a { color: inherit; text-decoration: none; }
 }
 
 
+/* ─── Tag Filter Bar ────────────────────────────────────────────── */
+.tag-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 var(--pad) clamp(1.5rem, 3vw, 2rem);
+}
+
+.tag-filter-btn {
+  padding: 5px 18px 4px;
+  border: 1.5px solid #222;
+  border-radius: 999px;
+  font-size: 14px;
+  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #222;
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1.2;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.tag-filter-btn:hover,
+.tag-filter-btn.active {
+  background: #222;
+  color: #fff;
+}
+
 /* ─── Info Section ──────────────────────────────────────────────── */
 .info-section {
   padding: clamp(3rem, 8vw, 6rem) var(--pad);

@@ -101,6 +101,18 @@ document.addEventListener('mouseout', e => {
   if (!to || to.closest('.squiggle-track') || !to.closest('a, button, img')) dot.classList.remove('hovered');
 });
 
+/* ── Category tag filter ─────────────────────────────────────── */
+document.querySelectorAll('.tag-filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tag-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
+    });
+  });
+});
+
 /* ── Cover image gallery scrub on hover ─────────────────────── */
 
 // Preload all gallery images after page load so swaps are instant

@@ -38,10 +38,22 @@
 
   <!-- PORTFOLIO GRID -->
   <main class="portfolio" id="work">
+
+    <div class="tag-filter">
+      <button class="tag-filter-btn active" data-filter="all">All</button>
+      <button class="tag-filter-btn" data-filter="Retail">Retail</button>
+      <button class="tag-filter-btn" data-filter="Healthcare">Healthcare</button>
+      <button class="tag-filter-btn" data-filter="Culture">Culture</button>
+      <button class="tag-filter-btn" data-filter="Craft">Craft</button>
+      <button class="tag-filter-btn" data-filter="Food &amp; Bev">Food &amp; Bev</button>
+      <button class="tag-filter-btn" data-filter="Tech">Tech</button>
+      <button class="tag-filter-btn" data-filter="Finance">Finance</button>
+    </div>
+
     <div class="grid">
 
       <!-- Featured -->
-      <article class="project-card large">
+      <article class="project-card large" data-category="Retail">
         <a href="wing-ming.html" class="card-link">
           <div class="img-wrap" data-gallery="images/wing-ming_billboard-cover.jpg,images/wingming_Billboard-on-Bridge-Mockup.jpg,images/wing-ming_Business-Card-Mockup2.jpg,images/Signboard-Mockup-wm.jpg,images/wing-ming_tape_mockup_02.jpg,images/wing-ming_project-4.jpg,images/wingming-stand-sign-mockup.jpg,images/wing-ming_project-15.jpg,images/phone-wingming2.jpg,images/wing-ming-Storage-Plastic-Box-Mockup.jpg,images/wing-ming-A4-Poster-Mockup4.jpg" data-positions="|||center 20%|||||||">
             <img
@@ -57,7 +69,7 @@
         </a>
       </article>
 
-      <article class="project-card">
+      <article class="project-card" data-category="Healthcare">
         <a href="endeavor-health.html" class="card-link">
           <div class="img-wrap" data-gallery="images/endeavor-highway-billboard.jpg,images/endeavor-subway.jpg,images/endeavor-van-mockup.jpg,images/endeavor-scrub.jpg,images/endeavor-bench-billboard.jpg,images/endeavor-tote-bag.jpg">
             <img src="images/endeavor-highway-billboard.jpg" alt="Endeavor Health" loading="lazy" />
@@ -70,7 +82,7 @@
         </a>
       </article>
 
-      <article class="project-card">
+      <article class="project-card" data-category="Retail">
         <a href="kohls.html" class="card-link">
           <div class="img-wrap" data-gallery="images/Kohls.jpg,images/kohls-01.gif,images/kohls-02.jpg,images/kohls-04.jpg,images/kohls-06.jpg,images/kohls-08.jpg">
             <img src="images/Kohls.jpg" alt="Kohl's" loading="lazy" />
@@ -84,7 +96,7 @@
       </article>
 
       <!-- Featured -->
-      <article class="project-card large">
+      <article class="project-card large" data-category="Culture">
         <a href="rockefeller-center.html" class="card-link">
           <div class="img-wrap" data-gallery="images/rockefeller-center-3.jpg,images/rc-magazine-cover.jpg,images/rc-christmas-plaza.jpg,images/rc-dine-poster-grid.jpg,images/rc-magazine-fashion.jpg,images/rc-magazine-humans.jpg">
             <img
@@ -99,7 +111,7 @@
         </a>
       </article>
 
-      <article class="project-card">
+      <article class="project-card" data-category="Culture">
         <a href="brothertiger.html" class="card-link">
           <div class="img-wrap" data-gallery="images/brothertiger-View-Angle-4.jpg,images/brothertiger-vinyl-mockup.jpg,images/brothertiger-green-vinyl-mockup.jpg,images/brothertiger-paradise-lost-mockup.jpg,images/brothertiger-fundamentals-mockup.jpg,images/brothertiger-tears-for-fears-mockup.jpg">
             <img src="images/brothertiger-View-Angle-4.jpg" alt="Brothertiger" loading="lazy" />
@@ -112,7 +124,7 @@
         </a>
       </article>
 
-      <article class="project-card">
+      <article class="project-card" data-category="Craft">
         <a href="finding-form-design.html" class="card-link">
           <div class="img-wrap" data-gallery="images/finding-form-design.jpg,images/ffd-brochure-mockup.jpg,images/ffd-brochure-spread.jpg,images/ffd-brochure-parts.jpg,images/ffd-chair-parts.jpg">
             <img src="images/finding-form-design.jpg" alt="Finding Form Design" loading="lazy" />
@@ -125,7 +137,7 @@
         </a>
       </article>
 
-      <article class="project-card">
+      <article class="project-card" data-category="Craft">
         <a href="studio-glagola.html" class="card-link">
           <div class="img-wrap" data-gallery="images/sg-cover.svg,images/sg-logo-lockup.svg,images/sg-type-specimen.svg,images/sg-type-specimen-02.svg|images/sg-type-specimen-03.svg,images/sg-business-cards.jpg,images/sg-street-sign.jpg,images/sg-interior.jpg,images/sg-laptop.jpg,images/sg-monogram-wood.jpg,images/sg-social-grid.png,images/sg-tshirt.jpg">
             <img src="images/sg-cover.svg" alt="Studio Glagola" loading="lazy" style="width:100%; height:100%; object-fit:cover; display:block;" />
@@ -138,7 +150,7 @@
         </a>
       </article>
 
-      <article class="project-card">
+      <article class="project-card" data-category="Food &amp; Bev">
         <a href="superbrewed-food.html" class="card-link">
           <div class="img-wrap" data-gallery="images/superbrewed-food.jpg,images/sbf-01.jpg,images/sbf-02.jpg,images/sbf-03.jpg,images/sbf-04.jpg,images/sbf-05.jpg">
             <img src="images/superbrewed-food.jpg" alt="Superbrewed Food" loading="lazy" />
@@ -151,7 +163,7 @@
         </a>
       </article>
 
-      <article class="project-card">
+      <article class="project-card" data-category="Tech">
         <a href="keeptruckin.html" class="card-link">
           <div class="img-wrap" data-gallery="images/KeepTruckin.jpg,images/kt-01.gif,images/kt-02.jpg,images/kt-04.jpg,images/kt-05.gif,images/kt-07.gif">
             <img src="images/KeepTruckin.jpg" alt="KeepTruckin" loading="lazy" />
@@ -164,7 +176,7 @@
         </a>
       </article>
 
-      <article class="project-card">
+      <article class="project-card" data-category="Finance">
         <a href="piermont-bank.html" class="card-link">
           <div class="img-wrap" data-gallery="images/Piermont-Bank.jpg,images/pb-01.jpg,images/pb-02.jpg,images/pb-04.jpg,images/pb-06.jpg,images/pb-09.jpg">
             <img src="images/Piermont-Bank.jpg" alt="Piermont Bank" loading="lazy" />
@@ -177,7 +189,7 @@
         </a>
       </article>
 
-      <article class="project-card">
+      <article class="project-card" data-category="Finance">
         <a href="carlyle-impact-review.html" class="card-link">
           <div class="img-wrap" data-gallery="images/Carlyle.jpg,images/cir-04.jpg,images/cir-06.jpg,images/cir-09.jpg">
             <img src="images/Carlyle.jpg" alt="Carlyle Impact Review" loading="lazy" style="object-position: calc(25% - 15px) calc(85% + 10px); transform: scale(1.08);" />
