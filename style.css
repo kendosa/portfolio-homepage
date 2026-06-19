@@ -525,7 +525,7 @@ a { color: inherit; text-decoration: none; }
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     gap: 6px;
-    padding-bottom: 1rem;
+    padding-bottom: 2.5rem;
   }
   .tag-filter::-webkit-scrollbar { display: none; }
   .tag-filter-btn { flex-shrink: 0; }
@@ -574,7 +574,7 @@ a { color: inherit; text-decoration: none; }
   .hero { min-height: 0; }
 
   .portfolio { margin-top: 0; }
-  .grid > .project-card:first-child { margin-top: 2.5rem; }
+  .grid > .project-card:first-child { margin-top: 0; }
 
   .project-card.large { grid-column: auto; }
   .project-card.large .img-wrap { aspect-ratio: 16 / 10; height: auto; }
