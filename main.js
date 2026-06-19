@@ -192,6 +192,48 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
     currentIdx = 0;
     frames.forEach(frame => { if (frame) frame.classList.remove('active'); });
   });
+
+  // Touch: swipe left/right scrubs through the same frames
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchDirLocked = false;
+  let touchScrubbing = false;
+
+  wrap.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchDirLocked = false;
+    touchScrubbing = false;
+    currentIdx = 0;
+  }, { passive: true });
+
+  wrap.addEventListener('touchmove', e => {
+    const dx = Math.abs(e.touches[0].clientX - touchStartX);
+    const dy = Math.abs(e.touches[0].clientY - touchStartY);
+
+    if (!touchDirLocked) {
+      if (dx < 8 && dy < 8) return; // wait for clear intent
+      touchDirLocked = true;
+      touchScrubbing = dx > dy; // commit to horizontal or vertical
+    }
+
+    if (!touchScrubbing) return; // vertical — let the page scroll
+
+    e.preventDefault();
+
+    const idx = getZone(e.touches[0].clientX);
+    if (idx !== currentIdx) {
+      currentIdx = idx;
+      showFrame(idx);
+    }
+  }, { passive: false });
+
+  wrap.addEventListener('touchend', () => {
+    touchDirLocked = false;
+    touchScrubbing = false;
+    currentIdx = 0;
+    frames.forEach(frame => { if (frame) frame.classList.remove('active'); });
+  });
 });
 
 
