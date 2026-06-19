@@ -225,38 +225,111 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
     frames.forEach(frame => { if (frame) frame.classList.remove('active'); });
   });
 
-  // Touch: swipe left/right to step through frames one at a time
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let touchDirLocked = false;
-  let touchIsHorizontal = false;
+  // Touch: drag-reveal swipe — current slides out, next slides in, snaps or reverts
+  const baseImg = wrap.querySelector('img');
+
+  function getEl(idx) {
+    return idx === 0 ? baseImg : (frames[idx] || null);
+  }
+
+  let touchStartX = 0, touchStartY = 0;
+  let touchDirLocked = false, touchIsHorizontal = false;
+  let swipeDir = 0, incomingIdx = -1, wrapW = 0;
 
   wrap.addEventListener('touchstart', e => {
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
     touchDirLocked = false;
     touchIsHorizontal = false;
+    swipeDir = 0;
+    incomingIdx = -1;
+    wrapW = wrap.offsetWidth;
   }, { passive: true });
 
   wrap.addEventListener('touchmove', e => {
-    const dx = Math.abs(e.touches[0].clientX - touchStartX);
-    const dy = Math.abs(e.touches[0].clientY - touchStartY);
+    const rawDx = e.touches[0].clientX - touchStartX;
+    const rawDy = e.touches[0].clientY - touchStartY;
+
     if (!touchDirLocked) {
-      if (dx < 8 && dy < 8) return;
+      if (Math.abs(rawDx) < 8 && Math.abs(rawDy) < 8) return;
       touchDirLocked = true;
-      touchIsHorizontal = dx > dy;
+      touchIsHorizontal = Math.abs(rawDx) > Math.abs(rawDy);
     }
-    if (touchIsHorizontal) e.preventDefault();
+    if (!touchIsHorizontal) return;
+    e.preventDefault();
+
+    const dir = rawDx < 0 ? -1 : 1;
+
+    // First horizontal move: lock in the incoming frame and position it
+    if (incomingIdx === -1) {
+      swipeDir = dir;
+      const candidate = dir === -1
+        ? Math.min(imgs.length - 1, currentIdx + 1)
+        : Math.max(0, currentIdx - 1);
+      if (candidate === currentIdx) return; // at boundary
+      incomingIdx = candidate;
+
+      const inEl = getEl(incomingIdx);
+      const curEl = getEl(currentIdx);
+      if (inEl) {
+        inEl.style.transition = 'none';
+        inEl.style.opacity = '1';
+        inEl.style.transform = `translateX(${-dir * wrapW}px)`;
+      }
+      if (curEl) curEl.style.transition = 'none';
+    }
+    if (incomingIdx === -1) return;
+
+    const curEl = getEl(currentIdx);
+    const inEl  = getEl(incomingIdx);
+    if (curEl) curEl.style.transform = `translateX(${rawDx}px)`;
+    if (inEl)  inEl.style.transform  = `translateX(${-swipeDir * wrapW + rawDx}px)`;
   }, { passive: false });
 
   wrap.addEventListener('touchend', e => {
-    if (!touchDirLocked || !touchIsHorizontal) return;
+    if (!touchDirLocked || !touchIsHorizontal || incomingIdx === -1) {
+      incomingIdx = -1;
+      return;
+    }
+
     const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) < 30) return;
-    currentIdx = dx < 0
-      ? Math.min(imgs.length - 1, currentIdx + 1)
-      : Math.max(0, currentIdx - 1);
-    showFrame(currentIdx);
+    const committed = Math.abs(dx) > wrapW * 0.25;
+    const ease = 'transform 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    const prevIdx = currentIdx;
+    const savedIncoming = incomingIdx;
+    const curEl = getEl(currentIdx);
+    const inEl  = getEl(incomingIdx);
+
+    if (committed) {
+      if (curEl) { curEl.style.transition = ease; curEl.style.transform = `translateX(${swipeDir * wrapW}px)`; }
+      if (inEl)  { inEl.style.transition  = ease; inEl.style.transform  = 'translateX(0)'; }
+      currentIdx = incomingIdx;
+      incomingIdx = -1;
+
+      setTimeout(() => {
+        showFrame(currentIdx); // add .active before removing inline opacity
+        if (inEl)  { inEl.style.transition = 'none'; inEl.style.transform = ''; inEl.style.opacity = ''; }
+        if (curEl) { curEl.style.transition = 'none'; curEl.style.transform = ''; }
+        requestAnimationFrame(() => {
+          if (inEl)  inEl.style.transition  = '';
+          if (curEl) curEl.style.transition = '';
+        });
+      }, 230);
+    } else {
+      if (curEl) { curEl.style.transition = ease; curEl.style.transform = 'translateX(0)'; }
+      if (inEl)  { inEl.style.transition  = ease; inEl.style.transform  = `translateX(${-swipeDir * wrapW}px)`; }
+      incomingIdx = -1;
+
+      setTimeout(() => {
+        const inElSaved = getEl(savedIncoming);
+        if (curEl)     { curEl.style.transition = 'none'; curEl.style.transform = ''; }
+        if (inElSaved) { inElSaved.style.transition = 'none'; inElSaved.style.transform = ''; inElSaved.style.opacity = ''; }
+        requestAnimationFrame(() => {
+          if (curEl)     curEl.style.transition     = '';
+          if (inElSaved) inElSaved.style.transition = '';
+        });
+      }, 230);
+    }
   });
 });
 
