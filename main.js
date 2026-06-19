@@ -131,6 +131,30 @@ if (window.matchMedia('(hover: hover)').matches) {
       requestAnimationFrame(() => title.classList.remove('char-reset'));
     });
   });
+
+  // Logo char-shift
+  const logo = document.querySelector('.logo');
+  if (logo) {
+    const logoChars = [...logo.textContent];
+    const logoPerChar = 160 / Math.max(logoChars.length, 1);
+    logo.innerHTML = '';
+    logoChars.forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.dataset.char = ch === ' ' ? ' ' : ch;
+      span.style.setProperty('--td', `${i * logoPerChar}ms`);
+      logo.appendChild(span);
+    });
+    logo.addEventListener('mouseenter', () => {
+      logo.classList.remove('char-reset');
+      logo.classList.add('char-animate');
+    });
+    logo.addEventListener('mouseleave', () => {
+      logo.classList.add('char-reset');
+      logo.classList.remove('char-animate');
+      requestAnimationFrame(() => logo.classList.remove('char-reset'));
+    });
+  }
 }
 
 /* ── Tag filter: drag-to-scroll on desktop ──────────────────── */
