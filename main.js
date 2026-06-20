@@ -431,4 +431,120 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   });
 });
 
+/* ── Project card drag-to-reorder ──────────────────────────────── */
+(function () {
+  const grid = document.querySelector('.grid');
+  if (!grid || !window.matchMedia('(hover: hover)').matches) return;
+
+  let dragCard = null, dragPh = null, ox = 0, oy = 0, lastRef = undefined;
+
+  function getCards() {
+    return [...grid.querySelectorAll('.project-card')].filter(c => c !== dragCard);
+  }
+
+  function nearestRef(mx, my) {
+    const cs = getCards();
+    for (const c of cs) {
+      const r = c.getBoundingClientRect();
+      if (mx >= r.left && mx <= r.right && my >= r.top && my <= r.bottom) {
+        return my < r.top + r.height / 2 ? c : c.nextElementSibling;
+      }
+    }
+    let best = null, bd = Infinity;
+    cs.forEach(c => {
+      const r = c.getBoundingClientRect();
+      const d = Math.hypot(mx - r.left - r.width / 2, my - r.top - r.height / 2);
+      if (d < bd) { bd = d; best = c; }
+    });
+    if (!best) return null;
+    const r = best.getBoundingClientRect();
+    return my < r.top + r.height / 2 ? best : best.nextElementSibling;
+  }
+
+  function movePh(ref) {
+    if (ref === lastRef) return;
+    lastRef = ref;
+    const cs = getCards();
+    const snap = new Map(cs.map(c => [c, c.getBoundingClientRect()]));
+    grid.insertBefore(dragPh, ref || null);
+    cs.forEach(c => {
+      const b = snap.get(c), a = c.getBoundingClientRect();
+      const dx = b.left - a.left, dy = b.top - a.top;
+      if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+      c.style.transition = 'none';
+      c.style.transform = `translate(${dx}px,${dy}px)`;
+      requestAnimationFrame(() => {
+        c.style.transition = 'transform 0.2s cubic-bezier(0.25,0.46,0.45,0.94)';
+        c.style.transform = '';
+      });
+    });
+  }
+
+  grid.addEventListener('pointerdown', e => {
+    if (e.button !== 0) return;
+    const card = e.target.closest('.project-card');
+    if (!card) return;
+
+    const sx = e.clientX, sy = e.clientY;
+    let started = false;
+
+    function onMove(me) {
+      if (!started) {
+        if (Math.hypot(me.clientX - sx, me.clientY - sy) < 8) return;
+        started = true;
+        dragCard = card;
+        lastRef = undefined;
+
+        const rect = card.getBoundingClientRect();
+        ox = me.clientX - rect.left;
+        oy = me.clientY - rect.top;
+
+        dragPh = document.createElement('div');
+        dragPh.className = 'drag-ph' + (card.classList.contains('large') ? ' large' : '');
+        dragPh.style.height = rect.height + 'px';
+        grid.insertBefore(dragPh, card);
+
+        card.style.cssText = [
+          'position:fixed',
+          `top:${rect.top}px`,
+          `left:${rect.left}px`,
+          `width:${rect.width}px`,
+          `height:${rect.height}px`,
+          'margin:0',
+          'z-index:9000',
+          'pointer-events:none',
+          'box-shadow:0 16px 48px rgba(0,0,0,0.22)'
+        ].join(';');
+
+        card.addEventListener('click', ev => ev.preventDefault(), { once: true, capture: true });
+      }
+      if (!started) return;
+      card.style.top = (me.clientY - oy) + 'px';
+      card.style.left = (me.clientX - ox) + 'px';
+      movePh(nearestRef(me.clientX, me.clientY));
+    }
+
+    function onUp() {
+      window.removeEventListener('pointermove', onMove);
+      if (!started) return;
+
+      const phRect = dragPh.getBoundingClientRect();
+      card.style.transition = 'top 0.22s cubic-bezier(0.25,0.46,0.45,0.94),left 0.22s cubic-bezier(0.25,0.46,0.45,0.94)';
+      card.style.top = phRect.top + 'px';
+      card.style.left = phRect.left + 'px';
+
+      setTimeout(() => {
+        grid.insertBefore(card, dragPh);
+        dragPh.remove();
+        card.style.cssText = '';
+        dragCard = null;
+        dragPh = null;
+        lastRef = undefined;
+      }, 240);
+    }
+
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp, { once: true });
+  });
+}());
 
