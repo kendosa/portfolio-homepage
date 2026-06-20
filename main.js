@@ -153,12 +153,19 @@ if (window.matchMedia('(hover: hover)').matches) {
     });
 
     let rects = [];
+    let isLeaving = false;
+    let leaveTimer = null;
 
     logo.addEventListener('mouseenter', () => {
+      if (leaveTimer) { clearTimeout(leaveTimer); leaveTimer = null; }
+      isLeaving = false;
       rects = charData.map(({ span }) => span.getBoundingClientRect());
+      // Clear any inline transitions left by a previous leave animation
+      charData.forEach(({ top, bot }) => { top.style.transition = ''; bot.style.transition = ''; });
     });
 
     logo.addEventListener('mousemove', e => {
+      if (isLeaving) return;
       const mx = e.clientX;
       const influence = 90; // px radius of full-to-zero falloff
       charData.forEach(({ top, bot }, i) => {
@@ -174,12 +181,31 @@ if (window.matchMedia('(hover: hover)').matches) {
     });
 
     logo.addEventListener('mouseleave', () => {
-      charData.forEach(({ span, top, bot }) => {
-        span.classList.add('no-transition');
-        top.style.transform = '';
-        bot.style.transform = '';
-        requestAnimationFrame(() => span.classList.remove('no-transition'));
+      isLeaving = true;
+      const dur = 220;
+      const spread = 120;
+      const perChar = spread / Math.max(charData.length, 1);
+      // Complete the sweep — all letters finish going up with a stagger
+      charData.forEach(({ top, bot }, i) => {
+        const delay = `${i * perChar}ms`;
+        top.style.transition = `transform ${dur}ms ease ${delay}`;
+        bot.style.transition = `transform ${dur}ms ease ${delay}`;
+        top.style.transform = 'translateY(-100%)';
+        bot.style.transform = 'translateY(0%)';
       });
+      // After completion, silently reset to start
+      leaveTimer = setTimeout(() => {
+        isLeaving = false;
+        leaveTimer = null;
+        charData.forEach(({ span, top, bot }) => {
+          span.classList.add('no-transition');
+          top.style.transition = '';
+          top.style.transform = '';
+          bot.style.transition = '';
+          bot.style.transform = '';
+        });
+        requestAnimationFrame(() => charData.forEach(({ span }) => span.classList.remove('no-transition')));
+      }, dur + spread + 20);
     });
   }
 }
