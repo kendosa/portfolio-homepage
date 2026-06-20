@@ -154,27 +154,31 @@ if (window.matchMedia('(hover: hover)').matches) {
 
     let rects = [];
     let isLeaving = false;
-    let leaveTimer = null;
 
     logo.addEventListener('mouseenter', () => {
-      if (leaveTimer) { clearTimeout(leaveTimer); leaveTimer = null; }
       isLeaving = false;
+      charData.forEach(({ span, top, bot }) => {
+        span.classList.add('no-transition');
+        top.style.transition = '';
+        top.style.transform = '';
+        bot.style.transition = '';
+        bot.style.transform = '';
+      });
       rects = charData.map(({ span }) => span.getBoundingClientRect());
-      // Clear any inline transitions left by a previous leave animation
-      charData.forEach(({ top, bot }) => { top.style.transition = ''; bot.style.transition = ''; });
+      requestAnimationFrame(() => charData.forEach(({ span }) => span.classList.remove('no-transition')));
     });
 
     logo.addEventListener('mousemove', e => {
       if (isLeaving) return;
       const mx = e.clientX;
-      const influence = 110; // px radius of full-to-zero falloff
+      const influence = 110;
       charData.forEach(({ top, bot }, i) => {
         const r = rects[i];
         if (!r) return;
         const cx = r.left + r.width / 2;
         const dx = Math.abs(mx - cx);
         const t = Math.max(0, 1 - dx / influence);
-        const ease = t * t * (3 - 2 * t); // smoothstep
+        const ease = t * t * (3 - 2 * t);
         top.style.transform = `translateY(${-ease * 100}%)`;
         bot.style.transform = `translateY(${(1 - ease) * 100}%)`;
       });
@@ -186,7 +190,6 @@ if (window.matchMedia('(hover: hover)').matches) {
       const spread = 140;
       const perChar = spread / Math.max(charData.length, 1);
       const easing = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      // Complete the sweep — all letters finish going up with a stagger
       charData.forEach(({ top, bot }, i) => {
         const delay = `${i * perChar}ms`;
         top.style.transition = `transform ${dur}ms ${easing} ${delay}`;
@@ -194,19 +197,6 @@ if (window.matchMedia('(hover: hover)').matches) {
         top.style.transform = 'translateY(-100%)';
         bot.style.transform = 'translateY(0%)';
       });
-      // After completion, silently reset to start
-      leaveTimer = setTimeout(() => {
-        isLeaving = false;
-        leaveTimer = null;
-        charData.forEach(({ span, top, bot }) => {
-          span.classList.add('no-transition');
-          top.style.transition = '';
-          top.style.transform = '';
-          bot.style.transition = '';
-          bot.style.transform = '';
-        });
-        requestAnimationFrame(() => charData.forEach(({ span }) => span.classList.remove('no-transition')));
-      }, dur + spread + 20);
     });
   }
 }
