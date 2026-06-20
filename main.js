@@ -167,7 +167,7 @@ if (window.matchMedia('(hover: hover)').matches) {
     logo.addEventListener('mousemove', e => {
       if (isLeaving) return;
       const mx = e.clientX;
-      const influence = 90; // px radius of full-to-zero falloff
+      const influence = 110; // px radius of full-to-zero falloff
       charData.forEach(({ top, bot }, i) => {
         const r = rects[i];
         if (!r) return;
@@ -182,14 +182,15 @@ if (window.matchMedia('(hover: hover)').matches) {
 
     logo.addEventListener('mouseleave', () => {
       isLeaving = true;
-      const dur = 220;
-      const spread = 120;
+      const dur = 300;
+      const spread = 140;
       const perChar = spread / Math.max(charData.length, 1);
+      const easing = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       // Complete the sweep — all letters finish going up with a stagger
       charData.forEach(({ top, bot }, i) => {
         const delay = `${i * perChar}ms`;
-        top.style.transition = `transform ${dur}ms ease ${delay}`;
-        bot.style.transition = `transform ${dur}ms ease ${delay}`;
+        top.style.transition = `transform ${dur}ms ${easing} ${delay}`;
+        bot.style.transition = `transform ${dur}ms ${easing} ${delay}`;
         top.style.transform = 'translateY(-100%)';
         bot.style.transform = 'translateY(0%)';
       });
