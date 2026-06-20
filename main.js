@@ -431,4 +431,17 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   });
 });
 
+/* ── Tag overlay — lift card-tags onto the cover image ── */
+document.querySelectorAll('.project-card').forEach(card => {
+  const tags = Array.from(card.querySelectorAll('.card-tag'));
+  if (!tags.length) return;
+  const wrap = card.querySelector('.img-wrap');
+  const overlay = document.createElement('div');
+  overlay.className = 'img-tags';
+  tags.forEach((tag, i) => {
+    tag.style.setProperty('--tag-i', i);
+    overlay.appendChild(tag);
+  });
+  wrap.appendChild(overlay);
+});
 
