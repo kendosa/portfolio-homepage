@@ -154,22 +154,62 @@ if (window.matchMedia('(hover: hover)').matches) {
 
     let rects = [];
     let isLeaving = false;
+    let entryCharIdx = 0;
+    let enterAnimTimeout = null;
 
-    logo.addEventListener('mouseenter', () => {
+    logo.addEventListener('mouseenter', e => {
       isLeaving = false;
-      charData.forEach(({ span, top, bot }) => {
-        span.classList.add('no-transition');
-        top.style.transition = '';
-        top.style.transform = '';
-        bot.style.transition = '';
-        bot.style.transform = '';
-      });
+      if (enterAnimTimeout) { clearTimeout(enterAnimTimeout); enterAnimTimeout = null; }
+
       rects = charData.map(({ span }) => span.getBoundingClientRect());
-      requestAnimationFrame(() => charData.forEach(({ span }) => span.classList.remove('no-transition')));
+
+      // Find which char the cursor is over at entry
+      const mx = e.clientX;
+      let closest = 0, minDist = Infinity;
+      rects.forEach((r, i) => {
+        const d = Math.abs(mx - (r.left + r.width / 2));
+        if (d < minDist) { minDist = d; closest = i; }
+      });
+      entryCharIdx = closest;
+
+      // Snap all chars to flipped state (top hidden, bot visible) with no transition
+      charData.forEach(({ top, bot }) => {
+        top.style.transition = 'none';
+        bot.style.transition = 'none';
+        top.style.transform = 'translateY(-100%)';
+        bot.style.transform = 'translateY(0%)';
+      });
+
+      // Cascade back to initial, radiating from entry char
+      const dur = 200;
+      const spread = 120;
+      const maxDist = Math.max(entryCharIdx, charData.length - 1 - entryCharIdx);
+      const perChar = maxDist > 0 ? spread / maxDist : 0;
+      const easing = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        charData.forEach(({ top, bot }, i) => {
+          const delay = Math.abs(i - entryCharIdx) * perChar;
+          top.style.transition = `transform ${dur}ms ${easing} ${delay}ms`;
+          bot.style.transition = `transform ${dur}ms ${easing} ${delay}ms`;
+          top.style.transform = '';
+          bot.style.transform = '';
+        });
+        enterAnimTimeout = setTimeout(() => {
+          charData.forEach(({ top, bot }) => { top.style.transition = ''; bot.style.transition = ''; });
+          enterAnimTimeout = null;
+        }, dur + spread + 50);
+      }));
     });
 
     logo.addEventListener('mousemove', e => {
       if (isLeaving) return;
+      // Short-circuit enter animation so mousemove responsiveness is immediate
+      if (enterAnimTimeout) {
+        clearTimeout(enterAnimTimeout);
+        enterAnimTimeout = null;
+        charData.forEach(({ top, bot }) => { top.style.transition = ''; bot.style.transition = ''; });
+      }
       const mx = e.clientX;
       const influence = 110;
       charData.forEach(({ top, bot }, i) => {
@@ -186,17 +226,19 @@ if (window.matchMedia('(hover: hover)').matches) {
 
     logo.addEventListener('mouseleave', () => {
       isLeaving = true;
+      if (enterAnimTimeout) { clearTimeout(enterAnimTimeout); enterAnimTimeout = null; }
       const dur = 300;
       const spread = 140;
-      const perChar = spread / Math.max(charData.length, 1);
+      const maxDist = Math.max(entryCharIdx, charData.length - 1 - entryCharIdx);
+      const perChar = maxDist > 0 ? spread / maxDist : spread / Math.max(charData.length, 1);
       const easing = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       charData.forEach(({ top, bot }, i) => {
-        const delay = `${i * perChar}ms`;
+        const delay = `${Math.abs(i - entryCharIdx) * perChar}ms`;
         top.style.transition = `transform ${dur}ms ${easing} ${delay}`;
         bot.style.transition = `transform ${dur}ms ${easing} ${delay}`;
         top.style.transform = 'translateY(-100%)';
         bot.style.transform = 'translateY(0%)';
-      });
+      }));
     });
   }
 }
