@@ -238,7 +238,7 @@ if (window.matchMedia('(hover: hover)').matches) {
         bot.style.transition = `transform ${dur}ms ${easing} ${delay}`;
         top.style.transform = 'translateY(-100%)';
         bot.style.transform = 'translateY(0%)';
-      }));
+      });
     });
   }
 }
