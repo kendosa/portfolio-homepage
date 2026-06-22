@@ -152,16 +152,13 @@ if (window.matchMedia('(hover: hover)').matches) {
       return { span, top, bot };
     });
 
-    let rects = [];
-    let isLeaving = false;
     let entryCharIdx = 0;
     let enterAnimTimeout = null;
 
     logo.addEventListener('mouseenter', e => {
-      isLeaving = false;
       if (enterAnimTimeout) { clearTimeout(enterAnimTimeout); enterAnimTimeout = null; }
 
-      rects = charData.map(({ span }) => span.getBoundingClientRect());
+      const rects = charData.map(({ span }) => span.getBoundingClientRect());
 
       // Find which char the cursor is over at entry
       const mx = e.clientX;
@@ -172,15 +169,15 @@ if (window.matchMedia('(hover: hover)').matches) {
       });
       entryCharIdx = closest;
 
-      // Snap all chars to flipped state (top hidden, bot visible) with no transition
+      // Snap all chars to initial (top visible, bot hidden) with no transition
       charData.forEach(({ top, bot }) => {
         top.style.transition = 'none';
         bot.style.transition = 'none';
-        top.style.transform = 'translateY(-100%)';
-        bot.style.transform = 'translateY(0%)';
+        top.style.transform = 'translateY(0%)';
+        bot.style.transform = 'translateY(100%)';
       });
 
-      // Cascade back to initial, radiating from entry char
+      // Cascade to flipped state (top hidden, bot visible), radiating from entry char
       const dur = 200;
       const spread = 120;
       const maxDist = Math.max(entryCharIdx, charData.length - 1 - entryCharIdx);
@@ -192,8 +189,8 @@ if (window.matchMedia('(hover: hover)').matches) {
           const delay = Math.abs(i - entryCharIdx) * perChar;
           top.style.transition = `transform ${dur}ms ${easing} ${delay}ms`;
           bot.style.transition = `transform ${dur}ms ${easing} ${delay}ms`;
-          top.style.transform = '';
-          bot.style.transform = '';
+          top.style.transform = 'translateY(-100%)';
+          bot.style.transform = 'translateY(0%)';
         });
         enterAnimTimeout = setTimeout(() => {
           charData.forEach(({ top, bot }) => { top.style.transition = ''; bot.style.transition = ''; });
@@ -202,30 +199,7 @@ if (window.matchMedia('(hover: hover)').matches) {
       }));
     });
 
-    logo.addEventListener('mousemove', e => {
-      if (isLeaving) return;
-      // Short-circuit enter animation so mousemove responsiveness is immediate
-      if (enterAnimTimeout) {
-        clearTimeout(enterAnimTimeout);
-        enterAnimTimeout = null;
-        charData.forEach(({ top, bot }) => { top.style.transition = ''; bot.style.transition = ''; });
-      }
-      const mx = e.clientX;
-      const influence = 110;
-      charData.forEach(({ top, bot }, i) => {
-        const r = rects[i];
-        if (!r) return;
-        const cx = r.left + r.width / 2;
-        const dx = Math.abs(mx - cx);
-        const t = Math.max(0, 1 - dx / influence);
-        const ease = t * t * (3 - 2 * t);
-        top.style.transform = `translateY(${-ease * 100}%)`;
-        bot.style.transform = `translateY(${(1 - ease) * 100}%)`;
-      });
-    });
-
     logo.addEventListener('mouseleave', () => {
-      isLeaving = true;
       if (enterAnimTimeout) { clearTimeout(enterAnimTimeout); enterAnimTimeout = null; }
       const dur = 300;
       const spread = 140;
@@ -236,8 +210,8 @@ if (window.matchMedia('(hover: hover)').matches) {
         const delay = `${Math.abs(i - entryCharIdx) * perChar}ms`;
         top.style.transition = `transform ${dur}ms ${easing} ${delay}`;
         bot.style.transition = `transform ${dur}ms ${easing} ${delay}`;
-        top.style.transform = 'translateY(-100%)';
-        bot.style.transform = 'translateY(0%)';
+        top.style.transform = 'translateY(0%)';
+        bot.style.transform = 'translateY(100%)';
       });
     });
   }
