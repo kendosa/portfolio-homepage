@@ -309,8 +309,8 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
 
   /* Order: eyebrow → title → deliverables → body */
   .project-hero--aa .project-label       { order: 1; margin-bottom: 0.85rem; }
-  .project-hero--aa .project-aa-title    { order: 2; font-size: clamp(3.6rem, 15.5vw, 4.25rem); margin-bottom: 1rem; }
-  .project-aa-deliverables               { order: 3; margin-bottom: 1.75rem; font-weight: 600; }
+  .project-hero--aa .project-aa-title    { order: 2; font-size: clamp(3.6rem, 15.5vw, 4.25rem); line-height: 1.05; margin-bottom: 1rem; }
+  .project-aa-deliverables               { order: 3; margin-bottom: 2.75rem; font-weight: 600; }
   .project-hero--aa .project-aa-body     { order: 4; font-size: 20px; max-width: none; }
 
   /* Deliverables: inline row with spacing between items */
