@@ -203,7 +203,8 @@ function initVerticalScroll(colSel, imgSel) {
   requestAnimationFrame(tick);
 }
 
-initVerticalScroll('.cir-landing-scroll-col', '.cir-landing-scroll-img');
+initVerticalScroll('.cir-landing-scroll-col',     '.cir-landing-scroll-img');
+initVerticalScroll('.cir-accelerate-scroll-col', '.cir-accelerate-scroll-img');
 
 /* Scroll reveal */
 const textEls = document.querySelectorAll('.content-block, .project-hero, .sub-project, .project-cta');
