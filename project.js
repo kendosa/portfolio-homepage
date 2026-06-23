@@ -115,6 +115,96 @@ initMarquee('.wm-marquee-wrap',  '.wm-marquee-track');
 initMarquee('.eh-marquee-wrap',  '.eh-marquee-track');
 initMarquee('.cir-marquee-wrap', '.cir-marquee-track');
 
+/* Vertical auto-scroll with click-drag */
+function initVerticalScroll(colSel, imgSel) {
+  const col = document.querySelector(colSel);
+  const img = document.querySelector(imgSel);
+  if (!col || !img) return;
+
+  const SPEED       = 60;   // px/sec
+  const PAUSE_MS    = 2000; // hold at bottom before reset
+
+  let pos          = 0;
+  let lastTime     = null;
+  let isDragging   = false;
+  let isHovering   = false;
+  let dragStartY   = 0;
+  let dragStartPos = 0;
+  let paused       = false;
+
+  function getCur() { return document.getElementById('ccCursor'); }
+  function maxScroll() { return Math.max(0, img.offsetHeight - col.offsetHeight); }
+
+  function tick(now) {
+    if (lastTime === null) lastTime = now;
+    const dt = Math.min((now - lastTime) / 1000, 0.05);
+    lastTime = now;
+
+    if (!isDragging && !paused) {
+      pos += SPEED * dt;
+      if (pos >= maxScroll()) {
+        pos    = maxScroll();
+        paused = true;
+        setTimeout(() => { pos = 0; paused = false; }, PAUSE_MS);
+      }
+    }
+
+    img.style.transform = `translateY(${-pos}px)`;
+    requestAnimationFrame(tick);
+  }
+
+  col.addEventListener('mouseenter', () => {
+    isHovering = true;
+    const cur = getCur();
+    if (cur) { cur.textContent = 'Click & drag'; cur.style.opacity = '1'; }
+    document.body.classList.add('cc-on-card');
+  });
+
+  col.addEventListener('mouseleave', () => {
+    isHovering = false;
+    if (isDragging) return;
+    const cur = getCur();
+    if (cur) cur.style.opacity = '0';
+    document.body.classList.remove('cc-on-card');
+  });
+
+  col.addEventListener('mousedown', e => {
+    isDragging   = true;
+    dragStartY   = e.clientY;
+    dragStartPos = pos;
+    const cur = getCur();
+    if (cur) cur.style.opacity = '0';
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    const delta = dragStartY - e.clientY;
+    pos = Math.max(0, Math.min(maxScroll(), dragStartPos + delta));
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    document.body.style.userSelect = '';
+    const cur = getCur();
+    if (isHovering) {
+      if (cur) cur.style.opacity = '1';
+    } else {
+      if (cur) cur.style.opacity = '0';
+      document.body.classList.remove('cc-on-card');
+    }
+  });
+
+  col.style.cursor = 'none';
+  img.style.animation = 'none';
+  img.style.transform  = 'translateY(0)';
+  requestAnimationFrame(tick);
+}
+
+initVerticalScroll('.cir-landing-scroll-col', '.cir-landing-scroll-img');
+
 /* Scroll reveal */
 const textEls = document.querySelectorAll('.content-block, .project-hero, .sub-project, .project-cta');
 const imgEls  = document.querySelectorAll('.images__container picture, .sticky-image-col img:not(.rc-marquee-card)');
