@@ -557,3 +557,27 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   flex-shrink: 0;
   display: block;
 }
+
+/* ─── Carlyle Impact Review pages marquee ────────────────── */
+.cir-marquee-wrap {
+  overflow: hidden;
+  background: #050405;
+  padding: 48px 0;
+  width: 100%;
+  cursor: none;
+}
+
+.cir-marquee-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: max-content;
+  will-change: transform;
+}
+
+.cir-marquee-card {
+  height: clamp(260px, 30vw, 420px);
+  width: auto;
+  flex-shrink: 0;
+  display: block;
+}

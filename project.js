@@ -113,6 +113,7 @@ initMarquee('.rc-marquee-wrap',  '.rc-marquee-track');
 initMarquee('.ffd-marquee-wrap', '.ffd-marquee-track');
 initMarquee('.wm-marquee-wrap',  '.wm-marquee-track');
 initMarquee('.eh-marquee-wrap',  '.eh-marquee-track');
+initMarquee('.cir-marquee-wrap', '.cir-marquee-track');
 
 /* Scroll reveal */
 const textEls = document.querySelectorAll('.content-block, .project-hero, .sub-project, .project-cta');
