@@ -121,36 +121,18 @@ function initVerticalScroll(colSel, imgSel) {
   const img = document.querySelector(imgSel);
   if (!col || !img) return;
 
-  const SPEED       = 60;   // px/sec
-  const PAUSE_MS    = 2000; // hold at bottom before reset
-
   let pos          = 0;
-  let lastTime     = null;
   let isDragging   = false;
   let isHovering   = false;
   let dragStartY   = 0;
   let dragStartPos = 0;
-  let paused       = false;
 
   function getCur() { return document.getElementById('ccCursor'); }
   function maxScroll() { return Math.max(0, img.offsetHeight - col.offsetHeight); }
 
-  function tick(now) {
-    if (lastTime === null) lastTime = now;
-    const dt = Math.min((now - lastTime) / 1000, 0.05);
-    lastTime = now;
-
-    if (!isDragging && !paused) {
-      pos += SPEED * dt;
-      if (pos >= maxScroll()) {
-        pos    = maxScroll();
-        paused = true;
-        setTimeout(() => { pos = 0; paused = false; }, PAUSE_MS);
-      }
-    }
-
+  function tick() {
     img.style.transform = `translateY(${-pos}px)`;
-    requestAnimationFrame(tick);
+    if (isDragging) requestAnimationFrame(tick);
   }
 
   col.addEventListener('mouseenter', () => {
@@ -176,6 +158,7 @@ function initVerticalScroll(colSel, imgSel) {
     if (cur) cur.style.opacity = '0';
     document.body.style.userSelect = 'none';
     e.preventDefault();
+    requestAnimationFrame(tick);
   });
 
   document.addEventListener('mousemove', e => {
@@ -197,10 +180,9 @@ function initVerticalScroll(colSel, imgSel) {
     }
   });
 
-  col.style.cursor = 'none';
+  col.style.cursor    = 'none';
   img.style.animation = 'none';
-  img.style.transform  = 'translateY(0)';
-  requestAnimationFrame(tick);
+  img.style.transform = 'translateY(0)';
 }
 
 initVerticalScroll('.cir-landing-scroll-col',     '.cir-landing-scroll-img');
