@@ -733,10 +733,10 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   overflow: hidden;
 }
 
-.cir-landing-scroll-img {
+.cir-landing-scroll-img,
+.cir-accelerate-scroll-img {
   width: 100%;
   display: block;
-  animation: cir-landing-scroll 28s linear infinite;
 }
 
 @keyframes cir-landing-scroll {
