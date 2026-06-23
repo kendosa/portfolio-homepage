@@ -396,6 +396,63 @@
       targetSpeed = DEFAULT_SPEED;
     });
 
+    // Touch drag + cursor
+    var tStartX = 0, tStartY = 0, tDirLocked = false, tIsHoriz = false;
+
+    wrap.addEventListener('touchstart', function (e) {
+      var t = e.touches[0];
+      tStartX      = t.clientX;
+      tStartY      = t.clientY;
+      tDirLocked   = false;
+      tIsHoriz     = false;
+      lastDragX    = t.clientX;
+      lastDragTime = performance.now();
+      dragVelocity = 0;
+      var cur = getCur();
+      if (cur) {
+        cur.style.left    = t.clientX + 'px';
+        cur.style.top     = t.clientY + 'px';
+        cur.textContent   = 'click & drag';
+        cur.style.opacity = '1';
+      }
+      document.body.classList.add('cc-on-card');
+    }, { passive: true });
+
+    wrap.addEventListener('touchmove', function (e) {
+      var t  = e.touches[0];
+      var dx = t.clientX - tStartX;
+      var dy = t.clientY - tStartY;
+      if (!tDirLocked && (Math.abs(dx) > 4 || Math.abs(dy) > 4)) {
+        tDirLocked = true;
+        tIsHoriz   = Math.abs(dx) > Math.abs(dy);
+        if (tIsHoriz) { dragStartX = t.clientX; dragStartPos = pos; isDragging = true; }
+      }
+      if (!tIsHoriz) return;
+      e.preventDefault();
+      var now    = performance.now();
+      var dtDrag = Math.max((now - lastDragTime) / 1000, 0.001);
+      pos          = wrapPos(dragStartPos - (t.clientX - dragStartX));
+      dragVelocity = -(t.clientX - lastDragX) / dtDrag;
+      lastDragX    = t.clientX;
+      lastDragTime = now;
+      var cur = getCur();
+      if (cur) { cur.style.left = t.clientX + 'px'; cur.style.top = t.clientY + 'px'; }
+    }, { passive: false });
+
+    wrap.addEventListener('touchend', function () {
+      if (isDragging) { isDragging = false; speed = dragVelocity; targetSpeed = DEFAULT_SPEED; }
+      var cur = getCur();
+      if (cur) cur.style.opacity = '0';
+      document.body.classList.remove('cc-on-card');
+    });
+
+    wrap.addEventListener('touchcancel', function () {
+      isDragging = false; targetSpeed = DEFAULT_SPEED;
+      var cur = getCur();
+      if (cur) cur.style.opacity = '0';
+      document.body.classList.remove('cc-on-card');
+    });
+
     wrap.style.cursor = 'none';
     requestAnimationFrame(tick);
   }());
