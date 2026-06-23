@@ -137,27 +137,7 @@
     </div>
   </div>
 
-  <!-- DIGITAL EXPERIENCE PROTOTYPE -->
-  <div class="cir-proto-section">
-    <div class="cir-proto-browser">
-      <div class="cir-proto-chrome">
-        <div class="cir-proto-dots">
-          <span></span><span></span><span></span>
-        </div>
-        <div class="cir-proto-urlbar">carlyle.com/impact-review-2020</div>
-      </div>
-      <div class="cir-proto-viewport">
-        <iframe
-          src="carlyle-prototype.html"
-          scrolling="no"
-          frameborder="0"
-          title="Carlyle 2020 Impact Review digital experience prototype"
-        ></iframe>
-      </div>
-    </div>
-  </div>
-
-  <footer class="site-footer">
+<footer class="site-footer">
     <span class="footer-copy">© 2026 Kenny Phillips</span>
     <div class="footer-social">
       <a href="mailto:kennydphillips@gmail.com?Subject=Hey%20Kenny!">Email</a>
@@ -167,22 +147,7 @@
   <div id="ccCursor"></div>
   <script src="main.js"></script>
   <script src="project.js"></script>
-  <script>
-  (function () {
-    var vp = document.querySelector('.cir-proto-viewport');
-    var iframe = vp ? vp.querySelector('iframe') : null;
-    if (!vp || !iframe) return;
-    function scaleProto() {
-      var w = vp.offsetWidth;
-      var scale = w / 1440;
-      iframe.style.transform = 'scale(' + scale + ')';
-      vp.style.height = Math.round(900 * scale) + 'px';
-    }
-    scaleProto();
-    window.addEventListener('resize', scaleProto);
-  }());
-  </script>
-  <script>
+<script>
   (function () {
     var cur = document.getElementById('ccCursor');
     if (!cur) return;
