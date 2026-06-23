@@ -8,6 +8,26 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="project.css" />
   <link rel="icon" type="image/png" href="favicon.png" />
+  <style>
+    body.cc-on-card #cursor-dot { opacity: 0 !important; transition: none !important; }
+    #ccCursor {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, sans-serif;
+      font-size: 3rem;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0;
+      color: #ffffff;
+      mix-blend-mode: difference;
+      opacity: 0;
+      transition: opacity 0.12s ease;
+      white-space: nowrap;
+      transform: translate(-50%, -50%);
+    }
+  </style>
 </head>
 <body>
 
@@ -88,7 +108,18 @@
     </div>
   </footer>
 
+  <div id="ccCursor"></div>
   <script src="main.js"></script>
   <script src="project.js"></script>
+  <script>
+  (function () {
+    var cur = document.getElementById('ccCursor');
+    if (!cur) return;
+    document.addEventListener('mousemove', function (e) {
+      cur.style.left = e.clientX + 'px';
+      cur.style.top  = e.clientY + 'px';
+    });
+  }());
+  </script>
 </body>
 </html>
