@@ -665,3 +665,44 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   transform: scale(var(--proto-scale, 1));
   display: block;
 }
+
+/* ─── Carlyle landing page interactive prototype ─────────── */
+.cir-landing-section {
+  background: #0a0a0a;
+  padding: 72px 48px 80px;
+}
+
+.cir-landing-browser {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06),
+    0 32px 80px rgba(0,0,0,.7),
+    0 8px 24px rgba(0,0,0,.5);
+}
+
+.cir-landing-chrome {
+  background: #2a2a2a;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  border-bottom: 1px solid rgba(0,0,0,.4);
+}
+
+.cir-landing-viewport {
+  width: 100%;
+  height: 680px;
+  overflow: hidden;
+  background: #001427;
+}
+
+.cir-landing-viewport iframe {
+  width: 100%;
+  height: 680px;
+  border: none;
+  display: block;
+}
