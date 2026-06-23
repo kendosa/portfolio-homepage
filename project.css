@@ -103,11 +103,12 @@
 .content-block { margin-bottom: clamp(1.25rem, 3.5vw, 2.5rem); }
 
 .section-label {
-  font-size: 11px;
-  letter-spacing: .09em;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .2em;
   text-transform: uppercase;
-  color: var(--grey);
-  margin-bottom: .6rem;
+  color: var(--black);
+  margin-bottom: 1.25rem;
   display: block;
 }
 
