@@ -587,3 +587,81 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   flex-shrink: 0;
   display: block;
 }
+
+/* ─── Carlyle prototype browser embed ────────────────────── */
+.cir-proto-section {
+  background: #0a0a0a;
+  padding: 72px 48px 80px;
+}
+
+.cir-proto-browser {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.06),
+    0 32px 80px rgba(0,0,0,.7),
+    0 8px 24px rgba(0,0,0,.5);
+}
+
+.cir-proto-chrome {
+  background: #2a2a2a;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  border-bottom: 1px solid rgba(0,0,0,.4);
+}
+
+.cir-proto-dots {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.cir-proto-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #555;
+}
+
+.cir-proto-dots span:nth-child(1) { background: #ff5f56; }
+.cir-proto-dots span:nth-child(2) { background: #febc2e; }
+.cir-proto-dots span:nth-child(3) { background: #27c93f; }
+
+.cir-proto-urlbar {
+  flex: 1;
+  background: #1a1a1a;
+  border-radius: 5px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: rgba(255,255,255,.4);
+  font-family: -apple-system, 'Helvetica Neue', sans-serif;
+  letter-spacing: .01em;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.cir-proto-viewport {
+  width: 100%;
+  aspect-ratio: 1440 / 900;
+  overflow: hidden;
+  position: relative;
+  background: #001427;
+}
+
+.cir-proto-viewport iframe {
+  width: 1440px;
+  height: 900px;
+  border: none;
+  pointer-events: none;
+  transform-origin: top left;
+  transform: scale(var(--proto-scale, 1));
+  display: block;
+}

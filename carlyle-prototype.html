@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=1440"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:1440px;overflow:hidden;background:#001427;}
+
+/* ── Auto-scroll ── */
+.page-scroll{
+  animation: autoscroll 110s linear infinite;
+  will-change: transform;
+}
+@keyframes autoscroll{
+  0%   { transform: translateY(0); }
+  92%  { transform: translateY(-7100px); }
+  100% { transform: translateY(-7100px); }
+}
+
+/* ── Type ── */
+.serif  { font-family: Georgia,'Times New Roman',Times,serif; }
+.sans   { font-family: -apple-system,'Helvetica Neue',Helvetica,Arial,sans-serif; }
+
+/* ── Nav ── */
+.nav{
+  width:100%; height:68px;
+  background:#001427;
+  display:flex; align-items:center;
+  padding:0 48px;
+  border-bottom:1px solid rgba(255,255,255,.12);
+  position:relative; z-index:2;
+}
+.nav-logo{
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+  font-size:18px; font-weight:700;
+  letter-spacing:.35em; color:#fff;
+  text-transform:uppercase;
+}
+.nav-sub{
+  font-size:9px; letter-spacing:.2em;
+  color:rgba(255,255,255,.5);
+  text-transform:uppercase;
+  margin-left:20px; padding-left:20px;
+  border-left:1px solid rgba(255,255,255,.2);
+}
+.nav-links{
+  margin-left:auto; display:flex; gap:32px; align-items:center;
+}
+.nav-links a{
+  font-size:13px; letter-spacing:.08em; color:rgba(255,255,255,.7);
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+  text-transform:uppercase;
+}
+.nav-icon{
+  width:20px; height:20px;
+  border:1.5px solid rgba(255,255,255,.5); border-radius:2px;
+  display:flex; align-items:center; justify-content:center;
+}
+.nav-icon span{
+  display:block; width:12px; height:1.5px;
+  background:rgba(255,255,255,.7);
+  position:relative;
+}
+.nav-icon span::before,.nav-icon span::after{
+  content:''; position:absolute; left:0;
+  width:12px; height:1.5px; background:rgba(255,255,255,.7);
+}
+.nav-icon span::before{top:-4px;}
+.nav-icon span::after{top:4px;}
+
+/* ── Hero ── */
+.hero{
+  width:100%; height:860px;
+  background:#001427;
+  display:flex; flex-direction:column;
+  justify-content:center;
+  padding:0 72px;
+  position:relative; overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute; top:0; right:0;
+  width:55%; height:100%;
+  background:url('images/cir-site-wind-hills.png') center/cover no-repeat;
+  opacity:.45;
+}
+.hero-eyebrow{
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+  font-size:11px; letter-spacing:.25em; color:rgba(255,255,255,.6);
+  text-transform:uppercase; margin-bottom:24px; position:relative; z-index:1;
+}
+.hero-title{
+  font-family:Georgia,'Times New Roman',Times,serif;
+  font-size:80px; font-weight:400; line-height:1.0;
+  color:#fff; max-width:680px;
+  position:relative; z-index:1; margin-bottom:48px;
+}
+.hero-nav{
+  display:flex; gap:12px; position:relative; z-index:1; flex-wrap:wrap;
+}
+.hero-pill{
+  font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color:rgba(255,255,255,.8);
+  border:1px solid rgba(255,255,255,.3);
+  padding:8px 20px; border-radius:24px;
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+}
+.hero-pill.active{
+  background:#fff; color:#001427; border-color:#fff;
+}
+
+/* ── Theme banner ── */
+.theme-banner{
+  width:100%; padding:80px 72px 64px;
+  background:#063f77;
+}
+.theme-banner.climate { background:#041e38; }
+.theme-banner.communities { background:#062d5e; }
+.theme-banner.sustainable { background:#052847; }
+.theme-banner.employees { background:#041e38; }
+.theme-banner.diversity { background:#062d5e; }
+
+.theme-label{
+  font-size:10px; letter-spacing:.25em; text-transform:uppercase;
+  color:rgba(255,255,255,.55); margin-bottom:20px;
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+}
+.theme-title{
+  font-family:Georgia,'Times New Roman',Times,serif;
+  font-size:60px; font-weight:400; color:#fff;
+  line-height:1.05; max-width:760px; margin-bottom:28px;
+}
+.theme-intro{
+  font-size:17px; color:rgba(255,255,255,.72); max-width:680px;
+  line-height:1.6; font-family:-apple-system,'Helvetica Neue',sans-serif;
+}
+.theme-tags{
+  display:flex; gap:10px; margin-top:32px; flex-wrap:wrap;
+}
+.theme-tag{
+  font-size:11px; letter-spacing:.08em;
+  color:#1869b7; border:1.5px solid #1869b7;
+  padding:6px 16px; border-radius:20px;
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+  background:rgba(24,105,183,.12);
+}
+
+/* ── Case study: info bar ── */
+.cs-infobar{
+  background:#f5f5f5; padding:14px 72px;
+  display:flex; gap:48px; align-items:center;
+  border-bottom:1px solid #e0e0e0;
+}
+.cs-infobar-item{
+  display:flex; flex-direction:column; gap:4px;
+}
+.cs-infobar-label{
+  font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  color:#888; font-family:-apple-system,'Helvetica Neue',sans-serif;
+}
+.cs-infobar-value{
+  font-size:12px; font-weight:600; color:#1869b7;
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+  letter-spacing:.04em;
+}
+
+/* ── Case study: hero image ── */
+.cs-photo{
+  width:100%; height:520px;
+  background-size:cover; background-position:center;
+  position:relative; overflow:hidden;
+  display:flex; align-items:flex-end;
+}
+.cs-photo::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(0,20,39,.85) 0%, rgba(0,20,39,.3) 50%, transparent 100%);
+}
+.cs-photo-content{
+  position:relative; z-index:1;
+  padding:48px 72px;
+}
+.cs-theme-label{
+  font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+  color:rgba(255,255,255,.65); margin-bottom:12px;
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+}
+.cs-company{
+  font-family:Georgia,'Times New Roman',Times,serif;
+  font-size:52px; font-weight:400; color:#fff;
+  line-height:1.0; margin-bottom:8px;
+}
+.cs-type{
+  font-size:13px; letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(255,255,255,.6);
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+}
+
+/* ── Case study: white content panel ── */
+.cs-content{
+  background:#fff; padding:56px 72px;
+  display:grid; grid-template-columns:1fr 1fr; gap:64px;
+  align-items:start;
+}
+.cs-content-full{
+  background:#fff; padding:56px 72px;
+}
+.cs-headline{
+  font-family:Georgia,'Times New Roman',Times,serif;
+  font-size:26px; font-weight:400; color:#001427;
+  line-height:1.35; margin-bottom:20px;
+}
+.cs-body{
+  font-size:15px; color:#444; line-height:1.7;
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+  margin-bottom:16px;
+}
+.cs-dataviz{
+  width:100%; display:block;
+}
+.cs-dataviz-full{
+  width:80%; max-width:900px; display:block;
+  margin:40px auto 0;
+}
+
+/* ── Case study: dark half + image split ── */
+.cs-split{
+  display:grid; grid-template-columns:1fr 1fr;
+}
+.cs-split-dark{
+  background:#001427; padding:60px 56px;
+  display:flex; flex-direction:column; justify-content:center;
+}
+.cs-split-dark .cs-headline{ color:#fff; }
+.cs-split-dark .cs-body{ color:rgba(255,255,255,.72); }
+.cs-split-photo{
+  background-size:cover; background-position:center;
+  min-height:440px;
+}
+
+/* ── Video block ── */
+.video-block{
+  background:#063f77; padding:64px 72px;
+  display:flex; align-items:center; gap:64px;
+}
+.video-thumb{
+  width:440px; flex-shrink:0; position:relative;
+}
+.video-thumb img{ width:100%; display:block; border-radius:3px; }
+.play-btn{
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:56px; height:56px; border-radius:50%;
+  background:rgba(255,255,255,.25);
+  border:2px solid rgba(255,255,255,.7);
+  display:flex; align-items:center; justify-content:center;
+}
+.play-btn::after{
+  content:''; width:0; height:0;
+  border-style:solid; border-width:10px 0 10px 18px;
+  border-color:transparent transparent transparent #fff;
+  margin-left:4px;
+}
+.video-text .cs-headline{ color:#fff; font-size:22px; }
+.video-text .cs-body{ color:rgba(255,255,255,.72); }
+
+/* ── Stats row ── */
+.stats-row{
+  background:#f5f5f5; padding:60px 72px;
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1px; background-color:#e0e0e0;
+}
+.stat-cell{
+  background:#f5f5f5; padding:48px 40px;
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center;
+}
+.stat-num{
+  font-family:Georgia,'Times New Roman',Times,serif;
+  font-size:64px; font-weight:400; color:#1869b7;
+  line-height:1; margin-bottom:12px;
+}
+.stat-unit{
+  font-size:20px; color:#1869b7; vertical-align:super;
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+}
+.stat-label{
+  font-size:14px; color:#444; line-height:1.5;
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+  max-width:220px;
+}
+
+/* ── Our Impact ── */
+.our-impact{
+  background:#001427; padding:80px 72px;
+}
+.our-impact-title{
+  font-family:Georgia,'Times New Roman',Times,serif;
+  font-size:52px; font-weight:400; color:#fff;
+  margin-bottom:16px;
+}
+.our-impact-sub{
+  font-size:15px; color:rgba(255,255,255,.6);
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+  max-width:600px; line-height:1.6; margin-bottom:56px;
+}
+.impact-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
+}
+.impact-cell{
+  background:rgba(255,255,255,.05);
+  padding:40px 36px;
+  border:1px solid rgba(255,255,255,.08);
+}
+.impact-cell-label{
+  font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  color:rgba(255,255,255,.45); margin-bottom:20px;
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+}
+.impact-cell-num{
+  font-family:Georgia,'Times New Roman',Times,serif;
+  font-size:48px; color:#fff; line-height:1; margin-bottom:8px;
+}
+.impact-cell-desc{
+  font-size:13px; color:rgba(255,255,255,.55); line-height:1.5;
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+}
+
+/* ── Footer ── */
+.site-footer{
+  background:#000d1a; padding:32px 72px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.footer-logo{
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+  font-size:14px; font-weight:700; letter-spacing:.3em;
+  color:rgba(255,255,255,.5); text-transform:uppercase;
+}
+.footer-copy{
+  font-size:11px; color:rgba(255,255,255,.3);
+  font-family:-apple-system,'Helvetica Neue',sans-serif;
+}
+</style>
+</head>
+<body>
+<div class="page-scroll">
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">Carlyle</span>
+  <span class="nav-sub">2020 Impact Review</span>
+  <div class="nav-links">
+    <a href="#">Our Impact At Carlyle</a>
+    <a href="#">Impact Themes</a>
+    <a href="#">Case Studies</a>
+    <a href="#">GRI Disclosures</a>
+    <div class="nav-icon"><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">2020 Impact Review</p>
+  <h1 class="hero-title serif">Building<br>Better<br>Businesses</h1>
+  <div class="hero-nav">
+    <span class="hero-pill">Our Impact At Carlyle</span>
+    <span class="hero-pill active">Our COVID-19 Response</span>
+    <span class="hero-pill">Climate Resilience</span>
+    <span class="hero-pill">Stronger Communities</span>
+    <span class="hero-pill">Sustainable Growth</span>
+    <span class="hero-pill">Engaged Employees</span>
+    <span class="hero-pill">Diverse Teams</span>
+  </div>
+</section>
+
+<!-- ══ CLIMATE RESILIENCE ══ -->
+<div class="theme-banner climate">
+  <p class="theme-label">Impact Theme</p>
+  <h2 class="theme-title serif">Climate<br>Resilience</h2>
+  <p class="theme-intro sans">Navigating climate change means navigating physical, transition, and regulatory risks and opportunities. Carlyle helps portfolio companies build resilience and reduce emissions across our global portfolio.</p>
+  <div class="theme-tags">
+    <span class="theme-tag">Cardinal Renewables</span>
+    <span class="theme-tag">Neptune Energy</span>
+    <span class="theme-tag">Accolade Wines</span>
+  </div>
+</div>
+
+<!-- Cardinal Renewables -->
+<div class="cs-infobar sans">
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Sector</span><span class="cs-infobar-value">Renewable Energy</span></div>
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Region</span><span class="cs-infobar-value">United States</span></div>
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Business Segment</span><span class="cs-infobar-value">RSEF (Renewable and Sustainable Energy Fund)</span></div>
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Acquisition Date</span><span class="cs-infobar-value">1/24/2020</span></div>
+</div>
+<div class="cs-photo" style="background-image:url('images/cir-site-wind-mountains.png');">
+  <div class="cs-photo-content">
+    <p class="cs-theme-label">Climate Resilience</p>
+    <h2 class="cs-company serif">Cardinal Renewables</h2>
+    <p class="cs-type sans">Case Study</p>
+  </div>
+</div>
+<div class="cs-content">
+  <div>
+    <h3 class="cs-headline serif">Building a leading renewable energy platform to accelerate the energy transition.</h3>
+    <p class="cs-body sans">Cardinal Renewables is an independent power producer focused on developing, constructing, and operating utility-scale renewable energy projects. Through Carlyle's Renewable and Sustainable Energy Fund, we are supporting the rapid scaling of clean energy generation across the United States, reducing carbon emissions at portfolio-wide scale.</p>
+    <p class="cs-body sans">Our investment thesis is predicated on both the compelling risk-adjusted returns of renewable energy and the opportunity to generate measurable, positive environmental impact — demonstrating that climate resilience and investment performance are mutually reinforcing.</p>
+  </div>
+  <div>
+    <img class="cs-dataviz" src="images/cir-site-dv-cardinal.jpg" alt="Cardinal Renewables impact data" />
+  </div>
+</div>
+
+<!-- Neptune Energy -->
+<div class="cs-infobar sans">
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Sector</span><span class="cs-infobar-value">Energy</span></div>
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Region</span><span class="cs-infobar-value">Europe</span></div>
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Lead Fund</span><span class="cs-infobar-value">Carlyle International Energy Partners</span></div>
+</div>
+<div class="cs-split">
+  <div class="cs-split-dark">
+    <p class="cs-theme-label" style="color:rgba(255,255,255,.5);font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-family:sans-serif;margin-bottom:12px;">Climate Resilience</p>
+    <h2 class="cs-company serif" style="font-size:44px;color:#fff;margin-bottom:20px;">Neptune Energy</h2>
+    <p class="cs-type sans" style="font-size:13px;letter-spacing:.1em;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:36px;">Case Study</p>
+    <h3 class="cs-headline serif" style="color:#fff;margin-bottom:16px;">Setting ambitious emissions targets and outperforming industry benchmarks.</h3>
+    <p class="cs-body sans">Neptune Energy has committed to net zero emissions across its operated assets by 2030, with CO₂ intensity already 68% below the industry average — one of the lowest footprints in the independent E&P sector.</p>
+  </div>
+  <div class="cs-split-photo" style="background-image:url('images/cir-site-wind-offshore.png');"></div>
+</div>
+<div class="cs-content-full" style="background:#f5f5f5;">
+  <img class="cs-dataviz-full" src="images/cir-site-dv-neptune.jpg" alt="Neptune CO2 data" />
+</div>
+
+<!-- Accolade Wines -->
+<div class="cs-infobar sans">
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Sector</span><span class="cs-infobar-value">Consumer &amp; Retail</span></div>
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Region</span><span class="cs-infobar-value">Australia / UK</span></div>
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Lead Fund</span><span class="cs-infobar-value">Carlyle Asia Partners IV</span></div>
+</div>
+<div class="cs-photo" style="background-image:url('images/cir-site-wine.png'); height:400px;">
+  <div class="cs-photo-content">
+    <p class="cs-theme-label">Climate Resilience</p>
+    <h2 class="cs-company serif">Accolade Wines</h2>
+    <p class="cs-type sans">Case Study</p>
+  </div>
+</div>
+<div class="cs-content">
+  <div>
+    <h3 class="cs-headline serif">"To paraphrase an old saying, if you show me a well-managed sustainability program, I'll show you a well-managed company."</h3>
+    <p class="cs-body sans">Accolade Wines not only holds their UK business as one of the UK's top certified Manufacturers of the Year in 2019, but also the Sustainable Manufacturer from the Manufacturer's Association. Their goal of targeting net zero carbon emissions by 2030 is already well underway.</p>
+    <p class="cs-body sans">In 2020, Accolade reduced CO₂ emissions at their bottling facility by 44% — from 3,345 to 1,873 tonnes — ahead of schedule, through investment in renewable infrastructure and operational efficiency programs.</p>
+  </div>
+  <div>
+    <img class="cs-dataviz" src="images/cir-site-dv-accolade.jpg" alt="Accolade Wines CO2 reduction" />
+  </div>
+</div>
+
+<!-- ══ STRONGER COMMUNITIES ══ -->
+<div class="theme-banner communities">
+  <p class="theme-label">Impact Theme</p>
+  <h2 class="theme-title serif">Stronger<br>Communities</h2>
+  <p class="theme-intro sans">Carlyle portfolio companies play a vital role in local economies around the world. We look at ways to support communities while driving better business outcomes — through workforce development, local sourcing, and community investment.</p>
+  <div class="theme-tags">
+    <span class="theme-tag">Abacus</span>
+    <span class="theme-tag">Accelerate Learning</span>
+    <span class="theme-tag">PA Consulting</span>
+    <span class="theme-tag">Penha Longa</span>
+  </div>
+</div>
+
+<div class="cs-photo" style="background-image:url('images/cir-site-workshop.png');">
+  <div class="cs-photo-content">
+    <p class="cs-theme-label">Stronger Communities</p>
+    <h2 class="cs-company serif">Accelerate Learning</h2>
+    <p class="cs-type sans">Case Study</p>
+  </div>
+</div>
+<div class="cs-content">
+  <div>
+    <h3 class="cs-headline serif">Democratizing access to high-quality science education across underserved communities.</h3>
+    <p class="cs-body sans">Accelerate Learning provides K–12 science curriculum solutions that meet students where they are — with adaptive, inquiry-based programs used in over 5,000 schools across the United States. The company's products are specifically designed to serve Title I schools, making rigorous STEM education accessible to all students regardless of socioeconomic background.</p>
+    <p class="cs-body sans">Since Carlyle's acquisition, Accelerate has expanded its reach by 38%, with measurable improvements in student outcomes in schools serving predominantly low-income communities.</p>
+  </div>
+  <div>
+    <div style="background:#f5f5f5;padding:40px;display:flex;flex-direction:column;gap:32px;">
+      <div>
+        <div style="font-size:52px;color:#1869b7;font-family:Georgia,serif;line-height:1;">5,000<span style="font-size:24px;">+</span></div>
+        <div style="font-size:13px;color:#444;font-family:sans-serif;margin-top:8px;line-height:1.5;">schools across the United States using Accelerate's science curriculum</div>
+      </div>
+      <div style="border-top:1px solid #ddd;padding-top:32px;">
+        <div style="font-size:52px;color:#1869b7;font-family:Georgia,serif;line-height:1;">38<span style="font-size:24px;">%</span></div>
+        <div style="font-size:13px;color:#444;font-family:sans-serif;margin-top:8px;line-height:1.5;">increase in students reached since Carlyle's investment</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SUSTAINABLE GROWTH ══ -->
+<div class="theme-banner sustainable">
+  <p class="theme-label">Impact Theme</p>
+  <h2 class="theme-title serif">Sustainable<br>Growth</h2>
+  <p class="theme-intro sans">ESG is no longer a buzz word — it's a board room topic. Companies that perform well on ESG issues which are material for their business financially outperform companies that don't. Carlyle works with management teams to integrate ESG rigor that creates more sustainable long-term value.</p>
+  <div class="theme-tags">
+    <span class="theme-tag">Jeanologia</span>
+    <span class="theme-tag">Novolex</span>
+    <span class="theme-tag">Weiman</span>
+    <span class="theme-tag">CommScope</span>
+  </div>
+</div>
+
+<!-- Jeanologia -->
+<div class="cs-infobar sans">
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Sector</span><span class="cs-infobar-value">Technology / Manufacturing</span></div>
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Region</span><span class="cs-infobar-value">Europe</span></div>
+  <div class="cs-infobar-item"><span class="cs-infobar-label">Lead Fund</span><span class="cs-infobar-value">Carlyle Europe Technology Partners III</span></div>
+</div>
+<div class="cs-photo" style="background-image:url('images/cir-scroll-032.jpg');">
+  <div class="cs-photo-content">
+    <p class="cs-theme-label">Sustainable Growth</p>
+    <h2 class="cs-company serif">Jeanologia</h2>
+    <p class="cs-type sans">Case Study</p>
+  </div>
+</div>
+<div class="cs-content">
+  <div>
+    <h3 class="cs-headline serif">Reducing water and chemical usage in denim processes to transform a global industry.</h3>
+    <p class="cs-body sans">Jeanologia's technologies are used to create roughly 15% of the 6 billion jeans produced each year — with dramatically reduced water, energy, and chemical consumption compared to conventional processes. An ESG-linked loan signed in 2019 tied the company's financing directly to its sustainability performance, creating direct financial incentives for environmental progress.</p>
+    <p class="cs-body sans">The ESG-linked loan structure was a first for Carlyle and demonstrates our commitment to innovative financing mechanisms that align capital with impact.</p>
+  </div>
+  <div>
+    <img class="cs-dataviz" src="images/cir-site-dv-jeanologia.jpg" alt="Jeanologia water savings data" />
+  </div>
+</div>
+
+<!-- Novolex -->
+<div class="cs-split">
+  <div class="cs-split-photo" style="background-image:url('images/cir-site-bag.png');background-size:cover;"></div>
+  <div class="cs-split-dark" style="background:#f5f5f5;">
+    <p style="font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#888;font-family:sans-serif;margin-bottom:12px;">Sustainable Growth</p>
+    <h2 style="font-family:Georgia,serif;font-size:44px;color:#001427;margin-bottom:20px;">Novolex</h2>
+    <p style="font-size:13px;letter-spacing:.1em;color:#888;text-transform:uppercase;font-family:sans-serif;margin-bottom:36px;">Case Study</p>
+    <h3 style="font-family:Georgia,serif;font-size:22px;color:#001427;margin-bottom:16px;line-height:1.3;">Creating packaging solutions that meet growing consumer demand for sustainable materials.</h3>
+    <p style="font-size:14px;color:#555;font-family:sans-serif;line-height:1.6;margin-bottom:24px;">Novolex, a leading manufacturer of packaging products, has committed to incorporating 50% post-consumer recycled content into their products — addressing the growing market demand for sustainable packaging while building a more resilient supply chain.</p>
+    <img src="images/cir-site-dv-novolex.jpg" style="width:100%;display:block;" alt="Novolex recycled content data" />
+  </div>
+</div>
+
+<!-- ══ ENGAGED EMPLOYEES ══ -->
+<div class="theme-banner employees">
+  <p class="theme-label">Impact Theme</p>
+  <h2 class="theme-title serif">Engaged<br>Employees</h2>
+  <p class="theme-intro sans">We believe that companies with engaged, empowered employees are more productive and more innovative. Carlyle works with portfolio companies to build cultures where talent is developed, voices are heard, and opportunities are equitably distributed.</p>
+  <div class="theme-tags">
+    <span class="theme-tag">HireVue</span>
+    <span class="theme-tag">PPD</span>
+    <span class="theme-tag">USRE</span>
+  </div>
+</div>
+
+<!-- HireVue -->
+<div class="cs-photo" style="background-image:url('images/cir-scroll-016.jpg');">
+  <div class="cs-photo-content">
+    <p class="cs-theme-label">Diverse Teams</p>
+    <h2 class="cs-company serif">HireVue</h2>
+    <p class="cs-type sans">Case Study</p>
+  </div>
+</div>
+<div class="cs-content">
+  <div>
+    <h3 class="cs-headline serif">Diversity is a central priority for many companies — HireVue's core business model helps solve these challenges.</h3>
+    <p class="cs-body sans">HireVue is supporting Fortune 500 companies to continue to recruit candidates during the pandemic across a wide variety of entry-level and experienced roles. Its support of companies who rely on university recruiting is helping reshape the direct to graduate hiring landscape. Additionally, HireVue is offering free on-demand access to hospitals across the nation during this crisis.</p>
+    <p class="cs-body sans">In October 2019, Carlyle Partners VII partnered with HireVue, a tech company which provides virtual interviewing and assessment technologies to help companies find the most qualified and diverse candidates more quickly.</p>
+  </div>
+  <div>
+    <img class="cs-dataviz" src="images/cir-site-dv-hirevue.jpg" alt="HireVue diversity data" />
+  </div>
+</div>
+
+<!-- Video block: Pooja Goyal -->
+<div class="video-block">
+  <div class="video-thumb">
+    <img src="images/cir-site-pooja.png" alt="Pooja Goyal, Head of Carlyle Renewable & Sustainable Energy" />
+    <div class="play-btn"></div>
+  </div>
+  <div class="video-text">
+    <p style="font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.5);font-family:sans-serif;text-transform:uppercase;margin-bottom:16px;">Featured Interview</p>
+    <h3 class="cs-headline serif" style="color:#fff;font-size:28px;max-width:520px;">Pooja Goyal on building Carlyle's Renewable and Sustainable Energy platform</h3>
+    <p class="cs-body sans" style="color:rgba(255,255,255,.65);">Head of Carlyle Renewable &amp; Sustainable Energy discusses the firm's approach to investing in the energy transition and the opportunity set ahead.</p>
+  </div>
+</div>
+
+<!-- ══ OUR IMPACT AT CARLYLE ══ -->
+<div class="our-impact">
+  <p class="theme-label" style="color:rgba(255,255,255,.45);font-size:10px;letter-spacing:.25em;text-transform:uppercase;font-family:sans-serif;margin-bottom:20px;">Our Impact At Carlyle</p>
+  <h2 class="our-impact-title serif">What We're Doing</h2>
+  <p class="our-impact-sub sans">Our impact as a firm is grounded in how we operate as a corporation — from our carbon footprint and board composition, to how we engage our workforce and invest in our communities.</p>
+  <div class="impact-grid">
+    <div class="impact-cell">
+      <p class="impact-cell-label">Carbon Neutrality</p>
+      <div class="impact-cell-num serif">3<span style="font-size:24px;">rd</span></div>
+      <p class="impact-cell-desc">consecutive year of carbon neutrality across Carlyle's global operations</p>
+    </div>
+    <div class="impact-cell">
+      <p class="impact-cell-label">Board Diversity</p>
+      <div class="impact-cell-num serif">30<span style="font-size:24px;">%</span></div>
+      <p class="impact-cell-desc">female representation target for boards of our largest buyout investments</p>
+    </div>
+    <div class="impact-cell">
+      <p class="impact-cell-label">Portfolio AUM</p>
+      <div class="impact-cell-num serif">$217<span style="font-size:24px;">B</span></div>
+      <p class="impact-cell-desc">in assets under management, providing platform-wide leverage for impact</p>
+    </div>
+    <div class="impact-cell">
+      <p class="impact-cell-label">GRI Reporting</p>
+      <div class="impact-cell-num serif">1<span style="font-size:24px;">st</span></div>
+      <p class="impact-cell-desc">year of full Global Reporting Initiative and SASB disclosure</p>
+    </div>
+    <div class="impact-cell">
+      <p class="impact-cell-label">ESG Integration</p>
+      <div class="impact-cell-num serif">12<span style="font-size:24px;">yr</span></div>
+      <p class="impact-cell-desc">of responsible investment guidelines embedded across all fund strategies</p>
+    </div>
+    <div class="impact-cell">
+      <p class="impact-cell-label">Impact Investing</p>
+      <div class="impact-cell-num serif">15<span style="font-size:24px;">+</span></div>
+      <p class="impact-cell-desc">impact-themed case studies featured across five driver frameworks</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <span class="footer-logo">Carlyle</span>
+  <span class="footer-copy sans">© 2020 Carlyle Investment Management L.L.C. All rights reserved.</span>
+  <span class="footer-copy sans">Copyright &nbsp;|&nbsp; Transparency and Reporting &nbsp;|&nbsp; Cookies &nbsp;|&nbsp; Privacy Notice</span>
+</footer>
+
+</div><!-- /page-scroll -->
+</body>
+</html>
