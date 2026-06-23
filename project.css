@@ -310,12 +310,12 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   /* Order: eyebrow → title → deliverables → body */
   .project-hero--aa .project-label       { order: 1; margin-bottom: 0.85rem; }
   .project-hero--aa .project-aa-title    { order: 2; font-size: clamp(2.25rem, 9vw, 2.75rem); line-height: 1.05; margin-bottom: 1rem; }
-  .project-aa-deliverables               { order: 3; margin-bottom: 2.75rem; font-size: 12.5px; font-weight: 600; display: flex; flex-wrap: wrap; column-gap: 0.9em; row-gap: 0.3em; }
+  .project-aa-deliverables               { order: 3; margin-bottom: 2.75rem; font-size: 12.5px; font-weight: 600; }
   .project-hero--aa .project-aa-body     { order: 4; font-size: 20px; max-width: none; }
 
-  /* Deliverables: flex-wrap row so longer items wrap cleanly between spans */
-  .project-aa-deliverables span          { display: block; }
-  .project-aa-deliverables span + span::before { content: none; }
+  /* Deliverables: inline with middle-dot separator; wraps at the spaces flanking · */
+  .project-aa-deliverables span          { display: inline; }
+  .project-aa-deliverables span + span::before { content: ' · '; }
 }
 
 /* ─── Sticky copy + image layout ───────────────────────── */
