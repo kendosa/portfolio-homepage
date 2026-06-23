@@ -713,3 +713,34 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
     cursor: auto !important;
   }
 }
+
+/* ─── Carlyle video + landing scroll pair row ────────────── */
+.cir-pair-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 80px;
+}
+
+.cir-pair-col {
+  overflow: hidden;
+  height: 560px;
+  line-height: 0;
+  background: #050405;
+}
+
+.cir-landing-scroll-col {
+  overflow: hidden;
+}
+
+.cir-landing-scroll-img {
+  width: 100%;
+  display: block;
+  animation: cir-landing-scroll 28s linear infinite;
+}
+
+@keyframes cir-landing-scroll {
+  0%   { transform: translateY(0); }
+  88%  { transform: translateY(calc(-100% + 560px)); }
+  100% { transform: translateY(calc(-100% + 560px)); }
+}
