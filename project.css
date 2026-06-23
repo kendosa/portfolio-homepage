@@ -325,6 +325,12 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   /* Deliverables: inline with middle-dot separator; wraps at the spaces flanking · */
   .project-aa-deliverables span          { display: inline; }
   .project-aa-deliverables span + span::before { content: ' · '; }
+
+  /* Intro → sticky-pair gap = 2× paragraph spacing (2 × 1.8em × 20px = 72px) */
+  .project-hero--aa + .sticky-pair {
+    padding-top: 0;
+    margin-top: 4.8rem;
+  }
 }
 
 /* ─── Sticky copy + image layout ───────────────────────── */
