@@ -719,8 +719,8 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--pad);
-  margin-top: 80px;
-  padding: 0 var(--pad);
+  padding: 80px var(--pad);
+  background: #050405;
 }
 
 .cir-pair-col {
