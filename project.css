@@ -387,8 +387,13 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   width: clamp(420px, 35%, 520px);
   position: sticky;
   top: calc(var(--header-h) + 15px);
+  transition: top 0.3s ease;
   height: 100%;
   padding-right: clamp(1rem, 2vw, 1.5rem);
+}
+
+body:has(.site-header.nav-hidden) .sticky-copy {
+  top: 15px;
 }
 
 .sticky-copy-text {
