@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 414px; height: 629px; overflow: hidden; background: #fff; cursor: default; }
+img { display: block; }
+
+.card {
+  position: absolute;
+  width: 305px; height: 334px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+  user-select: none;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- "Case Studies" heading: 574×122 @2x → 287×61, centered at screen (172,80) → top-left (29,50) -->
+<img src="images/cir-card-heading.png" width="287" height="61"
+     style="position:absolute;left:29px;top:50px;" />
+
+<!-- Card group: 325×354, top-left at (46,163) -->
+<div id="deck" style="position:absolute;left:46px;top:163px;width:325px;height:354px;"></div>
+
+<!-- More Case Studies: 157×24 centered horizontally -->
+<img id="moreLink" src="images/cir-card-more.png" width="157" height="24"
+     style="position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+            opacity:0;pointer-events:none;transition:opacity 0.25s ease;cursor:pointer;" />
+
+<script>
+(function () {
+  var deck     = document.getElementById('deck');
+  var moreLink = document.getElementById('moreLink');
+
+  /* Stack positions (back→front): left/top offsets within deck, z-index */
+  var POS = [
+    { left:  0, top:  0, z: 1 }, // back
+    { left: 10, top: 10, z: 2 }, // middle
+    { left: 20, top: 20, z: 3 }, // front
+  ];
+
+  var TOTAL = 5;
+  var cards  = [];
+  var alive  = []; // indices of cards still in stack, [0]=back … [n-1]=front
+
+  function makeCard() {
+    var el = document.createElement('div');
+    el.className = 'card';
+    el.innerHTML =
+      '<img src="images/cir-card-name.png"     width="229" height="26"  style="position:absolute;left:17px;top:14px;"/>' +
+      '<img src="images/cir-card-subtitle.png" width="229" height="26"  style="position:absolute;left:17px;top:33px;"/>' +
+      '<img src="images/cir-card-body.png"     width="267" height="196" style="position:absolute;left:16px;top:88px;"/>' +
+      '<img src="images/cir-card-tag.png"      width="239" height="27"  style="position:absolute;left:17px;top:292px;"/>';
+    el.style.display = 'none';
+    deck.appendChild(el);
+    return el;
+  }
+
+  for (var i = 0; i < TOTAL; i++) {
+    cards.push(makeCard());
+    alive.push(i);
+  }
+
+  function layout(animated) {
+    var n = alive.length;
+    alive.forEach(function (idx, si) {
+      var card      = cards[idx];
+      var fromFront = n - 1 - si; // 0 = front
+      card.style.display = 'block';
+
+      if (fromFront >= POS.length) {
+        /* hidden behind stack — no transition, invisible */
+        card.style.transition    = 'none';
+        card.style.left          = POS[0].left + 'px';
+        card.style.top           = POS[0].top  + 'px';
+        card.style.zIndex        = '0';
+        card.style.opacity       = '0';
+        card.style.pointerEvents = 'none';
+        return;
+      }
+
+      var p = POS[POS.length - 1 - fromFront]; // POS[2]=front, [1]=mid, [0]=back
+      card.style.transition    = animated ? 'left 0.32s ease, top 0.32s ease, opacity 0.32s ease' : 'none';
+      card.style.left          = p.left + 'px';
+      card.style.top           = p.top  + 'px';
+      card.style.zIndex        = String(p.z);
+      card.style.opacity       = '1';
+      card.style.pointerEvents = fromFront === 0 ? 'auto' : 'none';
+    });
+  }
+
+  function onFrontClick() {
+    if (alive.length === 0) return;
+
+    var frontIdx = alive[alive.length - 1];
+    var front    = cards[frontIdx];
+    front.removeEventListener('click', onFrontClick);
+
+    /* Fly card up and off */
+    front.style.transition    = 'transform 0.38s cubic-bezier(0.4,0,0.6,1), opacity 0.28s ease';
+    front.style.transform     = 'translateY(-540px) rotate(-7deg)';
+    front.style.opacity       = '0';
+    front.style.pointerEvents = 'none';
+
+    alive.pop();
+
+    setTimeout(function () {
+      front.style.display   = 'none';
+      front.style.transform = '';
+      layout(true);
+
+      if (alive.length === 0) {
+        moreLink.style.opacity       = '1';
+        moreLink.style.pointerEvents = 'auto';
+      } else {
+        /* attach click to new front */
+        cards[alive[alive.length - 1]].addEventListener('click', onFrontClick);
+      }
+    }, 360);
+  }
+
+  function reset() {
+    moreLink.style.opacity       = '0';
+    moreLink.style.pointerEvents = 'none';
+    cards.forEach(function (c) {
+      c.style.transition = 'none';
+      c.style.transform  = '';
+      c.style.display    = 'none';
+      c.style.opacity    = '';
+    });
+    alive = [];
+    for (var i = 0; i < TOTAL; i++) alive.push(i);
+    layout(false);
+    setTimeout(function () {
+      cards[alive[alive.length - 1]].addEventListener('click', onFrontClick);
+    }, 50);
+  }
+
+  moreLink.addEventListener('click', reset);
+
+  layout(false);
+  cards[alive[alive.length - 1]].addEventListener('click', onFrontClick);
+}());
+</script>
+</body>
+</html>
