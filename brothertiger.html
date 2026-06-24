@@ -65,7 +65,7 @@
   <div class="sticky-pair">
     <div class="sticky-copy">
       <div class="project-aa-body">
-        <p id="btAlbumLabel" style="transition: opacity 0.2s ease;"></p>
+        <p id="btAlbumLabel"></p>
       </div>
     </div>
     <div class="sticky-image-col" style="display:flex; flex-direction:column; gap:20px;">
@@ -111,9 +111,8 @@
     if (!label) return;
 
     var targets = Array.from(document.querySelectorAll('[data-album]'));
-    var current   = '';
-    var ticking   = false;
-    var fadeTimer = null;
+    var current = '';
+    var ticking = false;
 
     function activeIndex() {
       var idx = 0;
@@ -127,12 +126,7 @@
       var text = targets[activeIndex()].dataset.album;
       if (text !== current) {
         current = text;
-        clearTimeout(fadeTimer);
-        label.style.opacity = '0';
-        fadeTimer = setTimeout(function () {
-          label.textContent = text;
-          label.style.opacity = '1';
-        }, 180);
+        label.textContent = text;
       }
       ticking = false;
     }
