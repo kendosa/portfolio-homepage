@@ -386,7 +386,7 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   flex: 0 0 clamp(420px, 35%, 520px);
   width: clamp(420px, 35%, 520px);
   position: sticky;
-  top: 15px;
+  top: calc(var(--header-h) + 15px);
   height: 100%;
   padding-right: clamp(1rem, 2vw, 1.5rem);
 }
