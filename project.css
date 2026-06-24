@@ -8,39 +8,67 @@
   perspective: 1000px;
 }
 
-/* Three nested elements, each animating one axis independently.
-   Separating axes means each can use its own timing function and period,
-   producing true sine-wave motion with no jerk at keyframe boundaries. */
+/* Relative wrapper so .bt-specular can sit over the spinning image
+   without being inside the 3D transform — keeps it in screen space */
+.bt-logo-stage {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .bt-spin-y {
-  transform-style: preserve-3d;
-  animation: bt-rotate-y 16s linear infinite;
-}
-.bt-tilt-x {
-  transform-style: preserve-3d;
-  animation: bt-tilt-x 8.7s ease-in-out infinite;
-}
-.bt-wobble-z {
-  animation: bt-wobble-z 5.3s ease-in-out infinite;
+  animation: bt-rotate-y 12s linear infinite;
 }
 
 .bt-chrome-logo {
   width: clamp(280px, 38vw, 520px);
   height: auto;
   display: block;
-  will-change: transform;
+  animation: bt-lighting 12s linear infinite;
+  will-change: filter;
+}
+
+/* Screen-space specular highlight — lives outside the Y-rotation so it
+   stays fixed relative to the viewer, like a real light source */
+.bt-specular {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 55% 58% at 34% 28%,
+    rgba(255, 255, 255, 0.6)  0%,
+    rgba(255, 255, 255, 0.18) 38%,
+    transparent 62%
+  );
+  pointer-events: none;
+  animation: bt-specular-pulse 12s linear infinite;
 }
 
 @keyframes bt-rotate-y {
   from { transform: rotateY(0deg); }
   to   { transform: rotateY(360deg); }
 }
-@keyframes bt-tilt-x {
-  0%, 100% { transform: rotateX(18deg); }
-  50%      { transform: rotateX(30deg); }
+
+/* Brightness follows cos(θ): peaks at 0° (front), troughs at 90°/270° (edge),
+   partial recovery at 180° (back face lit from behind).
+   Per-keyframe timing-function produces a smooth cosine-like curve. */
+@keyframes bt-lighting {
+  0%   { filter: brightness(1.18); animation-timing-function: ease-in; }
+  25%  { filter: brightness(0.18); animation-timing-function: ease-out; }
+  50%  { filter: brightness(0.72); animation-timing-function: ease-in; }
+  75%  { filter: brightness(0.18); animation-timing-function: ease-out; }
+  100% { filter: brightness(1.18); }
 }
-@keyframes bt-wobble-z {
-  0%, 100% { transform: rotateZ(3deg); }
-  50%      { transform: rotateZ(-5deg); }
+
+/* Specular highlight fades out at the edges (90°/270°) and
+   recovers when facing toward or away from the viewer */
+@keyframes bt-specular-pulse {
+  0%   { opacity: 1;    animation-timing-function: ease-in; }
+  25%  { opacity: 0;    animation-timing-function: ease-out; }
+  50%  { opacity: 0.38; animation-timing-function: ease-in; }
+  75%  { opacity: 0;    animation-timing-function: ease-out; }
+  100% { opacity: 1; }
 }
 
 /* ─── Project Page Styles ───────────────────────────────────────── */
