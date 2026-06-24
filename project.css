@@ -1,3 +1,29 @@
+/* ─── Brothertiger chrome spin ──────────────────────────────────── */
+.bt-chrome-section {
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0;
+}
+
+.bt-chrome-logo {
+  width: clamp(280px, 38vw, 520px);
+  height: auto;
+  display: block;
+  animation: bt-spin 16s linear infinite;
+  will-change: transform;
+}
+
+@keyframes bt-spin {
+  0%   { transform: perspective(1000px) rotateX(22deg)  rotateY(0deg)   rotateZ(4deg); }
+  20%  { transform: perspective(1000px) rotateX(30deg)  rotateY(72deg)  rotateZ(-2deg); }
+  40%  { transform: perspective(1000px) rotateX(17deg)  rotateY(144deg) rotateZ(6deg); }
+  60%  { transform: perspective(1000px) rotateX(28deg)  rotateY(216deg) rotateZ(-3deg); }
+  80%  { transform: perspective(1000px) rotateX(14deg)  rotateY(288deg) rotateZ(4deg); }
+  100% { transform: perspective(1000px) rotateX(22deg)  rotateY(360deg) rotateZ(4deg); }
+}
+
 /* ─── Project Page Styles ───────────────────────────────────────── */
 
 /* Header */
