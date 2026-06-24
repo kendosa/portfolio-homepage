@@ -107,25 +107,47 @@
   <script src="project.js"></script>
   <script>
   (function () {
-    var label = document.getElementById('btAlbumLabel');
+    var label   = document.getElementById('btAlbumLabel');
     if (!label) return;
 
-    var targets = document.querySelectorAll('[data-album]');
+    var targets = Array.from(document.querySelectorAll('[data-album]'));
+    var current = '';
+    var ticking = false;
 
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var text = entry.target.dataset.album;
-          label.style.opacity = '0';
-          setTimeout(function () {
-            label.textContent = text;
-            label.style.opacity = '1';
-          }, 180);
-        }
-      });
-    }, { rootMargin: '-35% 0px -35% 0px', threshold: 0 });
+    function activeIndex() {
+      /* The active album is the one whose top has most recently crossed
+         the top of the viewport. Walk forward through the list and keep
+         advancing as long as each element's top edge is at or above 0. */
+      var idx = 0;
+      for (var i = 0; i < targets.length; i++) {
+        if (targets[i].getBoundingClientRect().top <= 0) idx = i + 1;
+      }
+      return Math.min(idx, targets.length - 1);
+    }
 
-    targets.forEach(function (el) { io.observe(el); });
+    function update() {
+      var text = targets[activeIndex()].dataset.album;
+      if (text !== current) {
+        current = text;
+        label.style.opacity = '0';
+        setTimeout(function () {
+          label.textContent = text;
+          label.style.opacity = '1';
+        }, 180);
+      }
+      ticking = false;
+    }
+
+    /* Set initial state without transition */
+    label.textContent = targets[0].dataset.album;
+    current = targets[0].dataset.album;
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
   }());
   </script>
 </body>
