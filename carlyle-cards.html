@@ -2,79 +2,163 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
+<link rel="stylesheet" href="https://use.typekit.net/eux7kam.css" />
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { width: 414px; height: 629px; overflow: hidden; background: #fff; cursor: default; }
-img { display: block; }
+html, body {
+  width: 414px; height: 629px;
+  overflow: hidden;
+  background: #fff;
+  cursor: default;
+  font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.heading {
+  position: absolute;
+  left: 29px; top: 50px;
+  font-size: 30px;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  color: #0a1f44;
+  line-height: 1;
+}
+
+/* Card group mirrors Principle layout:
+   group top-left at (46, 163), 325×354 */
+#deck {
+  position: absolute;
+  left: 46px; top: 163px;
+  width: 325px; height: 354px;
+}
 
 .card {
   position: absolute;
   width: 305px; height: 334px;
   background: #fff;
   border-radius: 14px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
-  user-select: none;
-  cursor: pointer;
+  box-shadow: 0 2px 20px rgba(10,31,68,0.10), 0 1px 4px rgba(10,31,68,0.06);
+  padding: 20px 20px 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-company {
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #0a1f44;
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+
+.card-label {
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #0a1f44;
+  opacity: 0.45;
+  margin-bottom: 16px;
+}
+
+.card-body {
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.58;
+  color: #0a1f44;
+  flex: 1;
+}
+
+.card-tag {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: #2456C0;
+  margin-top: 14px;
+  flex-shrink: 0;
 }
 </style>
 </head>
 <body>
 
-<!-- "Case Studies" heading: 574×122 @2x → 287×61, centered at screen (172,80) → top-left (29,50) -->
-<img src="images/cir-card-heading.png" width="287" height="61"
-     style="position:absolute;left:29px;top:50px;" />
+<div class="heading">Case Studies</div>
 
-<!-- Card group: 325×354, top-left at (46,163) -->
-<div id="deck" style="position:absolute;left:46px;top:163px;width:325px;height:354px;"></div>
-
-<!-- More Case Studies: 157×24 centered horizontally -->
-<img id="moreLink" src="images/cir-card-more.png" width="157" height="24"
-     style="position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
-            opacity:0;pointer-events:none;transition:opacity 0.25s ease;cursor:pointer;" />
+<div id="deck">
+  <!-- Cards populated by JS so content + order are controlled in one place -->
+</div>
 
 <script>
 (function () {
-  var deck     = document.getElementById('deck');
-  var moreLink = document.getElementById('moreLink');
 
-  /* Stack positions (back→front): left/top offsets within deck, z-index */
-  var POS = [
-    { left:  0, top:  0, z: 1 }, // back
-    { left: 10, top: 10, z: 2 }, // middle
-    { left: 20, top: 20, z: 3 }, // front
+  var DATA = [
+    {
+      company: 'HireVue',
+      body: 'Businesses frequently struggle to find ways to expand their hiring pipeline, find more diverse candidates, and reduce unconscious bias in hiring decisions. HireVue’s core business model helps solve these challenges.',
+      tag: 'Diverse Teams'
+    },
+    {
+      company: 'PPD',
+      body: 'PPD is a Carlyle portfolio company profiled for its innovative work accelerating patient enrollment and the use of digital and virtual trials to increase patient access, retention and engagement in vital medical research.',
+      tag: 'Diverse Teams'
+    },
+    {
+      company: 'Accelerate Learning',
+      body: 'The persistent causes of the achievement gap in the United States include costly, static, and scarce educational materials. ALI’s mission is to develop digital learning tools that produce verifiably better outcomes at a lower price point.',
+      tag: 'Stronger Communities'
+    },
+    {
+      company: 'Cardinal Renewables',
+      body: 'Electricity generation accounts for approximately 28% of U.S. emissions alone — almost two-thirds of our electricity comes from burning fossil fuels, creating a large and growing investment opportunity in renewable capacity.',
+      tag: 'Climate Resilience'
+    },
+    {
+      company: 'Accolade Wines',
+      body: 'Accolade is acutely aware of the impact climate change can have on their crops. In 2020 they achieved a 44% reduction in CO₂e by integrating on-site wind turbines and clean energy sourcing at their bottling facility.',
+      tag: 'Climate Resilience'
+    }
   ];
 
-  var TOTAL = 5;
-  var cards  = [];
-  var alive  = []; // indices of cards still in stack, [0]=back … [n-1]=front
+  /* Stack positions: [0] = back, [2] = front */
+  var POS = [
+    { left:  0, top:  0, z: 1 },
+    { left: 10, top: 10, z: 2 },
+    { left: 20, top: 20, z: 3 }
+  ];
 
-  function makeCard() {
+  var PAUSE    = 2400; /* ms each card stays visible */
+  var FLY_DUR  = 380;  /* ms dismissal flight */
+  var SHIFT_DUR = 320; /* ms cards shift positions */
+
+  var deck  = document.getElementById('deck');
+  var cards = [];
+  var alive = []; /* indices in deck order: [0]=back … [n-1]=front */
+
+  /* Build card elements */
+  DATA.forEach(function (d) {
     var el = document.createElement('div');
     el.className = 'card';
     el.innerHTML =
-      '<img src="images/cir-card-name.png"     width="229" height="26"  style="position:absolute;left:17px;top:14px;"/>' +
-      '<img src="images/cir-card-subtitle.png" width="229" height="26"  style="position:absolute;left:17px;top:33px;"/>' +
-      '<img src="images/cir-card-body.png"     width="267" height="196" style="position:absolute;left:16px;top:88px;"/>' +
-      '<img src="images/cir-card-tag.png"      width="239" height="27"  style="position:absolute;left:17px;top:292px;"/>';
+      '<div class="card-company">' + d.company + '</div>' +
+      '<div class="card-label">Case Study</div>' +
+      '<div class="card-body">' + d.body + '</div>' +
+      '<div class="card-tag">' + d.tag + '</div>';
     el.style.display = 'none';
     deck.appendChild(el);
-    return el;
-  }
-
-  for (var i = 0; i < TOTAL; i++) {
-    cards.push(makeCard());
-    alive.push(i);
-  }
+    cards.push(el);
+    alive.push(cards.length - 1);
+  });
 
   function layout(animated) {
     var n = alive.length;
     alive.forEach(function (idx, si) {
       var card      = cards[idx];
-      var fromFront = n - 1 - si; // 0 = front
+      var fromFront = n - 1 - si; /* 0 = front card */
+
       card.style.display = 'block';
 
       if (fromFront >= POS.length) {
-        /* hidden behind stack — no transition, invisible */
+        /* Hidden behind the visible stack */
         card.style.transition    = 'none';
         card.style.left          = POS[0].left + 'px';
         card.style.top           = POS[0].top  + 'px';
@@ -84,26 +168,26 @@ img { display: block; }
         return;
       }
 
-      var p = POS[POS.length - 1 - fromFront]; // POS[2]=front, [1]=mid, [0]=back
-      card.style.transition    = animated ? 'left 0.32s ease, top 0.32s ease, opacity 0.32s ease' : 'none';
+      var p = POS[POS.length - 1 - fromFront]; /* POS[2]=front … POS[0]=back */
+      card.style.transition    = animated
+        ? 'left ' + SHIFT_DUR + 'ms ease, top ' + SHIFT_DUR + 'ms ease, opacity ' + SHIFT_DUR + 'ms ease'
+        : 'none';
       card.style.left          = p.left + 'px';
       card.style.top           = p.top  + 'px';
       card.style.zIndex        = String(p.z);
       card.style.opacity       = '1';
-      card.style.pointerEvents = fromFront === 0 ? 'auto' : 'none';
+      card.style.pointerEvents = 'none';
     });
   }
 
-  function onFrontClick() {
-    if (alive.length === 0) return;
+  function dismissFront(done) {
+    if (alive.length === 0) { done(); return; }
 
-    var frontIdx = alive[alive.length - 1];
-    var front    = cards[frontIdx];
-    front.removeEventListener('click', onFrontClick);
+    var front = cards[alive[alive.length - 1]];
 
-    /* Fly card up and off */
-    front.style.transition    = 'transform 0.38s cubic-bezier(0.4,0,0.6,1), opacity 0.28s ease';
-    front.style.transform     = 'translateY(-540px) rotate(-7deg)';
+    /* Fly card up and off-screen with slight rotation */
+    front.style.transition    = 'transform ' + FLY_DUR + 'ms cubic-bezier(0.4,0,0.6,1), opacity ' + (FLY_DUR - 60) + 'ms ease';
+    front.style.transform     = 'translateY(-560px) rotate(-7deg)';
     front.style.opacity       = '0';
     front.style.pointerEvents = 'none';
 
@@ -112,39 +196,65 @@ img { display: block; }
     setTimeout(function () {
       front.style.display   = 'none';
       front.style.transform = '';
-      layout(true);
+      layout(true);   /* shift remaining cards forward */
+      done();
+    }, FLY_DUR + 20);
+  }
 
-      if (alive.length === 0) {
-        moreLink.style.opacity       = '1';
-        moreLink.style.pointerEvents = 'auto';
-      } else {
-        /* attach click to new front */
-        cards[alive[alive.length - 1]].addEventListener('click', onFrontClick);
-      }
-    }, 360);
+  function runLoop() {
+    if (alive.length === 0) {
+      /* Brief pause then reset */
+      setTimeout(reset, 700);
+      return;
+    }
+
+    /* Wait, then dismiss the front card, then recurse */
+    setTimeout(function () {
+      dismissFront(runLoop);
+    }, PAUSE);
   }
 
   function reset() {
-    moreLink.style.opacity       = '0';
-    moreLink.style.pointerEvents = 'none';
-    cards.forEach(function (c) {
+    /* Restore all cards silently at their stacked positions */
+    cards.forEach(function (c, i) {
       c.style.transition = 'none';
       c.style.transform  = '';
-      c.style.display    = 'none';
-      c.style.opacity    = '';
+      c.style.opacity    = '0';
+      c.style.display    = 'block';
     });
-    alive = [];
-    for (var i = 0; i < TOTAL; i++) alive.push(i);
-    layout(false);
-    setTimeout(function () {
-      cards[alive[alive.length - 1]].addEventListener('click', onFrontClick);
-    }, 50);
+    alive = cards.map(function (_, i) { return i; });
+
+    /* Force reflow so transitions fire properly */
+    deck.offsetHeight; // eslint-disable-line no-unused-expressions
+
+    /* Fade visible cards in */
+    cards.forEach(function (c, i) {
+      var fromFront = alive.length - 1 - i;
+      if (fromFront < POS.length) {
+        var p = POS[POS.length - 1 - fromFront];
+        c.style.transition = 'none';
+        c.style.left       = p.left + 'px';
+        c.style.top        = p.top  + 'px';
+        c.style.zIndex     = String(p.z);
+        deck.offsetHeight; // reflow
+        c.style.transition = 'opacity 0.5s ease';
+        c.style.opacity    = '1';
+      } else {
+        c.style.left    = POS[0].left + 'px';
+        c.style.top     = POS[0].top  + 'px';
+        c.style.zIndex  = '0';
+        c.style.opacity = '0';
+        c.style.display = 'none';
+      }
+    });
+
+    setTimeout(runLoop, 500 + PAUSE);
   }
 
-  moreLink.addEventListener('click', reset);
-
+  /* Initial render + start */
   layout(false);
-  cards[alive[alive.length - 1]].addEventListener('click', onFrontClick);
+  setTimeout(runLoop, PAUSE);
+
 }());
 </script>
 </body>
