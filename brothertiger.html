@@ -64,20 +64,25 @@
 
   <div class="sticky-pair">
     <div class="sticky-copy">
-      <span class="section-label">Placeholder Section</span>
-      <div class="project-aa-body">
-        <p>Placeholder copy for this section of the Brothertiger case study.</p>
-      </div>
+      <p id="btAlbumLabel" class="project-aa-deliverables" style="transition: opacity 0.2s ease; min-height: 2em;"></p>
     </div>
     <div class="sticky-image-col" style="display:flex; flex-direction:column; gap:20px;">
-      <img src="images/brothertiger-vinyl-mockup.jpg" alt="Out of Touch 10th Anniversary vinyl and jacket mockup" style="width:100%; aspect-ratio:16/9; object-fit:cover; display:block;" />
-      <img src="images/brothertiger-green-vinyl-mockup.jpg" alt="Out of Touch 10th Anniversary green vinyl and jacket mockup" style="width:100%; aspect-ratio:8/5; object-fit:cover; display:block;" />
-      <img src="images/brothertiger-tears-for-fears-mockup.jpg" alt="Brothertiger Plays Tears for Fears vinyl mockup" style="width:100%; aspect-ratio:3/2; object-fit:cover; display:block;" />
-      <div class="pair-imgs">
+      <img src="images/brothertiger-vinyl-mockup.jpg" alt="Future Splendors LP vinyl mockup"
+           data-album="Future Splendors, LP, 2013"
+           style="width:100%; aspect-ratio:16/9; object-fit:cover; display:block;" />
+      <img src="images/brothertiger-green-vinyl-mockup.jpg" alt="Out of Touch LP vinyl mockup"
+           data-album="Out Of Touch, LP, 2015"
+           style="width:100%; aspect-ratio:8/5; object-fit:cover; display:block;" />
+      <img src="images/brothertiger-tears-for-fears-mockup.jpg" alt="Brothertiger Plays Tears for Fears vinyl mockup"
+           data-album="Brothertiger Plays: Tears For Fears Songs From The Big Chair, LP, 2017"
+           style="width:100%; aspect-ratio:3/2; object-fit:cover; display:block;" />
+      <div class="pair-imgs" data-album="A Chain Of Islands, EP, 2019 &amp; Paradise Lost, LP, 2020">
         <img src="images/brothertiger-chain-of-islands-mockup.jpg" alt="A Chain of Islands EP vinyl mockup" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block;" />
         <img src="images/brothertiger-paradise-lost-mockup.jpg" alt="Paradise Lost vinyl mockup" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block;" />
       </div>
-      <img src="images/brothertiger-fundamentals-mockup.jpg" alt="Brothertiger Fundamentals vinyl series mockup" style="width:100%; aspect-ratio:3/2; object-fit:cover; display:block;" />
+      <img src="images/brothertiger-fundamentals-mockup.jpg" alt="Brothertiger Fundamentals vinyl series mockup"
+           data-album="Fundamentals I–IV, LPs, 2020"
+           style="width:100%; aspect-ratio:3/2; object-fit:cover; display:block;" />
     </div>
   </div>
 
@@ -90,5 +95,28 @@
 
   <script src="main.js"></script>
   <script src="project.js"></script>
+  <script>
+  (function () {
+    var label = document.getElementById('btAlbumLabel');
+    if (!label) return;
+
+    var targets = document.querySelectorAll('[data-album]');
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var text = entry.target.dataset.album;
+          label.style.opacity = '0';
+          setTimeout(function () {
+            label.textContent = text;
+            label.style.opacity = '1';
+          }, 180);
+        }
+      });
+    }, { rootMargin: '-35% 0px -35% 0px', threshold: 0 });
+
+    targets.forEach(function (el) { io.observe(el); });
+  }());
+  </script>
 </body>
 </html>
