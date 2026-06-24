@@ -111,26 +111,25 @@
     if (!label) return;
 
     var targets = Array.from(document.querySelectorAll('[data-album]'));
-    var current = '';
-    var ticking = false;
+    var current   = '';
+    var ticking   = false;
+    var fadeTimer = null;
 
     function activeIndex() {
-      /* The active album is the one whose top has most recently crossed
-         the top of the viewport. Walk forward through the list and keep
-         advancing as long as each element's top edge is at or above 0. */
       var idx = 0;
       for (var i = 0; i < targets.length; i++) {
         if (targets[i].getBoundingClientRect().top <= 0) idx = i;
       }
-      return Math.min(idx, targets.length - 1);
+      return idx;
     }
 
     function update() {
       var text = targets[activeIndex()].dataset.album;
       if (text !== current) {
         current = text;
+        clearTimeout(fadeTimer);
         label.style.opacity = '0';
-        setTimeout(function () {
+        fadeTimer = setTimeout(function () {
           label.textContent = text;
           label.style.opacity = '1';
         }, 180);
