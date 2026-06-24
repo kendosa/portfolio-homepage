@@ -121,7 +121,7 @@
          advancing as long as each element's top edge is at or above 0. */
       var idx = 0;
       for (var i = 0; i < targets.length; i++) {
-        if (targets[i].getBoundingClientRect().top <= 0) idx = i + 1;
+        if (targets[i].getBoundingClientRect().top <= 0) idx = i;
       }
       return Math.min(idx, targets.length - 1);
     }
