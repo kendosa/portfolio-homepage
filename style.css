@@ -653,4 +653,10 @@ a { color: inherit; text-decoration: none; }
   .card-meta { align-items: center; }
 }
 
+@media (pointer: coarse) {
+  .img-wrap[data-gallery] > img {
+    transform: translateX(var(--px, 0px));
+  }
+}
+
 

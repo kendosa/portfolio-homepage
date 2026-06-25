@@ -490,4 +490,31 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   });
 });
 
+/* ── Mobile: parallax scroll shifts gallery images laterally ── */
+if (window.matchMedia('(pointer: coarse)').matches) {
+  const RANGE = 12;
+  const galleryImgs = [...document.querySelectorAll('.img-wrap[data-gallery] > img')];
+
+  function applyParallax() {
+    const vMid = window.innerHeight / 2;
+    const vh   = window.innerHeight;
+    galleryImgs.forEach(img => {
+      const rect     = img.parentElement.getBoundingClientRect();
+      const cardMid  = rect.top + rect.height / 2;
+      const progress = (cardMid - vMid) / vh; // +ve below center, -ve above
+      const offset   = Math.max(-RANGE, Math.min(RANGE, progress * RANGE * 2));
+      img.style.setProperty('--px', `${offset}px`);
+    });
+  }
+
+  let rafPending = false;
+  window.addEventListener('scroll', () => {
+    if (!rafPending) {
+      rafPending = true;
+      requestAnimationFrame(() => { applyParallax(); rafPending = false; });
+    }
+  }, { passive: true });
+
+  applyParallax();
+}
 
