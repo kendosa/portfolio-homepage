@@ -783,3 +783,7 @@ body:has(.site-header.nav-hidden) .sticky-copy {
   88%  { transform: translateY(calc(-100% + 560px)); }
   100% { transform: translateY(calc(-100% + 560px)); }
 }
+
+@media (pointer: coarse) {
+  #ccCursor { display: none !important; }
+}
