@@ -41,11 +41,25 @@
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        align-items: start;
+        align-items: stretch;
+        height: 62vw;
       }
       .wm-adidas-gallery::-webkit-scrollbar { display: none; }
-      .wm-adidas-row   { display: contents; }
-      .wm-adidas-slide { flex: 0 0 88% !important; scroll-snap-align: start; }
+      .wm-adidas-row { display: contents; }
+      .wm-adidas-slide {
+        flex: 0 0 auto !important;
+        scroll-snap-align: start;
+        height: 100%;
+      }
+      .wm-adidas-slide img {
+        height: 100%;
+        width: auto;
+        display: block;
+      }
+      .wm-adidas-slide a {
+        display: block;
+        height: 100%;
+      }
     }
     #ccCursor {
       position: fixed;
