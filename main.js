@@ -404,6 +404,10 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
 
     // Rubber-band at boundary: damped resistance, clamp so it only pulls in the boundary direction
     if (atBoundary) {
+      // White background so nothing shows through behind the pulled image
+      wrap.style.background = '#fff';
+      if (currentIdx === imgs.length - 1) baseImg.style.opacity = '0';
+
       const clamped = currentIdx === 0 ? Math.max(0, rawDx) : Math.min(0, rawDx);
       const curEl = getEl(currentIdx);
       if (curEl) {
@@ -433,6 +437,8 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
         setTimeout(() => {
           curEl.style.transition = 'none';
           curEl.style.transform  = '';
+          wrap.style.background  = '';
+          baseImg.style.opacity  = '';
           requestAnimationFrame(() => { curEl.style.transition = ''; });
         }, 510);
       }
