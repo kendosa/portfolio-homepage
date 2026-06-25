@@ -349,6 +349,7 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   let touchStartX = 0, touchStartY = 0;
   let touchDirLocked = false, touchIsHorizontal = false;
   let swipeDir = 0, incomingIdx = -1, wrapW = 0;
+  let atBoundary = false;
 
   wrap.addEventListener('touchstart', e => {
     touchStartX = e.touches[0].clientX;
@@ -357,6 +358,7 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
     touchIsHorizontal = false;
     swipeDir = 0;
     incomingIdx = -1;
+    atBoundary = false;
     wrapW = wrap.offsetWidth;
   }, { passive: true });
 
@@ -374,26 +376,44 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
 
     const dir = rawDx < 0 ? -1 : 1;
 
-    // First horizontal move: lock in the incoming frame and position it
-    if (incomingIdx === -1) {
-      swipeDir = dir;
-      const candidate = dir === -1
-        ? Math.min(imgs.length - 1, currentIdx + 1)
-        : Math.max(1, currentIdx - 1); // never swipe back to the cover (idx 0)
-      if (candidate === currentIdx) return; // at boundary
-      incomingIdx = candidate;
+    // On first horizontal move: check for boundary or set up incoming frame
+    if (!atBoundary && incomingIdx === -1) {
+      const hitStart = currentIdx === 0 && dir === 1;
+      const hitEnd   = currentIdx === imgs.length - 1 && dir === -1;
 
-      const inEl = getEl(incomingIdx);
-      const curEl = getEl(currentIdx);
-      if (inEl) {
-        inEl.style.transition = 'none';
-        inEl.style.opacity = '1';
-        inEl.style.transform = `translateX(${-dir * wrapW}px)`;
+      if (hitStart || hitEnd) {
+        atBoundary = true;
+      } else {
+        swipeDir = dir;
+        const candidate = dir === -1
+          ? Math.min(imgs.length - 1, currentIdx + 1)
+          : Math.max(0, currentIdx - 1);
+        if (candidate === currentIdx) return;
+        incomingIdx = candidate;
+
+        const inEl  = getEl(incomingIdx);
+        const curEl = getEl(currentIdx);
+        if (inEl) {
+          inEl.style.transition = 'none';
+          inEl.style.opacity    = '1';
+          inEl.style.transform  = `translateX(${-dir * wrapW}px)`;
+        }
+        if (curEl) curEl.style.transition = 'none';
       }
-      if (curEl) curEl.style.transition = 'none';
     }
-    if (incomingIdx === -1) return;
 
+    // Rubber-band at boundary: damped resistance, clamp so it only pulls in the boundary direction
+    if (atBoundary) {
+      const clamped = currentIdx === 0 ? Math.max(0, rawDx) : Math.min(0, rawDx);
+      const curEl = getEl(currentIdx);
+      if (curEl) {
+        curEl.style.transition = 'none';
+        curEl.style.transform  = `translateX(${clamped * 0.18}px)`;
+      }
+      return;
+    }
+
+    if (incomingIdx === -1) return;
     const curEl = getEl(currentIdx);
     const inEl  = getEl(incomingIdx);
     if (curEl) curEl.style.transform = `translateX(${rawDx}px)`;
@@ -401,6 +421,24 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   }, { passive: false });
 
   wrap.addEventListener('touchend', e => {
+    const spring = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+
+    // Snap back from boundary rubber-band
+    if (atBoundary) {
+      atBoundary = false;
+      const curEl = getEl(currentIdx);
+      if (curEl) {
+        curEl.style.transition = spring;
+        curEl.style.transform  = 'translateX(0)';
+        setTimeout(() => {
+          curEl.style.transition = 'none';
+          curEl.style.transform  = '';
+          requestAnimationFrame(() => { curEl.style.transition = ''; });
+        }, 510);
+      }
+      return;
+    }
+
     if (!touchDirLocked || !touchIsHorizontal || incomingIdx === -1) {
       incomingIdx = -1;
       return;
@@ -409,7 +447,6 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
     const dx = e.changedTouches[0].clientX - touchStartX;
     const committed = Math.abs(dx) > wrapW * 0.25;
     const ease = 'transform 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    const prevIdx = currentIdx;
     const savedIncoming = incomingIdx;
     const curEl = getEl(currentIdx);
     const inEl  = getEl(incomingIdx);
@@ -421,7 +458,7 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
       incomingIdx = -1;
 
       setTimeout(() => {
-        showFrame(currentIdx); // add .active before removing inline opacity
+        showFrame(currentIdx);
         if (inEl)  { inEl.style.transition = 'none'; inEl.style.transform = ''; inEl.style.opacity = ''; }
         if (curEl) { curEl.style.transition = 'none'; curEl.style.transform = ''; }
         requestAnimationFrame(() => {
