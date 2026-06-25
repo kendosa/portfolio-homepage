@@ -9,6 +9,32 @@
   <link rel="stylesheet" href="project.css" />
   <style>
     body.cc-on-card #cursor-dot { opacity: 0 !important; transition: none !important; }
+
+    /* ── Dine at Radio Park poster marquee ── */
+    .rc-dine-marquee-wrap {
+      width: 100%;
+      height: clamp(260px, 32vw, 460px);
+      overflow: hidden;
+      position: relative;
+      cursor: grab;
+    }
+    .rc-dine-marquee-wrap:active { cursor: grabbing; }
+    .rc-dine-marquee-track {
+      display: flex;
+      position: absolute;
+      left: 0;
+      top: 0;
+      will-change: transform;
+    }
+    .rc-dine-marquee-img {
+      height: clamp(380px, 46vw, 660px);
+      width: auto;
+      flex-shrink: 0;
+      display: block;
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+
     #ccCursor {
       position: fixed;
       top: 0; left: 0;
@@ -210,7 +236,12 @@
     </div>
     <div class="sticky-image-col" style="display:flex; flex-direction:column; gap:20px;">
       <img src="images/rc-dine-aframe.png" alt="Dine at Radio Park A-frame sign" style="width:100%; display:block;" />
-      <img src="images/rc-dine-poster-grid.png" alt="Dine at Radio Park poster suite" style="width:100%; display:block;" />
+      <div class="rc-dine-marquee-wrap" id="rcDineMarquee">
+        <div class="rc-dine-marquee-track" id="rcDineTrack">
+          <img class="rc-dine-marquee-img" src="images/rc-dine-poster-grid.png" alt="Dine at Radio Park poster suite" decoding="async" draggable="false" />
+          <img class="rc-dine-marquee-img" src="images/rc-dine-poster-grid.png" alt="" aria-hidden="true" decoding="async" draggable="false" />
+        </div>
+      </div>
       <div style="display:flex; gap:20px;">
         <div style="width:calc(50% - 10px);">
           <img src="images/rc-dine-phone-2.png" alt="Dine at Radio Park phone mockup" style="width:100%; display:block;" />
@@ -295,6 +326,108 @@
       cur.style.left = e.clientX + 'px';
       cur.style.top  = e.clientY + 'px';
     });
+  }());
+
+  /* ── Dine at Radio Park poster marquee ────────────────────────────────── */
+  (function () {
+    var wrap  = document.getElementById('rcDineMarquee');
+    var track = document.getElementById('rcDineTrack');
+    if (!wrap || !track) return;
+
+    var BASE = 60;   /* px/s auto-scroll */
+    var imgW = 0;
+    var x    = 0;
+    var vel  = BASE;
+    var tgtVel = BASE;
+
+    /* drag state */
+    var dragging    = false;
+    var dragX0      = 0;
+    var dragScrollX = 0;
+    var lastDragX   = 0;
+    var dragVel     = 0;
+
+    function measure() {
+      var img = track.querySelector('img');
+      if (!img) return;
+      imgW = img.offsetWidth;
+      /* vertically centre the oversized track inside the clipping wrap */
+      var delta = (wrap.offsetHeight - img.offsetHeight) / 2;
+      track.style.top = delta.toFixed(0) + 'px';
+    }
+
+    var last = null;
+    function tick(ts) {
+      var dt = last ? Math.min((ts - last) / 1000, 0.1) : 0;
+      last = ts;
+
+      if (!dragging) {
+        vel += (tgtVel - vel) * 0.07;
+        x   += vel * dt;
+      }
+
+      if (imgW > 0) x = ((x % imgW) + imgW) % imgW;
+      track.style.transform = 'translateX(' + (-x).toFixed(2) + 'px)';
+      requestAnimationFrame(tick);
+    }
+
+    /* hover: left edge reverses, right edge fast-forwards */
+    wrap.addEventListener('mousemove', function (e) {
+      if (dragging) return;
+      var r = wrap.getBoundingClientRect();
+      var t = (e.clientX - r.left) / r.width;   /* 0–1 */
+      tgtVel = BASE * (t * 4 - 1.5);            /* -1.5× → +2.5× */
+    });
+    wrap.addEventListener('mouseleave', function () {
+      if (!dragging) tgtVel = BASE;
+    });
+
+    /* mouse drag */
+    wrap.addEventListener('mousedown', function (e) {
+      dragging    = true;
+      dragX0      = e.clientX;
+      dragScrollX = x;
+      lastDragX   = e.clientX;
+      dragVel     = 0;
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - dragX0;
+      x = ((dragScrollX - dx) % imgW + imgW) % imgW;
+      dragVel   = (lastDragX - e.clientX) / 0.016;
+      lastDragX = e.clientX;
+    });
+    document.addEventListener('mouseup', function () {
+      if (!dragging) return;
+      dragging = false;
+      tgtVel   = dragVel * 0.25 + BASE * 0.75;
+    });
+
+    /* touch drag */
+    wrap.addEventListener('touchstart', function (e) {
+      dragging    = true;
+      dragX0      = e.touches[0].clientX;
+      dragScrollX = x;
+      lastDragX   = e.touches[0].clientX;
+      dragVel     = 0;
+    }, { passive: true });
+    wrap.addEventListener('touchmove', function (e) {
+      if (!dragging) return;
+      var cx = e.touches[0].clientX;
+      x = ((dragScrollX - (cx - dragX0)) % imgW + imgW) % imgW;
+      dragVel   = (lastDragX - cx) / 0.016;
+      lastDragX = cx;
+    }, { passive: true });
+    wrap.addEventListener('touchend', function () {
+      dragging = false;
+      tgtVel   = dragVel * 0.25 + BASE * 0.75;
+    });
+
+    window.addEventListener('resize', measure);
+    window.addEventListener('load', function () { measure(); });
+    measure();
+    requestAnimationFrame(tick);
   }());
   </script>
 </body>
