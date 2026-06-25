@@ -19,20 +19,22 @@
     .cc-card[data-label],
     .cc-card[data-label] * { cursor: none !important; }
 
-    /* Adidas gallery: two-column grid on desktop, swipe carousel on mobile */
+    /* Adidas gallery: flex rows on desktop (aspect-ratio aligned), carousel on mobile */
     .wm-adidas-gallery {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 40px;
-      align-items: start;
     }
-    .wm-adidas-slide--left  { grid-column: 1; }
-    .wm-adidas-slide--right { grid-column: 2; }
-    .wm-adidas-slide a      { display: block; }
+    .wm-adidas-row {
+      display: flex;
+      gap: 40px;
+      line-height: 0;
+    }
+    .wm-adidas-slide img { width: 100%; display: block; }
+    .wm-adidas-slide a   { display: block; }
 
     @media (max-width: 767px) {
       .wm-adidas-gallery {
-        display: flex;
         flex-direction: row;
         gap: 12px;
         overflow-x: scroll;
@@ -42,11 +44,8 @@
         align-items: start;
       }
       .wm-adidas-gallery::-webkit-scrollbar { display: none; }
-      .wm-adidas-slide {
-        flex: 0 0 88%;
-        scroll-snap-align: start;
-        grid-column: unset;
-      }
+      .wm-adidas-row   { display: contents; }
+      .wm-adidas-slide { flex: 0 0 88% !important; scroll-snap-align: start; }
     }
     #ccCursor {
       position: fixed;
@@ -282,17 +281,21 @@
       <p class="project-aa-body">For the <a href="https://www.instagram.com/reel/DMN6VcCgCOJ/" target="_blank" rel="noopener" style="text-decoration:underline; text-underline-offset:3px;">Adidas Adistar</a> launch in Chinatown, Wing&nbsp;Ming supplied 250 seven-stem bouquets as give-aways, tucked into a bodega-style installation alongside boutique groceries and dry goods. A Hudson&nbsp;Valley flower farm, in the middle of New&nbsp;York&nbsp;City, alongside a global sneaker launch.</p>
     </div>
     <div class="sticky-image-col wm-adidas-gallery">
-      <div class="wm-adidas-slide wm-adidas-slide--left">
-        <img src="images/wing-ming_project-10.jpg" alt="Wing Ming Farm in use" />
+      <div class="wm-adidas-row">
+        <div class="wm-adidas-slide" style="flex: 1499 1 0%">
+          <img src="images/wing-ming_project-10.jpg" alt="Wing Ming Farm in use" />
+        </div>
+        <div class="wm-adidas-slide" style="flex: 462 1 0%">
+          <a href="https://www.instagram.com/reel/DMN6VcCgCOJ/" target="_blank" rel="noopener" class="cc-card" data-label="IG Link"><img src="images/wing-ming-adistar-reel.jpg" alt="Adistar Market Instagram reel" /></a>
+        </div>
       </div>
-      <div class="wm-adidas-slide wm-adidas-slide--right">
-        <a href="https://www.instagram.com/reel/DMN6VcCgCOJ/" target="_blank" rel="noopener" class="cc-card" data-label="IG Link"><img src="images/wing-ming-adistar-reel.jpg" alt="Adistar Market Instagram reel" /></a>
-      </div>
-      <div class="wm-adidas-slide wm-adidas-slide--left">
-        <img src="images/wing-ming-adistar-buckets.jpg" alt="Adistar Market flower buckets" />
-      </div>
-      <div class="wm-adidas-slide wm-adidas-slide--right">
-        <img src="images/wing-ming-adistar-car.jpg" alt="Adistar Market bouquets in car trunk" />
+      <div class="wm-adidas-row">
+        <div class="wm-adidas-slide" style="flex: 1333 1 0%">
+          <img src="images/wing-ming-adistar-buckets.jpg" alt="Adistar Market flower buckets" />
+        </div>
+        <div class="wm-adidas-slide" style="flex: 1333 1 0%">
+          <img src="images/wing-ming-adistar-car.jpg" alt="Adistar Market bouquets in car trunk" />
+        </div>
       </div>
     </div>
   </div>
