@@ -447,23 +447,4 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   });
 });
 
-/* ── Mobile swipe-hint nudge — once per session on visible gallery cards ── */
-if (window.matchMedia('(pointer: coarse)').matches && !sessionStorage.getItem('swipeHintSeen')) {
-  sessionStorage.setItem('swipeHintSeen', '1');
-  const galleryWraps = [...document.querySelectorAll('.img-wrap[data-gallery]')];
-  setTimeout(() => {
-    let delay = 0;
-    galleryWraps.forEach(wrap => {
-      const rect = wrap.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        setTimeout(() => {
-          wrap.classList.add('swipe-hint');
-          wrap.addEventListener('animationend', () => wrap.classList.remove('swipe-hint'), { once: true });
-        }, delay);
-        delay += 150;
-      }
-    });
-  }, 800);
-}
-
 
