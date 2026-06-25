@@ -297,6 +297,17 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
     return frame;
   });
 
+  // Dot indicators — styled via CSS, visible on touch only
+  const dotContainer = document.createElement('div');
+  dotContainer.className = 'gallery-dots';
+  imgs.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dotContainer.appendChild(dot);
+  });
+  wrap.appendChild(dotContainer);
+  const dots = [...dotContainer.children];
+
   let currentIdx = 0;
   let lastX = 0;
   let lastY = 0;
@@ -311,6 +322,7 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
     frames.forEach((frame, i) => {
       if (frame) frame.classList.toggle('active', i === idx);
     });
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
   }
 
   wrap.addEventListener('mouseenter', e => {
@@ -336,7 +348,7 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
 
   wrap.addEventListener('mouseleave', () => {
     currentIdx = 0;
-    frames.forEach(frame => { if (frame) frame.classList.remove('active'); });
+    showFrame(0);
   });
 
   // Touch: drag-reveal swipe — current slides out, next slides in, snaps or reverts
