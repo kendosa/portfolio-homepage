@@ -117,7 +117,13 @@
       animation: scroll-arrow-bounce 1s infinite;
     }
     @media (pointer: coarse) {
-      #scrollCursor { display: none !important; }
+      #scrollCursor {
+        top: calc(50% - 130px) !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 90px !important;
+        height: 90px !important;
+      }
     }
     /* Grabbing state during drag */
     body.cc-dragging,
@@ -464,6 +470,7 @@
 
     var overImage   = false;
     var hasScrolled = false;
+    var isTouch     = window.matchMedia('(pointer: coarse)').matches;
 
     function atBeginning() {
       if (!section) return true;
@@ -503,11 +510,15 @@
     window.addEventListener('scroll', function () {
       if (atBeginning()) {
         hasScrolled = false;
+        if (isTouch) showCursor();
       } else {
         hasScrolled = true;
         hideCursor();
       }
     }, { passive: true });
+
+    /* Touch devices have no mousemove — show immediately on load */
+    if (isTouch) showCursor();
   }());
   </script>
 </body>
