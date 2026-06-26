@@ -541,7 +541,7 @@
     wrap.addEventListener('mouseenter', function () {
       isHovering = true;
       var cur = getCur();
-      if (cur) { cur.textContent = 'click & drag'; cur.style.opacity = '1'; }
+      if (cur) { cur.textContent = 'Click & drag'; cur.style.opacity = '1'; }
       document.body.classList.add('cc-on-card');
     });
 
@@ -613,7 +613,7 @@
       if (cur) {
         cur.style.left    = t.clientX + 'px';
         cur.style.top     = t.clientY + 'px';
-        cur.textContent   = 'click & drag';
+        cur.textContent   = 'Click & drag';
         cur.style.opacity = '1';
       }
       document.body.classList.add('cc-on-card');
