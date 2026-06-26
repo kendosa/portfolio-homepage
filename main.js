@@ -269,7 +269,7 @@ if (window.matchMedia('(hover: hover)').matches) {
   document.querySelectorAll('.img-wrap').forEach(wrap => {
     const badge = document.createElement('div');
     badge.className = 'view-badge';
-    badge.innerHTML = '<span class="vb-label">View</span><span class="vb-arrow">↗</span>';
+    badge.textContent = 'View case';
     wrap.appendChild(badge);
   });
 }
