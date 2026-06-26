@@ -66,28 +66,19 @@
       background: #181818;
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      padding: 5px;
+      gap: 6px;
+      padding: 6px;
     }
-    .wmg-row { display: flex; gap: 5px; }
-    .wmg-cell { overflow: hidden; flex-shrink: 0; }
-    .wmg-cell img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: top center;
-      display: block;
-    }
-    .wmg-row--1 { height: 26vw; }
-    .wmg-row--2 { height: 40vw; }
-    .wmg-row--3 { height: 26vw; }
-    .wmg-row--4 { height: 22vw; }
+    .wmg-row { display: grid; gap: 6px; }
+    .wmg-row--1 { grid-template-columns: repeat(4, 1fr); }
+    .wmg-row--2 { grid-template-columns: repeat(3, 1fr); }
+    .wmg-row--3 { grid-template-columns: repeat(4, 1fr); }
+    .wmg-row--4 { grid-template-columns: repeat(5, 1fr); }
+    .wmg-cell { aspect-ratio: 16 / 9; overflow: hidden; }
+    .wmg-cell img { width: 100%; height: 100%; display: block; }
 
     @media (max-width: 767px) {
-      .wmg-row--1 { height: 46vw; }
-      .wmg-row--2 { height: 68vw; }
-      .wmg-row--3 { height: 46vw; }
-      .wmg-row--4 { height: 38vw; }
-      .wmg-cell:nth-child(n+3) { display: none; }
-      .wmg-cell { flex: 1 !important; }
+      .wmg-grid { display: none; }
     }
 
     /* ── Horizontal scroll gallery ── */
@@ -343,26 +334,28 @@
   <!-- Guidelines grid mockup -->
   <div class="wmg-grid">
     <div class="wmg-row wmg-row--1">
-      <div class="wmg-cell" style="flex:14"><img src="images/wm-guidelines/p-01.jpg" alt="" loading="lazy" /></div>
-      <div class="wmg-cell" style="flex:19"><img src="images/wm-guidelines/p-05.jpg" alt="" loading="lazy" /></div>
-      <div class="wmg-cell" style="flex:19"><img src="images/wm-guidelines/p-09.jpg" alt="" loading="lazy" /></div>
-      <div class="wmg-cell" style="flex:12"><img src="images/wm-guidelines/p-14.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-01.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-05.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-10.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-15.jpg" alt="" loading="lazy" /></div>
     </div>
     <div class="wmg-row wmg-row--2">
-      <div class="wmg-cell" style="flex:23"><img src="images/wm-guidelines/p-17.jpg" alt="" loading="lazy" /></div>
-      <div class="wmg-cell" style="flex:23"><img src="images/wm-guidelines/p-20.jpg" alt="" loading="lazy" /></div>
-      <div class="wmg-cell" style="flex:17"><img src="images/wm-guidelines/p-23.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-08.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-18.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-25.jpg" alt="" loading="lazy" /></div>
     </div>
     <div class="wmg-row wmg-row--3">
-      <div class="wmg-cell" style="flex:12"><img src="images/wm-guidelines/p-26.jpg" alt="" loading="lazy" /></div>
-      <div class="wmg-cell" style="flex:19"><img src="images/wm-guidelines/p-29.jpg" alt="" loading="lazy" /></div>
-      <div class="wmg-cell" style="flex:19"><img src="images/wm-guidelines/p-32.jpg" alt="" loading="lazy" /></div>
-      <div class="wmg-cell" style="flex:14"><img src="images/wm-guidelines/p-35.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-03.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-12.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-21.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-29.jpg" alt="" loading="lazy" /></div>
     </div>
     <div class="wmg-row wmg-row--4">
-      <div class="wmg-cell" style="flex:17"><img src="images/wm-guidelines/p-36.jpg" alt="" loading="lazy" /></div>
-      <div class="wmg-cell" style="flex:27"><img src="images/wm-guidelines/p-37.jpg" alt="" loading="lazy" /></div>
-      <div class="wmg-cell" style="flex:13"><img src="images/wm-guidelines/p-03.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-31.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-33.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-35.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-36.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-37.jpg" alt="" loading="lazy" /></div>
     </div>
   </div>
 
