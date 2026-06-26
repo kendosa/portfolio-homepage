@@ -264,6 +264,16 @@ document.querySelectorAll('.tag-filter-btn').forEach(btn => {
   });
 });
 
+/* ── View project badge (hover-capable devices only) ─────────────── */
+if (window.matchMedia('(hover: hover)').matches) {
+  document.querySelectorAll('.img-wrap').forEach(wrap => {
+    const badge = document.createElement('div');
+    badge.className = 'view-badge';
+    badge.innerHTML = '<span class="vb-label">View</span><span class="vb-arrow">↗</span>';
+    wrap.appendChild(badge);
+  });
+}
+
 /* ── Cover image gallery — position-based zone hover (Fuzzco-style) ── */
 
 document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
