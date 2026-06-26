@@ -61,6 +61,35 @@
         height: 100%;
       }
     }
+    /* ── Guidelines grid mockup ── */
+    .wmg-grid {
+      background: #181818;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 5px;
+    }
+    .wmg-row { display: flex; gap: 5px; }
+    .wmg-cell { overflow: hidden; flex-shrink: 0; }
+    .wmg-cell img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      display: block;
+    }
+    .wmg-row--1 { height: 26vw; }
+    .wmg-row--2 { height: 40vw; }
+    .wmg-row--3 { height: 26vw; }
+    .wmg-row--4 { height: 22vw; }
+
+    @media (max-width: 767px) {
+      .wmg-row--1 { height: 46vw; }
+      .wmg-row--2 { height: 68vw; }
+      .wmg-row--3 { height: 46vw; }
+      .wmg-row--4 { height: 38vw; }
+      .wmg-cell:nth-child(n+3) { display: none; }
+      .wmg-cell { flex: 1 !important; }
+    }
+
     /* ── Horizontal scroll gallery ── */
     .hscroll-driver {
       position: relative;
@@ -308,6 +337,32 @@
       <picture>
         <img src="images/wing-ming-A4-Poster-Mockup4.jpg" alt="Wing Ming Farm poster mockup" />
       </picture>
+    </div>
+  </div>
+
+  <!-- Guidelines grid mockup -->
+  <div class="wmg-grid">
+    <div class="wmg-row wmg-row--1">
+      <div class="wmg-cell" style="flex:14"><img src="images/wm-guidelines/p-01.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell" style="flex:19"><img src="images/wm-guidelines/p-05.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell" style="flex:19"><img src="images/wm-guidelines/p-09.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell" style="flex:12"><img src="images/wm-guidelines/p-14.jpg" alt="" loading="lazy" /></div>
+    </div>
+    <div class="wmg-row wmg-row--2">
+      <div class="wmg-cell" style="flex:23"><img src="images/wm-guidelines/p-17.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell" style="flex:23"><img src="images/wm-guidelines/p-20.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell" style="flex:17"><img src="images/wm-guidelines/p-23.jpg" alt="" loading="lazy" /></div>
+    </div>
+    <div class="wmg-row wmg-row--3">
+      <div class="wmg-cell" style="flex:12"><img src="images/wm-guidelines/p-26.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell" style="flex:19"><img src="images/wm-guidelines/p-29.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell" style="flex:19"><img src="images/wm-guidelines/p-32.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell" style="flex:14"><img src="images/wm-guidelines/p-35.jpg" alt="" loading="lazy" /></div>
+    </div>
+    <div class="wmg-row wmg-row--4">
+      <div class="wmg-cell" style="flex:17"><img src="images/wm-guidelines/p-36.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell" style="flex:27"><img src="images/wm-guidelines/p-37.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell" style="flex:13"><img src="images/wm-guidelines/p-03.jpg" alt="" loading="lazy" /></div>
     </div>
   </div>
 
