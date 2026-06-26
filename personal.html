@@ -441,17 +441,24 @@
     });
   }());
 
-  // ── Scroll cursor (whole page except image cards, hides on scroll) ───────
+  // ── Scroll cursor (whole page except image cards, hides once scrolled) ──
   (function () {
-    var sc = document.getElementById('scrollCursor');
+    var sc      = document.getElementById('scrollCursor');
+    var section = document.getElementById('ccSection');
     if (!sc) return;
 
     var overImage   = false;
-    var isScrolling = false;
-    var scrollTimer = null;
+    var hasScrolled = false;
+
+    function atBeginning() {
+      if (!section) return true;
+      var top     = section.getBoundingClientRect().top;
+      var scrollH = section.offsetHeight - window.innerHeight;
+      return scrollH <= 0 || -top / scrollH <= 0;
+    }
 
     function showCursor() {
-      if (overImage || isScrolling) return;
+      if (overImage || hasScrolled) return;
       sc.style.opacity = '1';
       document.body.classList.add('sc-active');
     }
@@ -463,7 +470,7 @@
     document.addEventListener('mousemove', function (e) {
       sc.style.left = e.clientX + 'px';
       sc.style.top  = e.clientY + 'px';
-      if (!isScrolling && !overImage) showCursor();
+      if (!overImage && !hasScrolled) showCursor();
     });
     document.addEventListener('mouseleave', hideCursor);
 
@@ -479,10 +486,12 @@
     });
 
     window.addEventListener('scroll', function () {
-      isScrolling = true;
-      hideCursor();
-      clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(function () { isScrolling = false; }, 500);
+      if (atBeginning()) {
+        hasScrolled = false;
+      } else {
+        hasScrolled = true;
+        hideCursor();
+      }
     }, { passive: true });
   }());
   </script>
