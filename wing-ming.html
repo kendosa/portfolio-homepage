@@ -61,6 +61,56 @@
         height: 100%;
       }
     }
+    /* ── Horizontal scroll gallery ── */
+    .hscroll-driver {
+      position: relative;
+      /* height calculated by JS to provide scroll travel distance */
+    }
+    .hscroll-viewport {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+    }
+    .hscroll-track {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 clamp(24px, 5vw, 80px);
+      gap: clamp(16px, 2.5vw, 36px);
+      will-change: transform;
+    }
+    .hscroll-panel {
+      flex-shrink: 0;
+      width: clamp(300px, 58vw, 860px);
+      height: clamp(260px, 70vh, 620px);
+      background: #2e2e2e;
+      border-radius: 3px;
+    }
+
+    @media (max-width: 767px) {
+      .hscroll-driver { height: auto !important; }
+      .hscroll-viewport {
+        position: relative;
+        height: auto;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .hscroll-viewport::-webkit-scrollbar { display: none; }
+      .hscroll-track {
+        padding: 28px 20px;
+        align-items: stretch;
+        gap: 12px;
+        height: auto;
+      }
+      .hscroll-panel {
+        width: 78vw;
+        height: 52vw;
+      }
+    }
+
     #ccCursor {
       position: fixed;
       top: 0; left: 0;
@@ -261,6 +311,19 @@
     </div>
   </div>
 
+  <!-- Horizontal scroll gallery -->
+  <div class="hscroll-driver" id="wmHScroll">
+    <div class="hscroll-viewport">
+      <div class="hscroll-track" id="wmHScrollTrack">
+        <div class="hscroll-panel"></div>
+        <div class="hscroll-panel"></div>
+        <div class="hscroll-panel"></div>
+        <div class="hscroll-panel"></div>
+        <div class="hscroll-panel"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="sticky-pair">
     <div class="sticky-copy">
       <p class="project-aa-body">Rosa, Wing&nbsp;Ming's founder, is also a part-time assistant professor teaching creative knitwear design and machine knitting at Parsons&nbsp;School of Design. She knitted this sign of the logo for her farmer's market booth.</p>
@@ -343,6 +406,38 @@
         document.body.classList.remove('cc-on-card');
       });
     });
+  }());
+
+  /* Wing Ming horizontal scroll gallery */
+  (function () {
+    var driver = document.getElementById('wmHScroll');
+    var track  = document.getElementById('wmHScrollTrack');
+    if (!driver || !track) return;
+
+    /* Mobile: native horizontal scroll, no JS hijacking */
+    if (window.matchMedia('(max-width: 767px)').matches) return;
+
+    function travel() {
+      return Math.max(0, track.scrollWidth - window.innerWidth);
+    }
+
+    function setHeight() {
+      driver.style.height = (window.innerHeight + travel()) + 'px';
+    }
+
+    function onScroll() {
+      var t = travel();
+      if (t <= 0) return;
+      var scrolled  = -driver.getBoundingClientRect().top;
+      var drivable  = driver.offsetHeight - window.innerHeight;
+      var progress  = Math.max(0, Math.min(1, scrolled / drivable));
+      track.style.transform = 'translateX(' + (-progress * t) + 'px)';
+    }
+
+    setHeight();
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () { setHeight(); onScroll(); });
   }());
 
   /* Wing Ming guidelines marquee */
