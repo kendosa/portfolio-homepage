@@ -120,7 +120,7 @@
       #scrollCursor {
         top: calc(50% - 130px) !important;
         left: 50% !important;
-        transform: translateX(-50%) !important;
+        transform: translateX(-50%);
         width: 90px !important;
         height: 90px !important;
       }
@@ -462,7 +462,7 @@
     });
   }());
 
-  // ── Scroll cursor (whole page except image cards, hides once scrolled) ──
+  // ── Scroll cursor (fades + drifts down as user scrolls) ──
   (function () {
     var sc      = document.getElementById('scrollCursor');
     var section = document.getElementById('ccSection');
@@ -472,16 +472,10 @@
     var hasScrolled = false;
     var isTouch     = window.matchMedia('(pointer: coarse)').matches;
 
-    function atBeginning() {
-      if (!section) return true;
-      var top     = section.getBoundingClientRect().top;
-      var scrollH = section.offsetHeight - window.innerHeight;
-      return scrollH <= 0 || -top / scrollH <= 0;
-    }
-
     function showCursor() {
       if (overImage || hasScrolled) return;
       sc.style.opacity = '1';
+      sc.style.transform = '';
       document.body.classList.add('sc-active');
     }
     function hideCursor() {
@@ -503,21 +497,37 @@
       });
       card.addEventListener('mouseleave', function () {
         overImage = false;
-        showCursor();
+        if (!hasScrolled) showCursor();
       });
     });
 
     window.addEventListener('scroll', function () {
-      if (atBeginning()) {
+      var sTop = section ? section.getBoundingClientRect().top : 1;
+
+      if (sTop >= 0) {
         hasScrolled = false;
-        if (isTouch) showCursor();
+        sc.style.transform = '';
+        showCursor();
+        return;
+      }
+
+      hasScrolled = true;
+      document.body.classList.remove('sc-active');
+
+      var scrolled     = -sTop;
+      var fadeProgress = Math.min(scrolled / 220, 1);
+      var opacity      = Math.max(0, 1 - fadeProgress);
+      var drift        = (fadeProgress * 28).toFixed(1);
+
+      sc.style.opacity = opacity.toFixed(3);
+
+      if (isTouch) {
+        sc.style.transform = 'translateX(-50%) translateY(' + drift + 'px)';
       } else {
-        hasScrolled = true;
-        hideCursor();
+        sc.style.transform = 'translate(-50%, -50%) translateY(' + drift + 'px)';
       }
     }, { passive: true });
 
-    /* Touch devices have no mousemove — show immediately on load */
     if (isTouch) showCursor();
   }());
   </script>
