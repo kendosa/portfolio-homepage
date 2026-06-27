@@ -472,6 +472,18 @@
     var hasScrolled = false;
     var isTouch     = window.matchMedia('(pointer: coarse)').matches;
 
+    // Mobile: fade starts at scrollY=0 and completes when text card clears the cursor.
+    // trackX ≈ scrollY, so the fade endpoint = text card right edge − cursor left edge.
+    var mobileFadeDist = (function () {
+      if (!isTouch || !section) return 250;
+      var textCard = section.querySelector('.cc-card--text');
+      if (!textCard) return 250;
+      // offsetLeft + offsetWidth gives the right edge in layout space (no translation applied)
+      var textRight  = textCard.offsetLeft + textCard.offsetWidth;
+      var cursorLeft = window.innerWidth * 0.5 - 45; // half cursor width (90px / 2)
+      return Math.max(120, Math.round(textRight - cursorLeft));
+    }());
+
     function showCursor() {
       if (overImage || hasScrolled) return;
       sc.style.opacity = '1';
@@ -502,8 +514,28 @@
     });
 
     window.addEventListener('scroll', function () {
-      var sTop = section ? section.getBoundingClientRect().top : 1;
+      var sTop    = section ? section.getBoundingClientRect().top : 1;
+      var scrollY = window.pageYOffset;
 
+      if (isTouch) {
+        // Mobile: fade from first pixel of scroll, driven by scrollY
+        if (scrollY === 0) {
+          hasScrolled = false;
+          sc.style.opacity   = '';
+          sc.style.transform = 'translateX(-50%)';
+          if (!overImage) showCursor();
+          return;
+        }
+        hasScrolled = true;
+        document.body.classList.remove('sc-active');
+        var fp    = Math.min(scrollY / mobileFadeDist, 1);
+        var drift = (fp * 28).toFixed(1);
+        sc.style.opacity   = Math.max(0, 1 - fp).toFixed(3);
+        sc.style.transform = 'translateX(-50%) translateY(' + drift + 'px)';
+        return;
+      }
+
+      // Desktop: fade tied to ccSection scroll progress
       if (sTop >= 0) {
         hasScrolled = false;
         sc.style.transform = '';
@@ -519,13 +551,8 @@
       var opacity      = Math.max(0, 1 - fadeProgress);
       var drift        = (fadeProgress * 28).toFixed(1);
 
-      sc.style.opacity = opacity.toFixed(3);
-
-      if (isTouch) {
-        sc.style.transform = 'translateX(-50%) translateY(' + drift + 'px)';
-      } else {
-        sc.style.transform = 'translate(-50%, -50%) translateY(' + drift + 'px)';
-      }
+      sc.style.opacity   = opacity.toFixed(3);
+      sc.style.transform = 'translate(-50%, -50%) translateY(' + drift + 'px)';
     }, { passive: true });
 
     if (isTouch) showCursor();
