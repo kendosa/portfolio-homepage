@@ -1,3 +1,56 @@
+/* ── Animated favicon ────────────────────────────────────────── */
+(function () {
+  const SZ = 32;
+  const letters = ['K', 'e', 'n'];
+  const FG = '#ffffff';
+  const INTERVAL = 700;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = SZ;
+  const ctx = canvas.getContext('2d');
+
+  const link = document.querySelector("link[rel='icon']") || (() => {
+    const l = document.createElement('link'); l.rel = 'icon'; document.head.appendChild(l); return l;
+  })();
+
+  let fontSize = SZ, baselineY = SZ / 2;
+
+  function calcFont() {
+    let lo = 10, hi = 400;
+    while (hi - lo > 0.5) {
+      const mid = (lo + hi) / 2;
+      ctx.font = `500 ${mid}px "neue-haas-grotesk-display","Helvetica Neue",Helvetica,Arial,sans-serif`;
+      ctx.textBaseline = 'alphabetic';
+      const m = ctx.measureText('K');
+      if (m.actualBoundingBoxAscent + m.actualBoundingBoxDescent < SZ) lo = mid; else hi = mid;
+    }
+    fontSize = Math.floor(lo);
+    ctx.font = `500 ${fontSize}px "neue-haas-grotesk-display","Helvetica Neue",Helvetica,Arial,sans-serif`;
+    const m = ctx.measureText('K');
+    const h = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+    baselineY = (SZ - h) / 2 + m.actualBoundingBoxAscent;
+  }
+
+  function draw(letter) {
+    ctx.clearRect(0, 0, SZ, SZ);
+    ctx.font = `500 ${fontSize}px "neue-haas-grotesk-display","Helvetica Neue",Helvetica,Arial,sans-serif`;
+    ctx.fillStyle = FG;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(letter, SZ / 2, baselineY);
+    link.type = 'image/png';
+    link.href = canvas.toDataURL();
+  }
+
+  let idx = 0;
+
+  document.fonts.ready.then(() => {
+    calcFont();
+    draw(letters[idx]);
+    setInterval(() => { idx = (idx + 1) % letters.length; draw(letters[idx]); }, INTERVAL);
+  });
+})();
+
 /* ── Mobile menu ──────────────────────────────────────────────── */
 const toggle = document.querySelector('.menu-toggle');
 const mobileMenu = document.getElementById('mobileMenu');
