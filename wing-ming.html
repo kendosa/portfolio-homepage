@@ -66,16 +66,12 @@
       background: #181818;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      padding: 6px;
+      gap: 20px;
+      padding: 28px;
     }
-    .wmg-row { display: grid; gap: 6px; }
-    .wmg-row--1 { grid-template-columns: repeat(4, 1fr); }
-    .wmg-row--2 { grid-template-columns: repeat(3, 1fr); }
-    .wmg-row--3 { grid-template-columns: repeat(4, 1fr); }
-    .wmg-row--4 { grid-template-columns: repeat(5, 1fr); }
+    .wmg-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .wmg-cell { aspect-ratio: 16 / 9; overflow: hidden; }
-    .wmg-cell img { width: 100%; height: 100%; display: block; }
+    .wmg-cell img { width: 100%; height: 100%; display: block; object-fit: cover; }
 
     @media (max-width: 767px) {
       .wmg-grid { display: none; }
@@ -290,26 +286,32 @@
 
   <!-- Guidelines grid mockup -->
   <div class="wmg-grid">
-    <div class="wmg-row wmg-row--1">
+    <div class="wmg-row">
       <div class="wmg-cell"><img src="images/wm-guidelines/p-01.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-02.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-03.jpg" alt="" loading="lazy" /></div>
+    </div>
+    <div class="wmg-row">
       <div class="wmg-cell"><img src="images/wm-guidelines/p-05.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-07.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-08.jpg" alt="" loading="lazy" /></div>
+    </div>
+    <div class="wmg-row">
       <div class="wmg-cell"><img src="images/wm-guidelines/p-10.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-12.jpg" alt="" loading="lazy" /></div>
       <div class="wmg-cell"><img src="images/wm-guidelines/p-15.jpg" alt="" loading="lazy" /></div>
     </div>
-    <div class="wmg-row wmg-row--2">
-      <div class="wmg-cell"><img src="images/wm-guidelines/p-08.jpg" alt="" loading="lazy" /></div>
+    <div class="wmg-row">
       <div class="wmg-cell"><img src="images/wm-guidelines/p-18.jpg" alt="" loading="lazy" /></div>
+      <div class="wmg-cell"><img src="images/wm-guidelines/p-21.jpg" alt="" loading="lazy" /></div>
       <div class="wmg-cell"><img src="images/wm-guidelines/p-25.jpg" alt="" loading="lazy" /></div>
     </div>
-    <div class="wmg-row wmg-row--3">
-      <div class="wmg-cell"><img src="images/wm-guidelines/p-03.jpg" alt="" loading="lazy" /></div>
-      <div class="wmg-cell"><img src="images/wm-guidelines/p-12.jpg" alt="" loading="lazy" /></div>
-      <div class="wmg-cell"><img src="images/wm-guidelines/p-21.jpg" alt="" loading="lazy" /></div>
+    <div class="wmg-row">
       <div class="wmg-cell"><img src="images/wm-guidelines/p-29.jpg" alt="" loading="lazy" /></div>
-    </div>
-    <div class="wmg-row wmg-row--4">
       <div class="wmg-cell"><img src="images/wm-guidelines/p-31.jpg" alt="" loading="lazy" /></div>
       <div class="wmg-cell"><img src="images/wm-guidelines/p-33.jpg" alt="" loading="lazy" /></div>
+    </div>
+    <div class="wmg-row">
       <div class="wmg-cell"><img src="images/wm-guidelines/p-35.jpg" alt="" loading="lazy" /></div>
       <div class="wmg-cell"><img src="images/wm-guidelines/p-36.jpg" alt="" loading="lazy" /></div>
       <div class="wmg-cell"><img src="images/wm-guidelines/p-37.jpg" alt="" loading="lazy" /></div>
