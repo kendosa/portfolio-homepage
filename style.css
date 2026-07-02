@@ -435,7 +435,7 @@ a { color: inherit; text-decoration: none; }
   padding: 1.5rem var(--pad) 16rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
+  align-items: start;
   background: var(--black);
 }
 .footer-logo {
@@ -453,13 +453,15 @@ a { color: inherit; text-decoration: none; }
   font-weight: 400;
   letter-spacing: .010em;
   color: #fff;
-  text-align: center;
+  text-align: left;
+  align-self: end;
 }
 
 .footer-social {
   display: flex;
   gap: 1.25rem;
   justify-content: flex-end;
+  align-self: end;
 }
 .footer-social a {
   font-size: 16px;
