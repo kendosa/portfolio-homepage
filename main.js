@@ -336,7 +336,7 @@ if (window.matchMedia('(hover: hover)').matches) {
   footer.style.overflow = 'hidden';
 
   const canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 0.9s ease';
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 1.1s ease';
   footer.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
@@ -348,12 +348,15 @@ if (window.matchMedia('(hover: hover)').matches) {
   resize();
   window.addEventListener('resize', resize, { passive: true });
 
-  let mx = 0, my = 0, tx = W / 2, ty = H / 2;
+  // Mouse: smoothed position. Starts at center; mouse pull is additive, not center-of-orbit
+  let mx = 0, my = 0, tx = -1, ty = -1, mouseActive = false;
 
   footer.addEventListener('mouseenter', e => {
     const r = footer.getBoundingClientRect();
-    tx = mx = e.clientX - r.left;
-    ty = my = e.clientY - r.top;
+    tx = e.clientX - r.left;
+    ty = e.clientY - r.top;
+    mx = tx; my = ty;
+    mouseActive = true;
     canvas.style.opacity = '1';
   });
   footer.addEventListener('mousemove', e => {
@@ -362,17 +365,20 @@ if (window.matchMedia('(hover: hover)').matches) {
     ty = e.clientY - r.top;
   });
   footer.addEventListener('mouseleave', () => {
+    mouseActive = false;
     canvas.style.opacity = '0';
   });
 
-  // Blobs: each orbits the cursor with its own speed, phase, radius, opacity
+  // Each blob drifts autonomously across the footer.
+  // `pull` = how strongly the mouse displaces it from its natural path (0 = ignores mouse, 1 = follows fully)
   const blobs = [
-    { r: 300, a: 0.13, speed: 1.0, phase: 0.0,  ox: 110, oy: 70  },
-    { r: 210, a: 0.09, speed: 0.7, phase: 2.1,  ox: 150, oy: 55  },
-    { r: 380, a: 0.05, speed: 1.3, phase: 4.2,  ox: 85,  oy: 120 },
-    { r: 160, a: 0.17, speed: 1.9, phase: 1.0,  ox: 55,  oy: 38  },
-    { r: 440, a: 0.04, speed: 0.5, phase: 3.3,  ox: 210, oy: 160 },
-    { r: 250, a: 0.08, speed: 1.5, phase: 5.1,  ox: 70,  oy: 90  },
+    { r: 320, a: 0.12, sxS: 0.55, syS: 0.40, sxP: 0.0,  syP: 1.5,  pull: 0.28 },
+    { r: 240, a: 0.09, sxS: 0.30, syS: 0.70, sxP: 2.1,  syP: 0.3,  pull: 0.15 },
+    { r: 400, a: 0.05, sxS: 0.80, syS: 0.35, sxP: 4.2,  syP: 3.0,  pull: 0.40 },
+    { r: 175, a: 0.16, sxS: 1.10, syS: 0.90, sxP: 1.0,  syP: 5.0,  pull: 0.10 },
+    { r: 460, a: 0.04, sxS: 0.25, syS: 0.20, sxP: 3.3,  syP: 2.2,  pull: 0.55 },
+    { r: 270, a: 0.08, sxS: 0.65, syS: 0.55, sxP: 5.1,  syP: 0.8,  pull: 0.22 },
+    { r: 200, a: 0.11, sxS: 0.45, syS: 1.00, sxP: 1.8,  syP: 4.1,  pull: 0.35 },
   ];
 
   let t = 0;
@@ -380,19 +386,27 @@ if (window.matchMedia('(hover: hover)').matches) {
     requestAnimationFrame(draw);
     if (!W || !H) return;
 
-    mx += (tx - mx) * 0.045;
-    my += (ty - my) * 0.045;
-    t  += 0.007;
+    if (mouseActive) {
+      mx += (tx - mx) * 0.055;
+      my += (ty - my) * 0.055;
+    }
+    t += 0.006;
 
     ctx.clearRect(0, 0, W, H);
 
     blobs.forEach(b => {
-      const bx = mx + Math.sin(t * b.speed + b.phase) * b.ox;
-      const by = my + Math.cos(t * b.speed * 0.8 + b.phase) * b.oy;
-      const g  = ctx.createRadialGradient(bx, by, 0, bx, by, b.r);
-      g.addColorStop(0,   `rgba(255,255,255,${b.a})`);
-      g.addColorStop(0.45,`rgba(255,255,255,${b.a * 0.45})`);
-      g.addColorStop(1,   'rgba(255,255,255,0)');
+      // Autonomous drift: sine paths across full footer dimensions
+      const autoX = W  * (0.5 + 0.44 * Math.sin(t * b.sxS + b.sxP));
+      const autoY = H  * (0.5 + 0.40 * Math.cos(t * b.syS + b.syP));
+
+      // Mouse displaces blob toward cursor proportional to pull strength
+      const bx = autoX + (mx - autoX) * b.pull;
+      const by = autoY + (my - autoY) * b.pull;
+
+      const g = ctx.createRadialGradient(bx, by, 0, bx, by, b.r);
+      g.addColorStop(0,    `rgba(255,255,255,${b.a})`);
+      g.addColorStop(0.45, `rgba(255,255,255,${b.a * 0.4})`);
+      g.addColorStop(1,    'rgba(255,255,255,0)');
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, W, H);
     });
