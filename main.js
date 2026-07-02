@@ -185,9 +185,8 @@ if (window.matchMedia('(hover: hover)').matches) {
     });
   });
 
-  // Logo: proximity-based independent char shift
-  const logo = document.querySelector('.logo');
-  if (logo) {
+  function initLogoAnim(logo) {
+    if (!logo) return;
     const logoText = [...logo.textContent];
     logo.innerHTML = '';
     const charData = logoText.map(ch => {
@@ -212,8 +211,6 @@ if (window.matchMedia('(hover: hover)').matches) {
       if (enterAnimTimeout) { clearTimeout(enterAnimTimeout); enterAnimTimeout = null; }
 
       const rects = charData.map(({ span }) => span.getBoundingClientRect());
-
-      // Find which char the cursor is over at entry
       const mx = e.clientX;
       let closest = 0, minDist = Infinity;
       rects.forEach((r, i) => {
@@ -222,7 +219,6 @@ if (window.matchMedia('(hover: hover)').matches) {
       });
       entryCharIdx = closest;
 
-      // Snap all chars to initial (top visible, bot hidden) with no transition
       charData.forEach(({ top, bot }) => {
         top.style.transition = 'none';
         bot.style.transition = 'none';
@@ -230,9 +226,7 @@ if (window.matchMedia('(hover: hover)').matches) {
         bot.style.transform = 'translateY(100%)';
       });
 
-      // Cascade to flipped state (top hidden, bot visible), radiating from entry char
-      const dur = 200;
-      const spread = 120;
+      const dur = 200, spread = 120;
       const maxDist = Math.max(entryCharIdx, charData.length - 1 - entryCharIdx);
       const perChar = maxDist > 0 ? spread / maxDist : 0;
       const easing = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
@@ -254,8 +248,7 @@ if (window.matchMedia('(hover: hover)').matches) {
 
     logo.addEventListener('mouseleave', () => {
       if (enterAnimTimeout) { clearTimeout(enterAnimTimeout); enterAnimTimeout = null; }
-      const dur = 300;
-      const spread = 140;
+      const dur = 300, spread = 140;
       const maxDist = Math.max(entryCharIdx, charData.length - 1 - entryCharIdx);
       const perChar = maxDist > 0 ? spread / maxDist : spread / Math.max(charData.length, 1);
       const easing = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
@@ -268,6 +261,9 @@ if (window.matchMedia('(hover: hover)').matches) {
       });
     });
   }
+
+  initLogoAnim(document.querySelector('.logo'));
+  initLogoAnim(document.querySelector('.footer-logo'));
 }
 
 /* ── Tag filter: drag-to-scroll on desktop ──────────────────── */

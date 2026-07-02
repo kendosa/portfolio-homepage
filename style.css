@@ -268,20 +268,23 @@ a { color: inherit; text-decoration: none; }
 .card-title.char-reset .char::after { transition: none !important; }
 
 /* Logo char-shift (proximity-based, inner span approach) */
-.logo .char {
+.logo .char,
+.footer-logo .char {
   display: inline-block;
   position: relative;
   overflow: hidden;
   vertical-align: bottom;
 }
 
-.logo .char-top {
+.logo .char-top,
+.footer-logo .char-top {
   display: block;
   white-space: pre;
   transition: transform 0.18s ease;
 }
 
-.logo .char-bot {
+.logo .char-bot,
+.footer-logo .char-bot {
   display: block;
   position: absolute;
   top: 0; left: 0;
@@ -291,7 +294,9 @@ a { color: inherit; text-decoration: none; }
 }
 
 .logo .char.no-transition .char-top,
-.logo .char.no-transition .char-bot { transition: none !important; }
+.logo .char.no-transition .char-bot,
+.footer-logo .char.no-transition .char-top,
+.footer-logo .char.no-transition .char-bot { transition: none !important; }
 
 .card-desc {
   display: inline-block;
