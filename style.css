@@ -432,12 +432,11 @@ a { color: inherit; text-decoration: none; }
 
 /* ─── Footer ────────────────────────────────────────────────────── */
 .site-footer {
-  border-top: 1px solid rgba(0,0,0,.08);
-  padding: 1.5rem var(--pad);
+  padding: 1.5rem var(--pad) 3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: transparent;
+  background: var(--black);
 }
 
 .footer-copy {
@@ -445,7 +444,7 @@ a { color: inherit; text-decoration: none; }
   font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   letter-spacing: .010em;
-  color: var(--grey);
+  color: #fff;
 }
 
 .footer-social {
@@ -457,10 +456,10 @@ a { color: inherit; text-decoration: none; }
   font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   letter-spacing: .010em;
-  color: var(--grey);
-  transition: color .2s;
+  color: #fff;
+  transition: opacity .2s;
 }
-.footer-social a:hover { color: var(--black); }
+.footer-social a:hover { opacity: .6; }
 
 /* ─── Nav Collapse ───────────────────────────────────────────────── */
 .nav-links a,
