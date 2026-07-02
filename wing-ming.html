@@ -107,8 +107,16 @@
     }
     .hscroll-panel {
       flex-shrink: 0;
-      width: clamp(300px, 58vw, 860px);
       background: #2e2e2e;
+      border-radius: 3px;
+    }
+    .hscroll-panel:empty {
+      width: clamp(300px, 58vw, 860px);
+    }
+    .hscroll-panel img {
+      height: 100%;
+      width: auto;
+      display: block;
       border-radius: 3px;
     }
 
@@ -129,8 +137,10 @@
         height: auto;
       }
       .hscroll-panel {
-        width: 78vw;
         height: 52vw;
+      }
+      .hscroll-panel:empty {
+        width: 78vw;
       }
     }
 
@@ -366,7 +376,7 @@
   <div class="hscroll-driver" id="wmHScroll">
     <div class="hscroll-viewport">
       <div class="hscroll-track" id="wmHScrollTrack">
-        <div class="hscroll-panel"><img src="images/wing-ming-folder-mockup.jpg" alt="Wing Ming folder mockup" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:3px;" /></div>
+        <div class="hscroll-panel"><img src="images/wing-ming-folder-mockup.jpg" alt="Wing Ming folder mockup" /></div>
         <div class="hscroll-panel"></div>
         <div class="hscroll-panel"></div>
         <div class="hscroll-panel"></div>
