@@ -327,6 +327,78 @@ if (window.matchMedia('(hover: hover)').matches) {
   });
 }
 
+/* ── Footer interactive gradient ─────────────────────────────── */
+(function () {
+  const footer = document.querySelector('.site-footer');
+  if (!footer || !window.matchMedia('(hover: hover)').matches) return;
+
+  footer.style.position = 'relative';
+  footer.style.overflow = 'hidden';
+
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 0.9s ease';
+  footer.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+
+  let W = 0, H = 0;
+  function resize() {
+    W = canvas.width  = footer.offsetWidth;
+    H = canvas.height = footer.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  let mx = 0, my = 0, tx = W / 2, ty = H / 2;
+
+  footer.addEventListener('mouseenter', e => {
+    const r = footer.getBoundingClientRect();
+    tx = mx = e.clientX - r.left;
+    ty = my = e.clientY - r.top;
+    canvas.style.opacity = '1';
+  });
+  footer.addEventListener('mousemove', e => {
+    const r = footer.getBoundingClientRect();
+    tx = e.clientX - r.left;
+    ty = e.clientY - r.top;
+  });
+  footer.addEventListener('mouseleave', () => {
+    canvas.style.opacity = '0';
+  });
+
+  // Blobs: each orbits the cursor with its own speed, phase, radius, opacity
+  const blobs = [
+    { r: 300, a: 0.13, speed: 1.0, phase: 0.0,  ox: 110, oy: 70  },
+    { r: 210, a: 0.09, speed: 0.7, phase: 2.1,  ox: 150, oy: 55  },
+    { r: 380, a: 0.05, speed: 1.3, phase: 4.2,  ox: 85,  oy: 120 },
+    { r: 160, a: 0.17, speed: 1.9, phase: 1.0,  ox: 55,  oy: 38  },
+    { r: 440, a: 0.04, speed: 0.5, phase: 3.3,  ox: 210, oy: 160 },
+    { r: 250, a: 0.08, speed: 1.5, phase: 5.1,  ox: 70,  oy: 90  },
+  ];
+
+  let t = 0;
+  (function draw() {
+    requestAnimationFrame(draw);
+    if (!W || !H) return;
+
+    mx += (tx - mx) * 0.045;
+    my += (ty - my) * 0.045;
+    t  += 0.007;
+
+    ctx.clearRect(0, 0, W, H);
+
+    blobs.forEach(b => {
+      const bx = mx + Math.sin(t * b.speed + b.phase) * b.ox;
+      const by = my + Math.cos(t * b.speed * 0.8 + b.phase) * b.oy;
+      const g  = ctx.createRadialGradient(bx, by, 0, bx, by, b.r);
+      g.addColorStop(0,   `rgba(255,255,255,${b.a})`);
+      g.addColorStop(0.45,`rgba(255,255,255,${b.a * 0.45})`);
+      g.addColorStop(1,   'rgba(255,255,255,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+    });
+  }());
+}());
+
 /* ── Cover image gallery — position-based zone hover (Fuzzco-style) ── */
 
 document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
