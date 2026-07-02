@@ -336,7 +336,7 @@ if (window.matchMedia('(hover: hover)').matches) {
   footer.style.overflow = 'hidden';
 
   const canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity 1.1s ease';
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;filter:blur(70px)';
   footer.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
@@ -348,16 +348,14 @@ if (window.matchMedia('(hover: hover)').matches) {
   resize();
   window.addEventListener('resize', resize, { passive: true });
 
-  // Mouse: smoothed position. Starts at center; mouse pull is additive, not center-of-orbit
-  let mx = 0, my = 0, tx = -1, ty = -1, mouseActive = false;
+  // Mouse pull: active on hover, otherwise blobs drift freely
+  let mx = W / 2, my = H / 2, tx = W / 2, ty = H / 2, mouseActive = false;
 
   footer.addEventListener('mouseenter', e => {
     const r = footer.getBoundingClientRect();
     tx = e.clientX - r.left;
     ty = e.clientY - r.top;
-    mx = tx; my = ty;
     mouseActive = true;
-    canvas.style.opacity = '1';
   });
   footer.addEventListener('mousemove', e => {
     const r = footer.getBoundingClientRect();
@@ -366,19 +364,18 @@ if (window.matchMedia('(hover: hover)').matches) {
   });
   footer.addEventListener('mouseleave', () => {
     mouseActive = false;
-    canvas.style.opacity = '0';
   });
 
   // Each blob drifts autonomously across the footer.
   // `pull` = how strongly the mouse displaces it from its natural path (0 = ignores mouse, 1 = follows fully)
   const blobs = [
-    { r: 320, a: 0.12, sxS: 0.55, syS: 0.40, sxP: 0.0,  syP: 1.5,  pull: 0.28 },
-    { r: 240, a: 0.09, sxS: 0.30, syS: 0.70, sxP: 2.1,  syP: 0.3,  pull: 0.15 },
-    { r: 400, a: 0.05, sxS: 0.80, syS: 0.35, sxP: 4.2,  syP: 3.0,  pull: 0.40 },
-    { r: 175, a: 0.16, sxS: 1.10, syS: 0.90, sxP: 1.0,  syP: 5.0,  pull: 0.10 },
-    { r: 460, a: 0.04, sxS: 0.25, syS: 0.20, sxP: 3.3,  syP: 2.2,  pull: 0.55 },
-    { r: 270, a: 0.08, sxS: 0.65, syS: 0.55, sxP: 5.1,  syP: 0.8,  pull: 0.22 },
-    { r: 200, a: 0.11, sxS: 0.45, syS: 1.00, sxP: 1.8,  syP: 4.1,  pull: 0.35 },
+    { r: 520, a: 0.14, sxS: 0.55, syS: 0.40, sxP: 0.0,  syP: 1.5,  pull: 0.28 },
+    { r: 440, a: 0.10, sxS: 0.30, syS: 0.70, sxP: 2.1,  syP: 0.3,  pull: 0.15 },
+    { r: 600, a: 0.06, sxS: 0.80, syS: 0.35, sxP: 4.2,  syP: 3.0,  pull: 0.40 },
+    { r: 380, a: 0.17, sxS: 1.10, syS: 0.90, sxP: 1.0,  syP: 5.0,  pull: 0.10 },
+    { r: 680, a: 0.05, sxS: 0.25, syS: 0.20, sxP: 3.3,  syP: 2.2,  pull: 0.55 },
+    { r: 480, a: 0.09, sxS: 0.65, syS: 0.55, sxP: 5.1,  syP: 0.8,  pull: 0.22 },
+    { r: 420, a: 0.12, sxS: 0.45, syS: 1.00, sxP: 1.8,  syP: 4.1,  pull: 0.35 },
   ];
 
   let t = 0;
@@ -404,9 +401,10 @@ if (window.matchMedia('(hover: hover)').matches) {
       const by = autoY + (my - autoY) * b.pull;
 
       const g = ctx.createRadialGradient(bx, by, 0, bx, by, b.r);
-      g.addColorStop(0,    `rgba(255,255,255,${b.a})`);
-      g.addColorStop(0.45, `rgba(255,255,255,${b.a * 0.4})`);
-      g.addColorStop(1,    'rgba(255,255,255,0)');
+      g.addColorStop(0,   `rgba(255,255,255,${b.a})`);
+      g.addColorStop(0.3, `rgba(255,255,255,${b.a * 0.75})`);
+      g.addColorStop(0.65,`rgba(255,255,255,${b.a * 0.25})`);
+      g.addColorStop(1,   'rgba(255,255,255,0)');
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, W, H);
     });
