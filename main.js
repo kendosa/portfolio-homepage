@@ -336,7 +336,7 @@ if (window.matchMedia('(hover: hover)').matches) {
   footer.style.overflow = 'hidden';
 
   const canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;filter:blur(70px)';
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;filter:blur(110px)';
   footer.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
@@ -401,10 +401,12 @@ if (window.matchMedia('(hover: hover)').matches) {
       const by = autoY + (my - autoY) * b.pull;
 
       const g = ctx.createRadialGradient(bx, by, 0, bx, by, b.r);
-      g.addColorStop(0,   `rgba(255,255,255,${b.a})`);
-      g.addColorStop(0.3, `rgba(255,255,255,${b.a * 0.75})`);
-      g.addColorStop(0.65,`rgba(255,255,255,${b.a * 0.25})`);
-      g.addColorStop(1,   'rgba(255,255,255,0)');
+      g.addColorStop(0,    `rgba(255,255,255,${b.a})`);
+      g.addColorStop(0.2,  `rgba(255,255,255,${b.a * 0.88})`);
+      g.addColorStop(0.45, `rgba(255,255,255,${b.a * 0.60})`);
+      g.addColorStop(0.70, `rgba(255,255,255,${b.a * 0.25})`);
+      g.addColorStop(0.88, `rgba(255,255,255,${b.a * 0.07})`);
+      g.addColorStop(1,    'rgba(255,255,255,0)');
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, W, H);
     });
