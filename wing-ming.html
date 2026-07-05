@@ -484,6 +484,17 @@
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', function () { setHeight(); onScroll(); });
+
+    /* Panel widths depend on image aspect ratio, which isn't known until each
+       image loads — recalculate once loading settles so the driver height
+       (and therefore scroll travel) matches the true track width. */
+    var imgs = track.querySelectorAll('img');
+    imgs.forEach(function (img) {
+      if (!img.complete) {
+        img.addEventListener('load', function () { setHeight(); onScroll(); });
+      }
+    });
+    window.addEventListener('load', function () { setHeight(); onScroll(); });
   }());
 
   /* Wing Ming guidelines marquee */
