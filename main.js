@@ -365,13 +365,13 @@ if (window.matchMedia('(hover: hover)').matches) {
   // Each blob drifts autonomously across the footer.
   // `pull` = how strongly the mouse displaces it from its natural path (0 = ignores mouse, 1 = follows fully)
   const blobs = [
-    { r: 520, a: 0.14, sxS: 0.55, syS: 0.40, sxP: 0.0,  syP: 1.5,  pull: 0.28 },
-    { r: 440, a: 0.10, sxS: 0.30, syS: 0.70, sxP: 2.1,  syP: 0.3,  pull: 0.15 },
-    { r: 600, a: 0.06, sxS: 0.80, syS: 0.35, sxP: 4.2,  syP: 3.0,  pull: 0.40 },
-    { r: 380, a: 0.17, sxS: 1.10, syS: 0.90, sxP: 1.0,  syP: 5.0,  pull: 0.10 },
-    { r: 680, a: 0.05, sxS: 0.25, syS: 0.20, sxP: 3.3,  syP: 2.2,  pull: 0.55 },
-    { r: 480, a: 0.09, sxS: 0.65, syS: 0.55, sxP: 5.1,  syP: 0.8,  pull: 0.22 },
-    { r: 420, a: 0.12, sxS: 0.45, syS: 1.00, sxP: 1.8,  syP: 4.1,  pull: 0.35 },
+    { r: 520, a: 0.07, sxS: 0.55, syS: 0.40, sxP: 0.0,  syP: 1.5,  pull: 0.28 },
+    { r: 440, a: 0.05, sxS: 0.30, syS: 0.70, sxP: 2.1,  syP: 0.3,  pull: 0.15 },
+    { r: 600, a: 0.03, sxS: 0.80, syS: 0.35, sxP: 4.2,  syP: 3.0,  pull: 0.40 },
+    { r: 380, a: 0.08, sxS: 1.10, syS: 0.90, sxP: 1.0,  syP: 5.0,  pull: 0.10 },
+    { r: 680, a: 0.025, sxS: 0.25, syS: 0.20, sxP: 3.3,  syP: 2.2,  pull: 0.55 },
+    { r: 480, a: 0.045, sxS: 0.65, syS: 0.55, sxP: 5.1,  syP: 0.8,  pull: 0.22 },
+    { r: 420, a: 0.06, sxS: 0.45, syS: 1.00, sxP: 1.8,  syP: 4.1,  pull: 0.35 },
   ];
 
   let t = 0;
