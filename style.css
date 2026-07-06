@@ -530,6 +530,7 @@ body.home .tag-filter-btn {
 body.home .tag-filter-btn:hover,
 body.home .tag-filter-btn.active {
   background: #38e1e5;
+  border-color: #38e1e5;
   color: #0b3336;
 }
 
