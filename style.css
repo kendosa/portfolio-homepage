@@ -13,13 +13,7 @@
 
 html { scroll-behavior: smooth; }
 html.home { background: #0b3336; }
-body.home::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: #0b3336;
-  z-index: -1;
-}
+body.home { background: #0b3336; }
 
 body {
   font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
