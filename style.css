@@ -513,8 +513,14 @@ body.home .nav-links a:hover,
 body.home .nav-links a.nav-active,
 body.home .menu-toggle:hover { color: #FFFFFF; }
 
-body.home .hero { background: #0b3336; }
-body.home .hero-text { color: #75c3ca; }
+body.home .hero {
+  background: #0b3336;
+  max-width: none;
+}
+body.home .hero-text {
+  color: #75c3ca;
+  max-width: 1050px;
+}
 
 body.home .tag-filter-btn {
   border-color: #75c3ca;
@@ -525,6 +531,8 @@ body.home .tag-filter-btn.active {
   background: #75c3ca;
   color: #0b3336;
 }
+
+body.home .tag-filter { margin-bottom: 56px; }
 
 /* ─── Nav Collapse ───────────────────────────────────────────────── */
 .nav-links a,
