@@ -541,7 +541,16 @@ body.home .tag-filter-btn.active {
   color: #0b3336;
 }
 
-body.home .tag-filter { margin-bottom: 56px; }
+body.home .tag-filter {
+  background: #0b3336;
+  margin-left: calc(-1 * var(--pad));
+  margin-right: calc(-1 * var(--pad));
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+  margin-top: -90px;
+  padding-top: 80px;
+  margin-bottom: 56px;
+}
 
 /* ─── Nav Collapse ───────────────────────────────────────────────── */
 .nav-links a,
