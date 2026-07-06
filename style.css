@@ -450,7 +450,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 34px;
   font-weight: 500;
   letter-spacing: .005em;
-  color: #000000;
+  color: #ffffff;
   transition: color .2s;
 }
 .footer-logo:hover { color: #7500c3ca; }
@@ -461,7 +461,7 @@ a { color: inherit; text-decoration: none; }
   font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   letter-spacing: .010em;
-  color: #000000;
+  color: #ffffff;
   text-align: left;
 }
 
@@ -477,7 +477,7 @@ a { color: inherit; text-decoration: none; }
   font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   letter-spacing: .010em;
-  color: #000000;
+  color: #ffffff;
   text-decoration: underline;
   text-underline-offset: 5px;
   transition: color .2s;
@@ -491,7 +491,7 @@ a { color: inherit; text-decoration: none; }
   font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   letter-spacing: .010em;
-  color: #000000;
+  color: #ffffff;
   text-decoration: underline;
   text-underline-offset: 5px;
   transition: color .2s;
