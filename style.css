@@ -70,7 +70,6 @@ a { color: inherit; text-decoration: none; }
 }
 .nav-links a:hover { color: var(--black); }
 .nav-links a.nav-active { color: var(--black); }
-.mobile-link.nav-active { color: #f5f4f2; }
 
 .nav-contact {
 }
@@ -94,7 +93,7 @@ a { color: inherit; text-decoration: none; }
 .mobile-menu {
   position: fixed;
   inset: var(--header-h) 0 0 0;
-  background: var(--black);
+  background: #59bbca;
   z-index: 99;
   display: flex;
   align-items: center;
@@ -117,11 +116,13 @@ a { color: inherit; text-decoration: none; }
   font-size: clamp(2rem, 8vw, 3.5rem);
   font-weight: 500;
   letter-spacing: -.03em;
-  color: #f5f4f2;
+  color: #0b3336;
+  transition: color .2s;
 }
+.mobile-link:visited { color: #0b3336; }
 .mobile-link:hover,
-.mobile-link:visited,
-.mobile-link:active { color: #f5f4f2; }
+.mobile-link:active,
+.mobile-link.nav-active { color: #e3f1f3; }
 
 /* ─── Hero ──────────────────────────────────────────────────────── */
 .hero {
@@ -453,6 +454,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 500;
   letter-spacing: .005em;
   color: #e3f1f3;
+  white-space: nowrap;
   transition: color .2s;
 }
 .footer-logo:hover { color: #38e1e5; }
