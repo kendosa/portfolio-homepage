@@ -454,7 +454,7 @@ a { color: inherit; text-decoration: none; }
   color: #75c3ca;
   transition: color .2s;
 }
-.footer-logo:hover { color: #FFFFFF; }
+.footer-logo:hover { color: #e2f2f4; }
 
 .footer-copy {
   grid-row: 2;
@@ -483,7 +483,7 @@ a { color: inherit; text-decoration: none; }
   text-underline-offset: 5px;
   transition: color .2s;
 }
-.footer-social a:hover { color: #FFFFFF; }
+.footer-social a:hover { color: #e2f2f4; }
 
 .footer-resume {
   grid-row: 2;
@@ -498,7 +498,7 @@ a { color: inherit; text-decoration: none; }
   transition: color .2s;
   text-align: center;
 }
-.footer-resume:hover { color: #FFFFFF; }
+.footer-resume:hover { color: #e2f2f4; }
 
 /* ─── Home hero: match footer color scheme ─────────────────────── */
 body.home .site-header { background: #0b3336; }
@@ -506,13 +506,13 @@ body.home .site-header { background: #0b3336; }
 body.home .logo,
 body.home .logo:visited,
 body.home .logo:active { color: #75c3ca; }
-body.home .logo:hover { color: #FFFFFF; }
+body.home .logo:hover { color: #e2f2f4; }
 
 body.home .nav-links a,
 body.home .menu-toggle { color: #75c3ca; }
 body.home .nav-links a:hover,
 body.home .nav-links a.nav-active,
-body.home .menu-toggle:hover { color: #FFFFFF; }
+body.home .menu-toggle:hover { color: #e2f2f4; }
 
 body.home .hero {
   background: #0b3336;
