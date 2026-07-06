@@ -518,17 +518,17 @@ body.home .hero {
   max-width: none;
 }
 body.home .hero-text {
-  color: #75c3ca;
+  color: #e2f2f4;
   max-width: 1050px;
 }
 
 body.home .tag-filter-btn {
-  border-color: #75c3ca;
-  color: #75c3ca;
+  border-color: #e2f2f4;
+  color: #e2f2f4;
 }
 body.home .tag-filter-btn:hover,
 body.home .tag-filter-btn.active {
-  background: #75c3ca;
+  background: #e2f2f4;
   color: #0b3336;
 }
 
