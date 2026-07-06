@@ -535,7 +535,13 @@ body.home .tag-filter-btn.active {
   color: #0b3336;
 }
 
-body.home .grid { background: #fff; }
+body.home .grid {
+  background: #fff;
+  margin-left: calc(-1 * var(--pad));
+  margin-right: calc(-1 * var(--pad));
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
 
 body.home .tag-filter {
   background: #0b3336;
