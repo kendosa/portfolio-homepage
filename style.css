@@ -499,6 +499,33 @@ a { color: inherit; text-decoration: none; }
 }
 .footer-resume:hover { color: #FFFFFF; }
 
+/* ─── Home hero: match footer color scheme ─────────────────────── */
+body.home .site-header { background: #0b3336; }
+
+body.home .logo,
+body.home .logo:visited,
+body.home .logo:active { color: #75c3ca; }
+body.home .logo:hover { color: #FFFFFF; }
+
+body.home .nav-links a,
+body.home .menu-toggle { color: #75c3ca; }
+body.home .nav-links a:hover,
+body.home .nav-links a.nav-active,
+body.home .menu-toggle:hover { color: #FFFFFF; }
+
+body.home .hero { background: #0b3336; }
+body.home .hero-text { color: #75c3ca; }
+
+body.home .tag-filter-btn {
+  border-color: #75c3ca;
+  color: #75c3ca;
+}
+body.home .tag-filter-btn:hover,
+body.home .tag-filter-btn.active {
+  background: #75c3ca;
+  color: #0b3336;
+}
+
 /* ─── Nav Collapse ───────────────────────────────────────────────── */
 .nav-links a,
 .menu-toggle {
