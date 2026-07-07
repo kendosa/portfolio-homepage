@@ -793,20 +793,25 @@ body.home .tag-filter {
   .hero-text { font-size: 48px; }
 
   .site-footer {
-    grid-template-columns: 1fr;
-    grid-template-rows: none;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
     row-gap: 2rem;
     min-height: auto;
+    align-items: baseline;
   }
-  .footer-logo,
-  .footer-copy,
-  .footer-resume,
-  .footer-social {
-    grid-row: auto;
+  .footer-logo { grid-row: 1; grid-column: 1 / -1; }
+  .footer-copy { grid-row: 2; grid-column: 1 / -1; }
+  .footer-resume {
+    grid-row: 3;
     grid-column: 1;
+    margin: 0;
+    justify-self: start;
   }
-  .footer-resume { margin: 0 auto; }
-  .footer-social { justify-content: flex-start; }
+  .footer-social {
+    grid-row: 3;
+    grid-column: 2;
+    justify-content: flex-end;
+  }
   .footer-social a { line-height: 1.2; }
 
   .email-full { display: none; }
