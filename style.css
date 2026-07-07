@@ -12,9 +12,9 @@
 }
 
 html { scroll-behavior: smooth; }
-html.home { background: #fff; }
+html.home { background: #efefef; }
 body.home {
-  background: linear-gradient(to bottom, #e8fe53 var(--header-h), #fff var(--header-h));
+  background: linear-gradient(to bottom, #e8fe53 var(--header-h), #efefef var(--header-h));
 }
 
 body {
