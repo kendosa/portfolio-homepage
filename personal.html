@@ -25,9 +25,10 @@
       align-items: center;
     }
 
-    /* While actively dragging a card, let it render above the fixed
-       header (z-index: 100) too, so it can cover the logo/nav text. */
-    body.cc-dragging .cc-sticky {
+    /* While dragging, and until the next scroll after a drop, let the
+       gallery render above the fixed header (z-index: 100) too, so a
+       dropped card can cover the logo/nav text as well as the footer. */
+    body.cc-drag-elevated .cc-sticky {
       z-index: 101;
     }
 
@@ -413,6 +414,7 @@
         dragStartDragY  = d.dragY;
         d.el.style.zIndex = ++dragTopZ;
         document.body.classList.add('cc-dragging');
+        document.body.classList.add('cc-drag-elevated');
       });
     });
 
@@ -425,10 +427,16 @@
     document.addEventListener('mouseup', function () {
       if (!dragCard) return;
       dragCard.isDragging = false;
-      // leave z-index elevated so dragged card stays on top of the stack
       document.body.classList.remove('cc-dragging');
+      // leave both the card's z-index and the gallery's elevation above
+      // the header in place — dropped card stays on top until the user
+      // scrolls, at which point it naturally scrolls away underneath.
       dragCard = null;
     });
+
+    window.addEventListener('scroll', function () {
+      document.body.classList.remove('cc-drag-elevated');
+    }, { passive: true });
   }());
 
   // ── Suppress link navigation after drag ──────────────────────────────────
