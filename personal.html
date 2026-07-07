@@ -25,6 +25,12 @@
       align-items: center;
     }
 
+    /* While actively dragging a card, let it render above the fixed
+       header (z-index: 100) too, so it can cover the logo/nav text. */
+    body.cc-dragging .cc-sticky {
+      z-index: 101;
+    }
+
     /* ── Scrolling track ── */
     .cc-track {
       display: flex;
