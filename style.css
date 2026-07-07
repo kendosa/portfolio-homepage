@@ -533,9 +533,9 @@ body.home .tag-filter-btn {
 }
 body.home .tag-filter-btn:hover,
 body.home .tag-filter-btn.active {
-  background: #e8fe53;
+  background: transparent;
   border-color: #e8fe53;
-  color: #151f22;
+  color: #e8fe53;
 }
 
 body.home .grid {
