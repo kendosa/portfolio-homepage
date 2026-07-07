@@ -445,8 +445,8 @@ a { color: inherit; text-decoration: none; }
   100% { background-size: 100% 1px; }
 }
 @keyframes footer-link-retrace {
-  0%   { background-size: 0% 2px; }
-  100% { background-size: 100% 2px; }
+  0%   { background-size: 0% 1.5px; }
+  100% { background-size: 100% 1.5px; }
 }
 
 /* ─── Footer ────────────────────────────────────────────────────── */
@@ -499,7 +499,7 @@ a { color: inherit; text-decoration: none; }
   padding-bottom: var(--ul-offset);
   background-image: linear-gradient(currentColor, currentColor);
   background-repeat: no-repeat;
-  background-size: 100% 2px;
+  background-size: 100% 1.5px;
   background-position: 0 100%;
   transition: color .2s;
 }
@@ -523,7 +523,7 @@ a { color: inherit; text-decoration: none; }
   padding-bottom: var(--ul-offset);
   background-image: linear-gradient(currentColor, currentColor);
   background-repeat: no-repeat;
-  background-size: 100% 2px;
+  background-size: 100% 1.5px;
   background-position: 0 100%;
   transition: color .2s;
 }
