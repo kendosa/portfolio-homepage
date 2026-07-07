@@ -544,7 +544,6 @@ body.home .grid {
   margin-right: calc(-1 * var(--pad));
   padding-left: var(--pad);
   padding-right: var(--pad);
-  padding-bottom: clamp(80px, 12vw, 150px);
 }
 
 body.home .tag-filter {
@@ -561,15 +560,6 @@ body.home .tag-filter {
 
 @media (max-width: 700px) {
   body.home .tag-filter { margin-bottom: 48px; }
-}
-
-/* Explicit rebuild: pin footer height/top-margin on home to the exact
-   same values as every other page, so nothing in the cascade can
-   diverge them. */
-body.home .site-footer {
-  margin-top: 0;
-  min-height: 0;
-  padding-top: 60px;
 }
 
 /* ─── Nav Collapse ───────────────────────────────────────────────── */
