@@ -523,7 +523,7 @@ body.home .tag-filter-btn:hover,
 body.home .tag-filter-btn.active {
   background: #151f22;
   border-color: #151f22;
-  color: #fff;
+  color: #e8fe53;
 }
 
 body.home .grid {
