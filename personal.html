@@ -434,8 +434,15 @@
       dragCard = null;
     });
 
+    // Clear the elevation once scrolling has settled, rather than on the
+    // very first pixel of scroll — otherwise the header would snap back
+    // in front while the dropped card is still visually overlapping it.
+    var elevationClearTimer = null;
     window.addEventListener('scroll', function () {
-      document.body.classList.remove('cc-drag-elevated');
+      clearTimeout(elevationClearTimer);
+      elevationClearTimer = setTimeout(function () {
+        document.body.classList.remove('cc-drag-elevated');
+      }, 250);
     }, { passive: true });
   }());
 
