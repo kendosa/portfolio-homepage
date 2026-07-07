@@ -562,6 +562,14 @@ body.home .tag-filter {
   body.home .tag-filter { margin-bottom: 48px; }
 }
 
+/* Explicit rebuild: pin footer height/top-margin on home to the exact
+   same values as every other page, so nothing in the cascade can
+   diverge them. */
+body.home .site-footer {
+  margin-top: var(--pad);
+  min-height: 28rem;
+}
+
 /* ─── Nav Collapse ───────────────────────────────────────────────── */
 .nav-links a,
 .menu-toggle {
