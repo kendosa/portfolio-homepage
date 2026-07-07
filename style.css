@@ -554,7 +554,7 @@ body.home .tag-filter-btn.active {
 }
 
 body.home .grid {
-  background: #fff;
+  background: #efefef;
   margin-left: calc(-1 * var(--pad));
   margin-right: calc(-1 * var(--pad));
   padding-left: var(--pad);
