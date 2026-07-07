@@ -15,7 +15,7 @@
     const l = document.createElement('link'); l.rel = 'icon'; document.head.appendChild(l); return l;
   })();
 
-  let fontSize = SZ, baselineY = SZ / 2;
+  let fontSize = SZ;
 
   function calcFont() {
     let lo = 10, hi = 400;
@@ -28,9 +28,6 @@
     }
     fontSize = Math.floor(lo * SCALE);
     ctx.font = `500 ${fontSize}px "neue-haas-grotesk-display","Helvetica Neue",Helvetica,Arial,sans-serif`;
-    const m = ctx.measureText('K');
-    const h = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
-    baselineY = (SZ - h) / 2 + m.actualBoundingBoxAscent;
   }
 
   function draw(letter) {
@@ -40,6 +37,9 @@
     ctx.fillStyle = FG;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'alphabetic';
+    const m = ctx.measureText(letter);
+    const h = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+    const baselineY = (SZ - h) / 2 + m.actualBoundingBoxAscent;
     ctx.fillText(letter, SZ / 2, baselineY);
     link.type = 'image/png';
     link.href = canvas.toDataURL();
