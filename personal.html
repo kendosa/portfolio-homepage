@@ -23,6 +23,11 @@
       overflow-y: visible;
       display: flex;
       align-items: center;
+      /* .site-footer is display:grid, which treats its children as
+         positioned for stacking purposes even at z-index:auto — without
+         this, footer text (a grid item, later in the DOM) wins the tie
+         against this sticky element and paints on top of dragged cards. */
+      z-index: 1;
     }
 
     /* While dragging, and until the next scroll after a drop, let the
