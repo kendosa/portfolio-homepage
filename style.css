@@ -12,8 +12,10 @@
 }
 
 html { scroll-behavior: smooth; }
-html.home { background: #a8c0c4; }
-body.home { background: #a8c0c4; }
+html.home { background: #fff; }
+body.home {
+  background: linear-gradient(to bottom, #a8c0c4 var(--header-h), #fff var(--header-h));
+}
 
 body {
   font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
