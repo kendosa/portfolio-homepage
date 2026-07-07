@@ -2,7 +2,9 @@
 (function () {
   const SZ = 32;
   const letters = ['K', 'e', 'n'];
-  const FG = '#ffffff';
+  const BG = '#e8fe53';
+  const FG = '#151f22';
+  const SCALE = 0.82;
   const INTERVAL = 700;
 
   const canvas = document.createElement('canvas');
@@ -24,7 +26,7 @@
       const m = ctx.measureText('K');
       if (m.actualBoundingBoxAscent + m.actualBoundingBoxDescent < SZ) lo = mid; else hi = mid;
     }
-    fontSize = Math.floor(lo);
+    fontSize = Math.floor(lo * SCALE);
     ctx.font = `500 ${fontSize}px "neue-haas-grotesk-display","Helvetica Neue",Helvetica,Arial,sans-serif`;
     const m = ctx.measureText('K');
     const h = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
@@ -32,7 +34,8 @@
   }
 
   function draw(letter) {
-    ctx.clearRect(0, 0, SZ, SZ);
+    ctx.fillStyle = BG;
+    ctx.fillRect(0, 0, SZ, SZ);
     ctx.font = `500 ${fontSize}px "neue-haas-grotesk-display","Helvetica Neue",Helvetica,Arial,sans-serif`;
     ctx.fillStyle = FG;
     ctx.textAlign = 'center';
