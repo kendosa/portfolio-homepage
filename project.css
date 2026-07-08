@@ -416,6 +416,15 @@ body:has(.site-header.nav-hidden) .sticky-copy {
   display: block;
 }
 
+/* Per-image captions for scroll-driven sticky text frames (e.g. the
+   brothertiger album module). On desktop the sticky-copy label tracks
+   scroll position via JS; on mobile sticky-copy unsticks and can't
+   follow along, so these captions stand in, locked directly under each
+   image instead. Hidden on desktop where the JS-driven label handles it. */
+.bt-mobile-caption {
+  display: none;
+}
+
 @media (max-width: 767px) {
   .sticky-pair {
     flex-direction: column;
@@ -429,6 +438,19 @@ body:has(.site-header.nav-hidden) .sticky-copy {
   }
   .images {
     padding-top: clamp(2rem, 5vw, 4rem);
+  }
+
+  /* Hide the desktop scroll-tracking label; show per-image captions
+     instead, using the same 40px gap already established between
+     copy and image (.sticky-pair's own gap) between an image and its
+     caption. The container's existing 20px gap continues to separate
+     a caption from the next image. */
+  .bt-album-copy {
+    display: none;
+  }
+  .bt-mobile-caption {
+    display: block;
+    margin-top: 20px;
   }
 
   /* Each block already contributes its own bottom gap (clamp(2rem,5vw,4rem)
