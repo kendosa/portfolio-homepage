@@ -430,6 +430,22 @@ body:has(.site-header.nav-hidden) .sticky-copy {
   .images {
     padding-top: clamp(2rem, 5vw, 4rem);
   }
+
+  /* Each block already contributes its own bottom gap (clamp(2rem,5vw,4rem)
+     via .images/.sticky-pair padding-bottom). Zero out the following
+     block's top padding/margin — including any per-page inline overrides —
+     so every images→text, text→images, images→images and text→text
+     transition converges on that single value instead of stacking two. */
+  .images + .sticky-pair,
+  .images + .images {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  .sticky-pair + .images,
+  .sticky-pair + .sticky-pair {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
 }
 
 /* ─── Image gallery (Carla-style) ──────────────────────── */
@@ -449,6 +465,7 @@ body:has(.site-header.nav-hidden) .sticky-copy {
   line-height: 0;
   display: block;
 }
+.images__container picture:last-child { margin-bottom: 0; }
 
 .images__container picture img {
   width: 100%;
