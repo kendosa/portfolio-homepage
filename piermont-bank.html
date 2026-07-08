@@ -58,6 +58,27 @@
       <picture style="width:calc(50% - 10px); margin-bottom:40px; line-height:0; display:block;"><img src="images/pb-03.jpg" alt="Piermont Bank applications" /></picture>
       <picture style="width:calc(50% - 10px); margin-bottom:40px; line-height:0; display:block;"><img src="images/pb-04.jpg" alt="Piermont Bank digital" /></picture>
       <picture style="width:calc(50% - 10px); margin-bottom:40px; line-height:0; display:block;"><img src="images/pb-05.jpg" alt="Piermont Bank brand guidelines" /></picture>
+    </div>
+  </div>
+
+  <!-- Brand applications in the wild — horizontal scroll gallery -->
+  <div class="hscroll-driver" id="pbAppHScroll">
+    <div class="hscroll-viewport">
+      <div class="hscroll-track" id="pbAppHScrollTrack">
+        <div class="hscroll-panel"><img src="images/pb-applications/pb-app-11.jpg" alt="Piermont Bank brand book" /></div>
+        <div class="hscroll-panel"><img src="images/pb-applications/pb-app-17.jpg" alt="Piermont Bank logo lockup detail" /></div>
+        <div class="hscroll-panel"><img src="images/pb-applications/pb-app-20.jpg" alt="Piermont Bank pattern spread detail" /></div>
+        <div class="hscroll-panel"><img src="images/pb-applications/pb-app-22.jpg" alt="Piermont Bank pattern colorways detail" /></div>
+        <div class="hscroll-panel"><img src="images/pb-applications/pb-app-23.jpg" alt="Piermont Bank pattern construction detail" /></div>
+        <div class="hscroll-panel"><img src="images/pb-applications/pb-app-25.jpg" alt="Piermont Bank office glass signage" /></div>
+        <div class="hscroll-panel"><img src="images/pb-applications/pb-app-26.jpg" alt="Piermont Bank conference room signage" /></div>
+        <div class="hscroll-panel"><img src="images/pb-applications/pb-app-30.jpg" alt="Piermont Bank window pattern application" /></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="images">
+    <div class="images__container">
       <picture><img src="images/pb-06.jpg" alt="Piermont Bank design system" /></picture>
       <picture><img src="images/pb-07.png" alt="Piermont Bank color system" /></picture>
       <picture><img src="images/pb-08.png" alt="Piermont Bank typography" /></picture>
@@ -97,6 +118,7 @@
   <script src="main.js"></script>
   <script src="project.js"></script>
   <script>
+    initHScroll('pbAppHScroll', 'pbAppHScrollTrack');
     initHScroll('pbHScroll', 'pbHScrollTrack');
   </script>
 </body>
