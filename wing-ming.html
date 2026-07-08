@@ -85,64 +85,6 @@
       .wmg-grid { display: none; }
     }
 
-    /* ── Horizontal scroll gallery ── */
-    .hscroll-driver {
-      position: relative;
-      /* height calculated by JS to provide scroll travel distance */
-    }
-    .hscroll-viewport {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: hidden;
-      background: #000;
-    }
-    .hscroll-track {
-      display: flex;
-      align-items: stretch;
-      height: 100%;
-      padding: clamp(16px, 2.5vw, 36px);
-      gap: clamp(16px, 2.5vw, 36px);
-      will-change: transform;
-    }
-    .hscroll-panel {
-      flex-shrink: 0;
-      border-radius: 3px;
-    }
-    .hscroll-panel:empty {
-      width: clamp(300px, 58vw, 860px);
-    }
-    .hscroll-panel img {
-      height: 100%;
-      width: auto;
-      display: block;
-      border-radius: 3px;
-    }
-
-    @media (max-width: 767px) {
-      .hscroll-driver { height: auto !important; }
-      .hscroll-viewport {
-        position: relative;
-        height: auto;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-      }
-      .hscroll-viewport::-webkit-scrollbar { display: none; }
-      .hscroll-track {
-        padding: 12px;
-        align-items: stretch;
-        gap: 12px;
-        height: auto;
-      }
-      .hscroll-panel {
-        height: 52vw;
-      }
-      .hscroll-panel:empty {
-        width: 78vw;
-      }
-    }
-
     #ccCursor {
       position: fixed;
       top: 0; left: 0;
@@ -455,48 +397,7 @@
     });
   }());
 
-  /* Wing Ming horizontal scroll gallery */
-  (function () {
-    var driver = document.getElementById('wmHScroll');
-    var track  = document.getElementById('wmHScrollTrack');
-    if (!driver || !track) return;
-
-    /* Mobile: native horizontal scroll, no JS hijacking */
-    if (window.matchMedia('(max-width: 767px)').matches) return;
-
-    function travel() {
-      return Math.max(0, track.scrollWidth - window.innerWidth);
-    }
-
-    function setHeight() {
-      driver.style.height = (window.innerHeight + travel()) + 'px';
-    }
-
-    function onScroll() {
-      var t = travel();
-      if (t <= 0) return;
-      var scrolled  = -driver.getBoundingClientRect().top;
-      var drivable  = driver.offsetHeight - window.innerHeight;
-      var progress  = Math.max(0, Math.min(1, scrolled / drivable));
-      track.style.transform = 'translateX(' + (-progress * t) + 'px)';
-    }
-
-    setHeight();
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', function () { setHeight(); onScroll(); });
-
-    /* Panel widths depend on image aspect ratio, which isn't known until each
-       image loads — recalculate once loading settles so the driver height
-       (and therefore scroll travel) matches the true track width. */
-    var imgs = track.querySelectorAll('img');
-    imgs.forEach(function (img) {
-      if (!img.complete) {
-        img.addEventListener('load', function () { setHeight(); onScroll(); });
-      }
-    });
-    window.addEventListener('load', function () { setHeight(); onScroll(); });
-  }());
+  initHScroll('wmHScroll', 'wmHScrollTrack');
 
   /* Wing Ming guidelines marquee */
   (function () {

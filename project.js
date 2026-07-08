@@ -205,3 +205,45 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.06 });
 
 [...textEls, ...imgEls].forEach(el => io.observe(el));
+
+/* Horizontal scroll gallery — scroll-jacked, full-viewport track.
+   Mobile falls back to native horizontal scroll (no JS hijacking). */
+function initHScroll(driverId, trackId) {
+  const driver = document.getElementById(driverId);
+  const track  = document.getElementById(trackId);
+  if (!driver || !track) return;
+
+  if (window.matchMedia('(max-width: 767px)').matches) return;
+
+  function travel() {
+    return Math.max(0, track.scrollWidth - window.innerWidth);
+  }
+
+  function setHeight() {
+    driver.style.height = (window.innerHeight + travel()) + 'px';
+  }
+
+  function onScroll() {
+    const t = travel();
+    if (t <= 0) return;
+    const scrolled = -driver.getBoundingClientRect().top;
+    const drivable = driver.offsetHeight - window.innerHeight;
+    const progress = Math.max(0, Math.min(1, scrolled / drivable));
+    track.style.transform = `translateX(${-progress * t}px)`;
+  }
+
+  setHeight();
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => { setHeight(); onScroll(); });
+
+  /* Panel widths depend on image aspect ratio, which isn't known until each
+     image loads — recalculate once loading settles so the driver height
+     (and therefore scroll travel) matches the true track width. */
+  track.querySelectorAll('img').forEach(img => {
+    if (!img.complete) {
+      img.addEventListener('load', () => { setHeight(); onScroll(); });
+    }
+  });
+  window.addEventListener('load', () => { setHeight(); onScroll(); });
+}

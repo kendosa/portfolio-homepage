@@ -826,3 +826,61 @@ body:has(.site-header.nav-hidden) .sticky-copy {
 @media (pointer: coarse) {
   #ccCursor { display: none !important; }
 }
+
+/* ── Horizontal scroll gallery (scroll-jacked, full-viewport) ──────── */
+.hscroll-driver {
+  position: relative;
+  /* height calculated by JS to provide scroll travel distance */
+}
+.hscroll-viewport {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+.hscroll-track {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  padding: clamp(16px, 2.5vw, 36px);
+  gap: clamp(16px, 2.5vw, 36px);
+  will-change: transform;
+}
+.hscroll-panel {
+  flex-shrink: 0;
+  border-radius: 3px;
+}
+.hscroll-panel:empty {
+  width: clamp(300px, 58vw, 860px);
+}
+.hscroll-panel img {
+  height: 100%;
+  width: auto;
+  display: block;
+  border-radius: 3px;
+}
+
+@media (max-width: 767px) {
+  .hscroll-driver { height: auto !important; }
+  .hscroll-viewport {
+    position: relative;
+    height: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .hscroll-viewport::-webkit-scrollbar { display: none; }
+  .hscroll-track {
+    padding: 12px;
+    align-items: stretch;
+    gap: 12px;
+    height: auto;
+  }
+  .hscroll-panel {
+    height: 52vw;
+  }
+  .hscroll-panel:empty {
+    width: 78vw;
+  }
+}
