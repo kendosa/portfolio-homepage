@@ -190,11 +190,12 @@ a { color: inherit; text-decoration: none; }
   display: block;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.18s ease;
+  transition: opacity 0.18s ease 0.18s;
 }
 
 .img-wrap .gallery-frame.active {
   opacity: 1;
+  transition: opacity 0.18s ease;
 }
 
 .img-wrap .gallery-frame img {
