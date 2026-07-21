@@ -861,6 +861,10 @@ body:has(.site-header.nav-hidden) .sticky-copy {
   border-radius: 3px;
 }
 
+.hscroll-driver + .sticky-pair {
+  margin-top: clamp(2rem, 5vw, 4rem);
+}
+
 @media (max-width: 767px) {
   .hscroll-driver { height: auto !important; }
   .hscroll-viewport {
