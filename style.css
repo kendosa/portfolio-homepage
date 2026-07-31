@@ -173,10 +173,6 @@ a { color: inherit; text-decoration: none; }
   border-radius: 6px;
 }
 
-.info-portrait-base {
-  filter: grayscale(1);
-}
-
 .info-portrait-hover {
   position: absolute;
   inset: 0;
