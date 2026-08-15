@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planetary Geology Kenny Phillips</title>
+  <link rel="stylesheet" href="https://use.typekit.net/eux7kam.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="project.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="index.html" class="logo">Kenny Phillips</a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-active">Work</a>
+      <a href="info.html">Info</a>
+      <a href="personal.html">Personal</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Toggle menu">Menu</button>
+  </header>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu" id="mobileMenu">
+    <nav class="mobile-nav">
+      <a href="index.html" class="mobile-link nav-active">Work</a>
+      <a href="info.html" class="mobile-link">Info</a>
+      <a href="personal.html" class="mobile-link">Personal</a>
+    </nav>
+  </div>
+
+  <div class="images" style="margin-top: var(--header-h);">
+    <div class="images__container">
+      <picture>
+        <img src="images/planetary-geology-cover.jpg" alt="Planetary Geology" />
+      </picture>
+    </div>
+  </div>
+
+  <section class="project-hero project-hero--aa" style="margin-top: 0; height: auto; min-height: 0; margin-bottom: clamp(4rem, 8vw, 7rem);">
+    <div class="project-aa-left">
+      <p class="project-aa-deliverables"><span>Editorial</span><span>Print</span></p>
+    </div>
+    <div class="project-aa-right">
+      <span class="project-label">Planetary Geology</span>
+      <h1 class="project-aa-title">Placeholder title goes here</h1>
+      <div class="project-aa-body">
+        <p>Placeholder body copy. This is a stand-in description for the Planetary Geology project, to be replaced with real project content.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="project-content" style="padding-top: 0;">
+    <div class="full-img content-block">
+      <img src="images/planetary-geology-book-mockup.jpg" alt="Planetary Geology book mockup, Beyond the Solar System spread" />
+    </div>
+    <div class="full-img content-block">
+      <img src="images/planetary-geology-toc-mockup.jpg" alt="Planetary Geology book mockup, table of contents spread" />
+    </div>
+  </div>
+
+  <!-- Horizontal scroll gallery -->
+  <div class="hscroll-driver" id="pgHScroll">
+    <div class="hscroll-viewport">
+      <div class="hscroll-track" id="pgHScrollTrack">
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-01.jpg" alt="Planetary Geology book cover" /></div>
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-02.jpg" alt="Planetary Geology spread" /></div>
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-03.jpg" alt="Planetary Geology spread" /></div>
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-04.jpg" alt="Planetary Geology spread" /></div>
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-05.jpg" alt="Planetary Geology spread" /></div>
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-06.jpg" alt="Planetary Geology spread" /></div>
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-07.jpg" alt="Planetary Geology spread" /></div>
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-08.jpg" alt="Planetary Geology spread" /></div>
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-09.jpg" alt="Planetary Geology spread" /></div>
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-10.jpg" alt="Planetary Geology spread" /></div>
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-11.jpg" alt="Planetary Geology spread" /></div>
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-12.jpg" alt="Planetary Geology spread" /></div>
+        <div class="hscroll-panel"><img src="images/planetary-geology-spread-13.jpg" alt="Planetary Geology spread" /></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <a href="index.html" class="footer-logo">Kenny Phillips</a>
+    <span class="footer-copy">© 2026 Kenny Phillips</span>
+    <a href="Kenny-Phillips-Resume-2026.pdf" target="_blank" rel="noopener" class="footer-resume">Resume</a>
+    <div class="footer-social">
+      <a href="mailto:kennydphillips@gmail.com?Subject=Hey%20Kenny!"><span class="email-full">Send an email</span><span class="email-short">Email</span></a>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="project.js"></script>
+  <script>
+    initHScroll('pgHScroll', 'pgHScrollTrack');
+  </script>
+</body>
+</html>
