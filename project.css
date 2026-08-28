@@ -251,6 +251,12 @@
   display: block;
 }
 
+.credit-line a.credit-source-link {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
 .credit-line + .credit-line {
   margin-top: 0.75em;
 }
