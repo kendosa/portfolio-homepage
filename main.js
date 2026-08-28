@@ -165,15 +165,26 @@ if (window.matchMedia('(hover: hover)').matches) {
   document.querySelectorAll('.project-card').forEach(card => {
     const title = card.querySelector('.card-title');
     if (!title) return;
-    const chars = [...title.textContent];
-    const perChar = 160 / Math.max(chars.length, 1);
+    const words = title.textContent.split(' ');
+    const perChar = 160 / Math.max(title.textContent.length, 1);
     title.innerHTML = '';
-    chars.forEach((ch, i) => {
-      const span = document.createElement('span');
-      span.className = 'char';
-      span.dataset.char = ch === ' ' ? ' ' : ch;
-      span.style.setProperty('--td', `${i * perChar}ms`);
-      title.appendChild(span);
+    let i = 0;
+    words.forEach((word, wi) => {
+      const wordSpan = document.createElement('span');
+      wordSpan.className = 'word';
+      [...word].forEach(ch => {
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.dataset.char = ch;
+        span.style.setProperty('--td', `${i * perChar}ms`);
+        wordSpan.appendChild(span);
+        i++;
+      });
+      title.appendChild(wordSpan);
+      if (wi < words.length - 1) {
+        title.appendChild(document.createTextNode(' '));
+        i++;
+      }
     });
 
     card.addEventListener('mouseenter', () => {
