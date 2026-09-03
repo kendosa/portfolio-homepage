@@ -350,6 +350,7 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   align-items: center;
   gap: 0.4rem;
   margin-top: 2rem;
+  margin-left: -14px;
   padding: 12px 20px 11px;
   border: 1px solid var(--black);
   border-radius: 999px;
