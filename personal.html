@@ -514,8 +514,11 @@
       return Math.max(120, Math.round(textRight - cursorLeft));
     }());
 
+    var menuToggle = document.querySelector('.menu-toggle');
+
     function showCursor() {
       if (overImage || hasScrolled) return;
+      if (menuToggle && menuToggle.classList.contains('open')) return;
       sc.style.opacity = '1';
       sc.style.transform = '';
       document.body.classList.add('sc-active');
@@ -523,6 +526,16 @@
     function hideCursor() {
       sc.style.opacity = '0';
       document.body.classList.remove('sc-active');
+    }
+
+    if (menuToggle) {
+      menuToggle.addEventListener('click', function () {
+        if (menuToggle.classList.contains('open')) {
+          hideCursor();
+        } else {
+          showCursor();
+        }
+      });
     }
 
     document.addEventListener('mousemove', function (e) {
