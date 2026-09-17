@@ -610,6 +610,7 @@ body:has(.site-header.nav-hidden) .sticky-copy {
 
 /* ─── Finding Form Design campaign booklet marquee ───────────── */
 .ffd-marquee-wrap {
+  position: relative;
   overflow: hidden;
   background: #050405;
   padding: 48px 0;
@@ -634,6 +635,7 @@ body:has(.site-header.nav-hidden) .sticky-copy {
 
 /* ─── Wing Ming guidelines marquee ──────────────────────── */
 .wm-marquee-wrap {
+  position: relative;
   overflow: hidden;
   background: #050405;
   padding: 48px 0;

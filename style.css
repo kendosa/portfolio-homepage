@@ -693,6 +693,31 @@ body.home .tag-filter {
   transform: translateY(0);
 }
 
+/* ─── Drag badge (mobile touch-drag hint) ──────────────────────────── */
+.drag-badge {
+  display: none;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 6px 16px 5px;
+  border-radius: 999px;
+  background: rgba(168, 192, 196, 0.42);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  font-size: 14px;
+  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: #fff;
+  white-space: nowrap;
+  line-height: 1.2;
+  pointer-events: none;
+  z-index: 10;
+}
+@media (pointer: coarse) {
+  .drag-badge { display: block; }
+}
+
 /* ─── Scroll Reveal ─────────────────────────────────────────────── */
 .p-reveal {
   opacity: 0;

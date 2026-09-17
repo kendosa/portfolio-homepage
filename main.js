@@ -344,6 +344,11 @@ document.querySelectorAll('.img-wrap[data-gallery]').forEach(wrap => {
   if (imgs.length < 2) return;
   const positions = wrap.dataset.positions ? wrap.dataset.positions.split('|') : [];
 
+  const dragBadge = document.createElement('div');
+  dragBadge.className = 'drag-badge';
+  dragBadge.textContent = 'Drag to see more';
+  wrap.appendChild(dragBadge);
+
   // Pre-render one absolutely-positioned frame per image (index 0 = base img already in DOM)
   const frames = imgs.map((src, i) => {
     if (i === 0) return null;
