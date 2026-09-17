@@ -367,6 +367,15 @@ p.project-aa-body + p.project-aa-body { margin-top: 1.8em; }
   background: #e8fe53;
   border-color: #e8fe53;
 }
+.project-aa-cta-arrow {
+  display: inline-flex;
+  align-items: center;
+}
+.project-aa-cta-arrow svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
 
 /* Responsive */
 @media (max-width: 600px) {
