@@ -107,19 +107,68 @@ body{background:#fff;font-family:KL,sans-serif;color:#fff;-webkit-font-smoothing
   </div>
 </div>
 
-<!-- ===================== COMPOSITION 2: room id by a door ===================== -->
-<div id="c-room" class="wall warm" style="width:1200px;height:1324px">
-  <!-- door frame -->
-  <div style="position:absolute;left:640px;top:0;width:560px;height:1324px;background:linear-gradient(90deg,#c9c4bb,#d8d3ca 8%,#d2cdc4);box-shadow:inset 18px 0 24px rgba(0,0,0,.08)"></div>
-  <div style="position:absolute;left:640px;top:0;width:22px;height:1324px;background:linear-gradient(90deg,#b8b2a8,#e9e5df)"></div>
-  <div style="position:absolute;left:700px;top:0;width:500px;height:1324px;background:linear-gradient(90deg,#9c7a5a,#b08c69 40%,#a4815f);box-shadow:inset 10px 0 18px rgba(0,0,0,.18)"></div>
-  <div style="position:absolute;left:740px;top:690px;width:120px;height:18px;border-radius:9px;background:linear-gradient(180deg,#e9ecef,#9aa1a8);box-shadow:0 4px 8px rgba(0,0,0,.25)"></div>
-  <div style="position:absolute;left:744px;top:672px;width:34px;height:54px;border-radius:6px;background:linear-gradient(90deg,#c9ced3,#eef0f2,#aab0b6);box-shadow:0 3px 6px rgba(0,0,0,.2)"></div>
-  <div class="sign room" style="left:90px;top:360px;width:500px;height:500px">
+<!-- ===================== COMPOSITION 2: room id by a door (true scale, 24px = 1in) ===================== -->
+<style>
+#c-room{background:#e8e5df}
+#c-room .paint{position:absolute;inset:0;
+  background:
+   radial-gradient(90% 70% at 18% 8%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
+   linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(60,50,40,.07) 100%),
+   linear-gradient(90deg, rgba(0,0,0,0) 40%, rgba(60,50,40,.05) 64%)}
+#c-room .paint::after{content:"";position:absolute;inset:0;opacity:.22;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .43  0 0 0 0 .4  0 0 0 .6 0'/></filter><rect width='260' height='260' filter='url(%23n)'/></svg>")}
+/* hollow metal frame: face + rabbet + stop */
+#c-room .frame{position:absolute;left:764px;top:0;width:58px;height:1324px;
+  background:linear-gradient(90deg,#7d7f7e 0,#a4a6a4 6%,#9a9c9a 40%,#8d8f8d 82%,#6f716f 92%,#5d5f5e 100%);
+  box-shadow:-3px 0 6px rgba(0,0,0,.18)}
+#c-room .stop{position:absolute;left:822px;top:0;width:16px;height:1324px;
+  background:linear-gradient(90deg,#5b5d5c,#8e908e 60%,#7c7e7c)}
+/* white oak veneer door leaf */
+#c-room .leaf{position:absolute;left:838px;top:0;width:362px;height:1324px;overflow:hidden;
+  background:linear-gradient(90deg,#b8946a,#c8a57a 30%,#c29e72 70%,#b99569)}
+#c-room .leaf::before{content:"";position:absolute;inset:0;mix-blend-mode:multiply;opacity:.55;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='362' height='1324'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.09 0.0022' numOctaves='4' seed='4'/><feColorMatrix values='0 0 0 0 .55  0 0 0 0 .38  0 0 0 0 .22  0 0 0 1.1 -.25'/></filter><rect width='362' height='1324' filter='url(%23g)'/></svg>")}
+#c-room .leaf::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(0,0,0,.28),rgba(0,0,0,0) 22px),
+             radial-gradient(80% 60% at 30% 10%, rgba(255,240,220,.22), rgba(255,255,255,0) 60%)}
+/* narrow vision panel, wired glass in a steel stop */
+#c-room .lite{position:absolute;left:1010px;top:110px;width:112px;height:540px;
+  background:linear-gradient(90deg,#8e908f,#b9bbba 40%,#7c7e7d);padding:12px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
+#c-room .lite i{display:block;width:100%;height:100%;
+  background:
+   linear-gradient(118deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.22) 38%, rgba(255,255,255,0) 46%),
+   repeating-linear-gradient(45deg, rgba(210,215,220,.18) 0 1px, transparent 1px 22px),
+   repeating-linear-gradient(-45deg, rgba(210,215,220,.18) 0 1px, transparent 1px 22px),
+   linear-gradient(180deg,#3c4652,#566170 45%,#46505c);
+  box-shadow:inset 3px 3px 6px rgba(0,0,0,.45)}
+/* lever on a round rose, brushed steel */
+#c-room .rose{position:absolute;left:868px;top:906px;width:64px;height:64px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f4f5f6,#c3c7cb 45%,#8b9096 100%);
+  box-shadow:4px 7px 9px rgba(0,0,0,.32),inset -2px -3px 4px rgba(0,0,0,.18)}
+#c-room .lever{position:absolute;left:892px;top:925px;width:150px;height:22px;border-radius:4px 11px 11px 4px;
+  background:linear-gradient(180deg,#f2f3f4 0,#d3d6da 35%,#9ca1a7 80%,#7f858b 100%);
+  box-shadow:5px 10px 10px rgba(0,0,0,.30)}
+/* 9in sign, 1/8in acrylic: crisp edge + cast shadow */
+#c-room .room{left:272px;top:300px;width:216px;height:216px;padding:16px 17px;
+  box-shadow:0 0 0 .5px rgba(0,0,0,.25),1px 1px 0 rgba(0,0,0,.18),5px 9px 12px rgba(40,30,20,.22),2px 3px 3px rgba(40,30,20,.18)}
+#c-room .room .eyebrow{font-size:9.5px;letter-spacing:.14em}
+#c-room .room .num{font-size:96px;margin:9px 0 6px -3px}
+#c-room .room .lbl{font-size:17px}
+#c-room .braille{left:17px;bottom:16px;gap:9px}
+#c-room .cell{grid-template-columns:repeat(2,5px);grid-template-rows:repeat(3,5px);gap:3px}
+#c-room .cell i{width:5px;height:5px}
+#c-room .cell i.on{box-shadow:.5px 1px 1px rgba(0,0,0,.35)}
+</style>
+<div id="c-room" class="wall" style="width:1200px;height:1324px">
+  <div class="paint"></div>
+  <div class="frame"></div><div class="stop"></div>
+  <div class="leaf"></div>
+  <div class="lite"><i></i></div>
+  <div class="rose"></div><div class="lever"></div>
+  <div class="sign room" style="position:absolute">
     <div class="eyebrow">Room</div>
     <div class="num">412</div>
     <div class="lbl">Exam</div>
-    <!-- braille: number sign, 4, 1, 2 -->
     <div class="braille">
       <div class="cell"><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
       <div class="cell"><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i></i><i></i></div>
@@ -130,7 +179,20 @@ body{background:#fff;font-family:KL,sans-serif;color:#fff;-webkit-font-smoothing
 </div>
 
 <!-- ===================== COMPOSITION 3: exterior pair ===================== -->
-<div id="c-exterior" class="wall" style="width:1200px;height:1324px;background:linear-gradient(180deg,#d9dcdf,#cfd3d7)">
+<div id="c-exterior" class="wall" style="width:1200px;height:1324px;background:
+   radial-gradient(90% 70% at 20% 10%, rgba(255,255,255,.45), rgba(255,255,255,0) 60%),
+   repeating-linear-gradient(180deg, rgba(0,0,0,0) 0 329px, rgba(70,72,76,.16) 329px 331px, rgba(255,255,255,.25) 331px 332px),
+   linear-gradient(90deg, rgba(0,0,0,0) 0 599px, rgba(70,72,76,.14) 599px 601px, rgba(0,0,0,0) 601px),
+   linear-gradient(180deg,#d6d7d6,#c9cbcb)">
+  <div style="position:absolute;inset:0;pointer-events:none;background-image:
+     radial-gradient(circle at 150px 165px, rgba(60,62,66,.35) 0 6px, rgba(255,255,255,.35) 7px, transparent 9px),
+     radial-gradient(circle at 450px 165px, rgba(60,62,66,.35) 0 6px, rgba(255,255,255,.35) 7px, transparent 9px),
+     radial-gradient(circle at 750px 165px, rgba(60,62,66,.35) 0 6px, rgba(255,255,255,.35) 7px, transparent 9px),
+     radial-gradient(circle at 1050px 165px, rgba(60,62,66,.35) 0 6px, rgba(255,255,255,.35) 7px, transparent 9px),
+     radial-gradient(circle at 150px 1155px, rgba(60,62,66,.35) 0 6px, rgba(255,255,255,.35) 7px, transparent 9px),
+     radial-gradient(circle at 450px 1155px, rgba(60,62,66,.35) 0 6px, rgba(255,255,255,.35) 7px, transparent 9px),
+     radial-gradient(circle at 750px 1155px, rgba(60,62,66,.35) 0 6px, rgba(255,255,255,.35) 7px, transparent 9px),
+     radial-gradient(circle at 1050px 1155px, rgba(60,62,66,.35) 0 6px, rgba(255,255,255,.35) 7px, transparent 9px)"></div>
   <div class="sign panel tall" style="left:85px;top:300px;width:500px;height:700px;padding:40px 42px">
     <div class="name">Parking<br>Garage</div>
     <div class="circle"><span class="ms">local_parking</span></div>
