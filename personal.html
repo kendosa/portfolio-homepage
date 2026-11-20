@@ -44,7 +44,9 @@
       gap: clamp(12px, 1.5vw, 20px);
       padding: 0 clamp(32px, 5vw, 80px);
       will-change: transform;
+      transition: opacity 0.4s ease;
     }
+    .cc-track--loading { opacity: 0; }
 
     /* ── Image cards ── */
     .cc-card {
@@ -210,43 +212,43 @@
 
         <!-- Image cards -->
         <div class="cc-card cc-card--landscape" data-label="Birch ply table">
-          <img class="cc-card-fill" src="images/woodwork-2.png" alt="Woodwork table" decoding="async">
+          <img class="cc-card-fill" src="images/woodwork-2.webp" alt="Woodwork table" width="1400" height="681" fetchpriority="high" decoding="async">
         </div>
         <div class="cc-card cc-card--portrait" data-label="Table detail">
-          <img class="cc-card-fill" src="images/woodwork-1.jpg" alt="Woodwork detail" decoding="async">
+          <img class="cc-card-fill" src="images/woodwork-1.jpg" alt="Woodwork detail" width="1400" height="924" fetchpriority="high" decoding="async">
         </div>
         <div class="cc-card cc-card--portrait" data-label="Table detail">
-          <img class="cc-card-fill" src="images/woodwork-3.jpg" alt="Woodwork shelf detail" decoding="async">
+          <img class="cc-card-fill" src="images/woodwork-3.jpg" alt="Woodwork shelf detail" width="1400" height="935" fetchpriority="high" decoding="async">
         </div>
         <div class="cc-card cc-card--portrait" data-label="Cedar lamp">
-          <img class="cc-card-fill" src="images/woodwork-6.jpg" alt="Lamp" decoding="async">
+          <img class="cc-card-fill" src="images/woodwork-6.jpg" alt="Lamp" width="1400" height="1395" fetchpriority="high" decoding="async">
         </div>
         <div class="cc-card cc-card--portrait" data-label="Lamp detail">
-          <img class="cc-card-fill" src="images/woodwork-7.jpg" alt="Lamp detail" decoding="async">
+          <img class="cc-card-fill" src="images/woodwork-7.jpg" alt="Lamp detail" width="1347" height="1400" decoding="async">
         </div>
         <div class="cc-card cc-card--tall" data-label="Birch ply built in closet" data-z="5">
-          <img class="cc-card-fill" src="images/woodwork-4.jpg" alt="Woodwork closet" decoding="async">
+          <img class="cc-card-fill" src="images/woodwork-4.jpg" alt="Woodwork closet" width="1088" height="1400" decoding="async">
         </div>
         <div class="cc-card cc-card--portrait" data-label="Closet detail">
-          <img class="cc-card-fill" src="images/closet-detail.png" alt="Closet detail" decoding="async">
+          <img class="cc-card-fill" src="images/closet-detail.webp" alt="Closet detail" width="1046" height="1400" decoding="async">
         </div>
         <div class="cc-card cc-card--tall" data-label="Birch &amp; Maple ply Shaker-inspired stool" data-z="6">
-          <img class="cc-card-fill" src="images/woodwork-5.png" alt="Woodwork stool" decoding="async">
+          <img class="cc-card-fill" src="images/woodwork-5.webp" alt="Woodwork stool" width="763" height="1400" decoding="async">
         </div>
         <a href="https://www.wingmingflowers.com/" target="_blank" rel="noopener" class="cc-card cc-card--landscape" data-label="Wing Ming's flower cooler">
-          <img class="cc-card-fill" src="images/wing-ming-flower-cooler.jpg" alt="Wing Ming's flower cooler" decoding="async">
+          <img class="cc-card-fill" src="images/wing-ming-flower-cooler.jpg" alt="Wing Ming's flower cooler" width="1400" height="785" decoding="async">
         </a>
         <div class="cc-card cc-card--portrait" data-label="Ceder deck">
-          <img class="cc-card-fill" src="images/cedar-deck.jpg" alt="Cedar deck" decoding="async">
+          <img class="cc-card-fill" src="images/cedar-deck.jpg" alt="Cedar deck" width="1064" height="1400" decoding="async">
         </div>
         <div class="cc-card cc-card--portrait" data-label="Engineered White Oak, full home flooring install">
-          <img class="cc-card-fill" src="images/white-oak-floor.jpg" alt="Engineered white oak floor install" decoding="async">
+          <img class="cc-card-fill" src="images/white-oak-floor.jpg" alt="Engineered white oak floor install" width="1064" height="1400" decoding="async">
         </div>
         <div class="cc-card cc-card--portrait" data-label="Red Oak bathroom shelf">
-          <img class="cc-card-fill" src="images/red-oak-bathroom-shelf.jpg" alt="Red Oak bathroom shelf" decoding="async">
+          <img class="cc-card-fill" src="images/red-oak-bathroom-shelf.jpg" alt="Red Oak bathroom shelf" width="1050" height="1400" decoding="async">
         </div>
         <a href="https://www.findingformdesign.com/" target="_blank" rel="noopener" class="cc-card cc-card--portrait" data-label="Kitchen remodel with Finding Form Design">
-          <img class="cc-card-fill" src="images/kitchen-remodel.jpg" alt="Kitchen remodel with Finding Form Design" decoding="async">
+          <img class="cc-card-fill" src="images/kitchen-remodel.jpg" alt="Kitchen remodel with Finding Form Design" width="1398" height="1600" decoding="async">
         </a>
 
         <div class="cc-card cc-card--landscape">
@@ -325,19 +327,26 @@
       d.el.style.zIndex = d.baseZ;
     });
 
+    // Layout width of the track, from layout positions only. track.scrollWidth
+    // also counts overflow from rotated and dragged cards, so it drifts from
+    // frame to frame as the cards tilt, which made the track jitter.
+    var contentW = 0;
+    const padR = function () { return parseFloat(getComputedStyle(track).paddingRight) || 0; };
+
     function measure() {
-      track.style.transform = 'translateX(0px)';
       cardData.forEach(function (d) {
-        d.left  = d.el.offsetLeft;
+        d.left  = d.el.offsetLeft;   // offsetLeft ignores transforms, no reset needed
         d.width = d.el.offsetWidth;
       });
+      const last = cardData[cardData.length - 1];
+      contentW = last.left + last.width + padR();
     }
 
+    function getTravel() { return Math.max(contentW - window.innerWidth, 0); }
+
     function setHeight() {
-      track.style.transform = 'translateX(0px)';
-      const travel = track.scrollWidth - window.innerWidth;
-      section.style.height = (window.innerHeight + Math.max(travel, 0)) + 'px';
       measure();
+      section.style.height = (window.innerHeight + getTravel()) + 'px';
     }
 
     function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
@@ -354,8 +363,7 @@
       if (firstFrame) { cur = tgt; firstFrame = false; }
       cur += (tgt - cur) * 0.08;
 
-      const travel = track.scrollWidth - window.innerWidth;
-      const trackX = travel * cur;
+      const trackX = getTravel() * cur;
 
       track.style.transform = 'translateX(' + (-trackX).toFixed(2) + 'px)';
 
@@ -382,24 +390,62 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', function () { setHeight(); onScroll(); }, { passive: true });
 
-    // Start immediately — script is at bottom of body so DOM is ready
+    // If the page loads at the top, nudge the track so a card peeks in from
+    // the right edge, then let it ease back. Runs once, when the gallery is
+    // revealed with correct measurements, so it never starts from a stale width.
+    var userScrolled = false;
+    function applyPeek() {
+      if (userScrolled || tgt !== 0) return;
+      const travel = getTravel();
+      if (travel > 0) { cur = 120 / travel; firstFrame = false; }
+    }
+    window.addEventListener('scroll', function () {
+      if (window.pageYOffset > 0) userScrolled = true;
+    }, { passive: true });
+
+    // Re-measure (batched to one per frame) whenever something that affects
+    // layout finishes: each image, the web fonts, and the full page load.
+    var remeasurePending = false;
+    function remeasure() {
+      if (remeasurePending) return;
+      remeasurePending = true;
+      requestAnimationFrame(function () {
+        remeasurePending = false;
+        setHeight(); onScroll();
+      });
+    }
+
+    // Start immediately — script is at bottom of body so DOM is ready.
+    // Image width/height attributes give every card its real size up front.
     setHeight();
     onScroll();
 
-    // If the page loads at the top, nudge cur forward so a card peeks
-    // from the right edge, hinting at the horizontal scroll experience
-    if (tgt === 0) {
-      const travel = track.scrollWidth - window.innerWidth;
-      if (travel > 0) {
-        cur = 120 / travel;
-        firstFrame = false;
-      }
-    }
+    // Hold the gallery invisible until the first screenful of images has
+    // decoded (or 900ms passes), then fade it in, so the first frames of
+    // motion are not spent decoding images mid-scroll.
+    var imgs = Array.from(track.querySelectorAll('img'));
+    imgs.forEach(function (img) {
+      if (!img.complete) img.addEventListener('load', remeasure, { once: true });
+    });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
+    window.addEventListener('load', remeasure);
+
+    track.classList.add('cc-track--loading');
+    var firstScreen = imgs.filter(function (img) {
+      return img.closest('.cc-card').offsetLeft < window.innerWidth * 1.5;
+    });
+    var reveal = function () {
+      if (!track.classList.contains('cc-track--loading')) return;
+      setHeight(); onScroll();
+      applyPeek();   // once, as the gallery appears, so the intro slide plays visibly
+      track.classList.remove('cc-track--loading');
+    };
+    Promise.all(firstScreen.map(function (img) {
+      return img.decode ? img.decode().catch(function () {}) : Promise.resolve();
+    })).then(reveal);
+    setTimeout(reveal, 900);
 
     requestAnimationFrame(tick);
-
-    // Re-measure once images are fully loaded in case any dimensions shifted
-    window.addEventListener('load', function () { setHeight(); onScroll(); });
 
     // ── Drag-to-snap ────────────────────────────────────────────────────────
     var dragCard = null, dragStartMouseX = 0, dragStartMouseY = 0;
