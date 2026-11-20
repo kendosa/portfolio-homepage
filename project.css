@@ -1100,8 +1100,13 @@ p.project-aa-body { text-wrap: pretty; }
   margin-top: 0 !important;
   height: auto !important;
   min-height: 0 !important;
-  padding-top: 0 !important;
+  padding-top: clamp(3rem, 6vw, 5rem) !important;
   margin-bottom: clamp(3rem, 7vw, 6rem) !important;
+}
+.fr-rule {
+  border: 0;
+  border-top: 1px solid var(--black);
+  margin: 0 var(--pad);
 }
 .fr-closing .project-aa-body a {
   text-decoration: underline;
