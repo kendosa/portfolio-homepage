@@ -22,7 +22,7 @@ const groups = {
   'floor-directory': '#c-lobby .dir',
   'room-id': '#c-room .room',
   'parking-garage': '#c-exterior > .sign:nth-of-type(1), #c-exterior > .arrow:last-of-type',
-  'emergency-entrance': '#c-exterior > .panel.t, #c-exterior > .arrow[style*="tangelo"]',
+  'emergency-entrance': '#c-exterior > .panel.t, #c-exterior > .arrow[style*="emergency"]',
   'overhead-blade': '#c-overhead .blade',
 };
 for (const [name, sel] of Object.entries(groups)) {

@@ -23,7 +23,7 @@ for (const spec of ids) {
   if (mode === 'transparent') await S('Emulation.setDefaultBackgroundColorOverride', { color: { r: 0, g: 0, b: 0, a: 0 } });
   else await S('Emulation.setDefaultBackgroundColorOverride', {});
   const r = await ev(`(()=>{const e=document.querySelector(${JSON.stringify(sel)});const b=e.getBoundingClientRect();return {x:b.x+scrollX,y:b.y+scrollY,w:b.width,h:b.height}})()`);
-  const scale = mode === 'transparent' ? 2 : 1;
+  const scale = (mode === 'transparent' || mode === '2x') ? 2 : 1;
   const { result } = await S('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: r.x, y: r.y, width: r.w, height: r.h, scale } });
   const name = sel.replace(/[#.]/g, '');
   writeFileSync(`${out}/${name}.png`, Buffer.from(result.data, 'base64'));
