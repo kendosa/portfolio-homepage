@@ -1148,3 +1148,18 @@ p.project-aa-body { text-wrap: pretty; }
   .sg-elev { width: 640px; max-width: none; }
   .sg-elev-notes { grid-template-columns: 1fr; }
 }
+
+/* Studio Glagola full shop drawing sheet (A-201) */
+.sg-sheet-wrap { width: 100%; line-height: 0; }
+.sg-sheet { width: 100%; height: auto; display: block; }
+.sg-sheet-hint { display: none; }
+@media (max-width: 767px) {
+  .sg-sheet-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .sg-sheet-wrap::-webkit-scrollbar { display: none; }
+  .sg-sheet { width: 1100px; max-width: none; }
+  .sg-sheet-hint {
+    display: block; width: 100%; margin-top: 10px;
+    font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px; color: var(--grey);
+  }
+}
