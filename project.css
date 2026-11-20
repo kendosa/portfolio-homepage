@@ -1009,6 +1009,9 @@ p.project-aa-body { text-wrap: pretty; }
   text-wrap: balance;
 }
 .eh-line-tile em { font-style: italic; font-weight: 500; }
+.eh-line-tile:has(svg) { padding: 0; display: block; }
+.eh-line-tile svg { width: 100%; height: 100%; display: block; fill: #fff; }
+.eh-klarheit-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 @media (max-width: 767px) {
   .eh-line-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .eh-line-tile { font-size: clamp(1.1rem, 5.2vw, 1.5rem); }
