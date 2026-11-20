@@ -929,3 +929,179 @@ body:has(.site-header.nav-hidden) .sticky-copy {
     width: 78vw;
   }
 }
+
+/* ─── Case study section headers (label style) ─────────────────── */
+.case-section-head {
+  padding: clamp(3rem, 7vw, 6rem) var(--pad) clamp(1.5rem, 3vw, 2.5rem);
+}
+.case-section-head .project-label {
+  margin-bottom: 0;
+  text-wrap: balance;
+}
+.case-section-head + .images,
+.case-section-head + .sticky-pair,
+.case-section-head + .images + .sticky-pair { padding-top: 0 !important; margin-top: 0 !important; }
+
+/* Copy that sits below a section head or under an image group */
+.case-note {
+  padding: 0 var(--pad) clamp(2rem, 5vw, 4rem);
+}
+.project-aa-body p,
+p.project-aa-body { text-wrap: pretty; }
+.project-aa-title { text-wrap: balance; }
+
+/* Large single-line stat under sticky copy */
+.stat-line {
+  font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  margin-top: 1.5em;
+  text-wrap: balance;
+}
+
+/* Small caption under an image */
+.img-caption {
+  padding: 12px var(--pad) 0;
+  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--grey);
+}
+.images:has(+ .img-caption) { padding-bottom: 0; }
+.img-caption + .project-hero { padding-top: clamp(2rem, 5vw, 4rem); }
+
+/* Stacked full-width images inside a sticky image column */
+.sticky-stack { display: flex; flex-direction: column; gap: 20px; }
+
+/* Impact block (credits styling, larger numbers) */
+.project-impact { padding-bottom: 0; }
+.project-impact .project-label { margin-bottom: 1rem; }
+.project-impact .credit-line {
+  font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+  line-height: 1.15;
+  color: var(--black);
+}
+.project-impact .credit-line + .credit-line { margin-top: 0.25em; }
+
+/* ─── Endeavor line system type grid ───────────────────────────── */
+.eh-line-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  line-height: 1.1;
+}
+.eh-line-tile {
+  aspect-ratio: 1 / 1;
+  background: #255EF6;
+  color: #fff;
+  padding: clamp(1rem, 2vw, 1.75rem);
+  display: flex;
+  align-items: flex-start;
+  font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: clamp(1.25rem, 2.1vw, 2.125rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.eh-line-tile em { font-style: italic; font-weight: 500; }
+@media (max-width: 767px) {
+  .eh-line-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .eh-line-tile { font-size: clamp(1.1rem, 5.2vw, 1.5rem); }
+}
+
+/* ─── Studio Glagola shop drawing title block ──────────────────── */
+.sg-titleblock {
+  background: #f0ece6;
+  padding: clamp(1.25rem, 4vw, 3.5rem);
+  line-height: 1.2;
+}
+.sg-titleblock__grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 0.75fr 0.9fr;
+  grid-template-areas:
+    "project drawing scale mark"
+    "material material date mark";
+  border: 2px solid #000;
+  font-family: neue-haas-grotesk-display, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #000;
+}
+.sg-tb-cell {
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  padding: clamp(0.6rem, 1.2vw, 1rem);
+  min-width: 0;
+}
+.sg-tb-project  { grid-area: project; }
+.sg-tb-drawing  { grid-area: drawing; }
+.sg-tb-scale    { grid-area: scale; }
+.sg-tb-material { grid-area: material; border-bottom: 0; }
+.sg-tb-date     { grid-area: date; border-bottom: 0; }
+.sg-tb-mark     { grid-area: mark; border-right: 0; border-bottom: 0; }
+.sg-tb-label {
+  display: block;
+  font-size: clamp(9px, 0.8vw, 11px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 0.6em;
+}
+.sg-tb-value {
+  display: block;
+  font-size: clamp(15px, 1.6vw, 24px);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.sg-tb-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sg-tb-mark svg { width: 46%; height: auto; display: block; }
+@media (max-width: 767px) {
+  .sg-titleblock__grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "project project"
+      "drawing scale"
+      "material material"
+      "date mark";
+  }
+  .sg-tb-scale    { border-right: 0; }
+  .sg-tb-project  { border-right: 0; }
+  .sg-tb-material { border-right: 0; border-bottom: 1px solid #000; }
+  .sg-tb-mark svg { width: 34%; padding: 0.75rem 0; box-sizing: content-box; }
+}
+
+/* ─── /for-ru-dy landing ───────────────────────────────────────── */
+.fr-intro .project-aa-deliverables a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+.fr-project .images { padding-bottom: 0; }
+.fr-project .images a { display: block; width: 100%; line-height: 0; }
+.fr-project .project-hero--aa {
+  margin-top: 0;
+  height: auto;
+  min-height: 0;
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  margin-bottom: clamp(4rem, 9vw, 8rem);
+}
+.fr-project .project-aa-title { margin-bottom: 1.5rem; }
+.fr-closing {
+  margin-top: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding-top: 0 !important;
+  margin-bottom: clamp(3rem, 7vw, 6rem) !important;
+}
+.fr-closing .project-aa-body a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
