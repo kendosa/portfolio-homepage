@@ -11,6 +11,7 @@ D = "/Users/kennyphillips/Library/Fonts/ES Klarheit/"
 FONTS = {"rm": D+"ESKlarheitGrotesk-Bk.ttf", "it": D+"ESKlarheitGrotesk-BkIt.ttf"}
 WORDS = ["best health","recovery","first breath","communities","care","next step"]
 SIZE, PAD, LH = 1000, 100, 1.12
+LOGO_W = 520
 
 class F:
     def __init__(s, key, path):
@@ -53,7 +54,12 @@ for word in WORDS:
     placed += [(g, x, y, 1) for g, x, y in c]
     uses = "".join(f'<use href="#{g}" transform="translate({PAD + x*sc:.1f} {PAD + fs*0.92 + line*fs*LH - y*sc:.1f}) scale({sc:.4f} -{sc:.4f})"/>' for g, x, y, line in placed)
     label = f"Your {word} is our endeavor."
-    tiles.append(f'        <div class="eh-line-tile"><svg viewBox="0 0 {SIZE} {SIZE}" role="img" aria-label="{label}"><title>{label}</title>{uses}</svg></div>\n')
-defs = '      <svg class="eh-klarheit-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>' + "".join(f'<path id="{g}" d="{d}"/>' for g, d in used.items() if d) + '</defs></svg>\n'
+    tiles.append(f'        <div class="eh-line-tile"><svg viewBox="0 0 {SIZE} {SIZE}" role="img" aria-label="{label}"><title>{label}</title>{uses}<use href="#eh-logo" x="{PAD}" y="{SIZE - PAD - LOGO_W*102/1243:.1f}" width="{LOGO_W}" height="{LOGO_W*102/1243:.1f}"/></svg></div>\n')
+import os
+_logo = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "images", "endeavor-logo.svg")).read()
+_vb = re.search(r'viewBox="([^"]+)"', _logo).group(1)
+_paths = "".join(re.sub(r'\s*fill="[^"]*"', "", m) for m in re.findall(r'<path[^>]*/>', _logo))
+logo_symbol = f'<symbol id="eh-logo" viewBox="{_vb}">{_paths}</symbol>'
+defs = '      <svg class="eh-klarheit-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>' + logo_symbol + "".join(f'<path id="{g}" d="{d}"/>' for g, d in used.items() if d) + '</defs></svg>\n'
 sys.stdout.write(f"FS {fs:.1f}\n")
 open(sys.argv[1], "w").write(defs + "|||" + "".join(tiles))
