@@ -1105,3 +1105,16 @@ p.project-aa-body { text-wrap: pretty; }
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
 }
+.fr-footnote {
+  order: 6;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  font-family: neue-haas-grotesk-text, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--grey);
+}
+.fr-footnote a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
