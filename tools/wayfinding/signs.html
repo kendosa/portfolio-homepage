@@ -1,0 +1,159 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+<style>
+@font-face{font-family:KL;font-weight:300;src:url("file:///Users/kennyphillips/Library/Fonts/ES%20Klarheit/ESKlarheitGrotesk-Lt.otf")}
+@font-face{font-family:KL;font-weight:400;src:url("file:///Users/kennyphillips/Library/Fonts/ES%20Klarheit/ESKlarheitGrotesk-Bk.ttf")}
+@font-face{font-family:KL;font-weight:500;src:url("file:///Users/kennyphillips/Library/Fonts/ES%20Klarheit/ESKlarheitGrotesk-Md.ttf")}
+@font-face{font-family:KL;font-weight:700;src:url("file:///Users/kennyphillips/Library/Fonts/ES%20Klarheit/ESKlarheitGrotesk-Bd.otf")}
+:root{--blue:#235FF8;--sea:#0B1B42;--azure:#E1F5FC;--tangelo:#F15624;--sun:#FFCF30}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;font-family:KL,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.ms{font-family:'Material Symbols Rounded';font-weight:300;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;direction:ltr;-webkit-font-feature-settings:'liga';font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 48}
+
+/* ---------- walls ---------- */
+.wall{position:relative;overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 30% 20%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
+    linear-gradient(180deg,#e7e9ec 0%,#dcdfe3 100%);}
+.wall::before{content:"";position:absolute;inset:0;opacity:.28;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .55 0'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");}
+.wall.warm{background:radial-gradient(110% 90% at 70% 15%, rgba(255,255,255,.5), rgba(255,255,255,0) 60%),linear-gradient(180deg,#ece9e4,#e0dcd6)}
+.wall.ceiling{background:linear-gradient(180deg,#f3f4f6 0%,#e6e8eb 55%,#d9dce0 100%)}
+.sign{position:absolute;box-shadow:0 1px 2px rgba(0,0,0,.22),10px 16px 28px rgba(20,30,60,.16),2px 3px 6px rgba(0,0,0,.08)}
+.solo .sign{position:relative;box-shadow:none}
+
+/* ---------- arrow module ---------- */
+.arrow{background:var(--blue);display:flex;align-items:center;justify-content:center}
+.arrow svg{width:62%;height:62%;stroke:#fff;fill:none;stroke-width:9;stroke-linecap:butt;stroke-linejoin:miter}
+
+/* ---------- destination panel ---------- */
+.panel{background:var(--blue);padding:22px 28px;display:flex;flex-direction:column;justify-content:space-between}
+.panel .name{font-weight:500;font-size:64px;letter-spacing:-.005em;line-height:1}
+.panel .meta{font-weight:400;font-size:24px;position:absolute;top:26px;right:30px}
+.panel .ico{position:absolute;right:26px;bottom:20px;font-size:56px}
+.panel.t{background:var(--tangelo)}
+.panel.sea{background:var(--sea)}
+
+/* ---------- directory ---------- */
+.dir{background:var(--sea);padding:44px 48px}
+.eyebrow{font-weight:700;font-size:20px;letter-spacing:.14em;text-transform:uppercase}
+.dir .floor{font-weight:300;font-size:300px;line-height:.8;margin:18px 0 36px -8px;letter-spacing:-.03em}
+.dir .row{display:flex;align-items:center;justify-content:space-between;border-top:1.5px solid rgba(255,255,255,.35);padding:20px 0}
+.dir .row .n{font-weight:500;font-size:40px}
+.dir .row .s{font-weight:400;font-size:22px;opacity:.75;margin-top:6px}
+.dir .row svg{width:46px;height:46px;stroke:#fff;fill:none;stroke-width:5;flex:none}
+.dir .logo{position:absolute;left:48px;bottom:40px;width:250px;fill:#fff}
+
+/* ---------- room id ---------- */
+.room{background:var(--blue);padding:34px 36px}
+.room .num{font-weight:300;font-size:210px;line-height:.85;margin:16px 0 12px -6px;letter-spacing:-.02em}
+.room .lbl{font-weight:400;font-size:34px}
+.braille{position:absolute;left:36px;bottom:34px;display:flex;gap:18px}
+.cell{display:grid;grid-template-columns:repeat(2,10px);grid-template-rows:repeat(3,10px);gap:6px}
+.cell i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.0)}
+.cell i.on{background:#fff;box-shadow:0 1px 1px rgba(0,0,0,.25)}
+
+/* ---------- tall exterior panels ---------- */
+.tall{padding:40px 42px}
+.tall .name{font-weight:300;font-size:76px;line-height:1.02;letter-spacing:-.01em}
+.tall .meta{position:absolute;top:44px;right:42px;font-weight:400;font-size:24px}
+.tall .circle{position:absolute;right:40px;bottom:40px;width:128px;height:128px;border-radius:50%;border:4px solid #fff;display:flex;align-items:center;justify-content:center}
+.tall .circle .ms{font-size:84px}
+.tall .logo{position:absolute;left:42px;bottom:46px;width:230px;fill:#fff}
+
+/* ---------- overhead blade ---------- */
+.blade{background:var(--sea);display:flex;height:220px}
+.blade .cell2{flex:1;display:flex;align-items:center;gap:26px;padding:0 44px;border-left:1.5px solid rgba(255,255,255,.3)}
+.blade .cell2:first-child{border-left:0}
+.blade .cell2 .n{font-weight:500;font-size:58px}
+.blade .cell2 svg{width:64px;height:64px;stroke:#fff;fill:none;stroke-width:5.5;flex:none}
+.blade .cell2 .ms{font-size:60px;margin-left:auto;opacity:.95}
+.rod{position:absolute;width:6px;background:linear-gradient(90deg,#9aa0a8,#cfd3d8,#8d939b)}
+</style></head><body>
+
+<!-- arrow glyph defs -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="a-ne" viewBox="0 0 100 100"><path d="M24 76 L74 26 M34 26 H74 V66"/></symbol>
+  <symbol id="a-up" viewBox="0 0 100 100"><path d="M50 84 V18 M22 46 L50 18 L78 46"/></symbol>
+  <symbol id="a-l"  viewBox="0 0 100 100"><path d="M84 50 H18 M46 22 L18 50 L46 78"/></symbol>
+  <symbol id="a-r"  viewBox="0 0 100 100"><path d="M16 50 H82 M54 22 L82 50 L54 78"/></symbol>
+</defs></svg>
+
+<!-- ===================== COMPOSITION 1: lobby wall ===================== -->
+<div id="c-lobby" class="wall" style="width:2400px;height:1350px">
+  <!-- directional stack -->
+  <div class="sign arrow" style="left:260px;top:250px;width:150px;height:150px"><svg><use href="#a-up"/></svg></div>
+  <div class="sign panel t" style="left:430px;top:250px;width:760px;height:150px"><div class="name">Emergency</div><div class="meta">Open 24/7</div><span class="ms ico">emergency</span></div>
+
+  <div class="sign arrow" style="left:260px;top:430px;width:150px;height:150px"><svg><use href="#a-ne"/></svg></div>
+  <div class="sign panel" style="left:430px;top:430px;width:760px;height:150px"><div class="name">Imaging</div><div class="meta">MRI, CT, X&#8209;Ray</div><span class="ms ico">radiology</span></div>
+
+  <div class="sign arrow" style="left:260px;top:610px;width:150px;height:150px"><svg><use href="#a-l"/></svg></div>
+  <div class="sign panel" style="left:430px;top:610px;width:760px;height:150px"><div class="name">Cardiology</div><span class="ms ico">cardiology</span></div>
+
+  <div class="sign arrow" style="left:260px;top:790px;width:150px;height:150px"><svg><use href="#a-r"/></svg></div>
+  <div class="sign panel" style="left:430px;top:790px;width:760px;height:150px"><div class="name">Elevators</div><div class="meta">Floors 2 to 8</div><span class="ms ico">elevator</span></div>
+
+  <!-- floor directory -->
+  <div class="sign dir" style="left:1440px;top:170px;width:700px;height:1010px">
+    <div class="eyebrow">Floor</div>
+    <div class="floor">4</div>
+    <div class="row"><div><div class="n">Cardiology</div><div class="s">Rooms 401 to 418</div></div><svg viewBox="0 0 100 100"><use href="#a-l"/></svg></div>
+    <div class="row"><div><div class="n">Cardiac Rehab</div><div class="s">Rooms 420 to 432</div></div><svg viewBox="0 0 100 100"><use href="#a-r"/></svg></div>
+    <div class="row"><div><div class="n">Vascular Lab</div><div class="s">Room 440</div></div><svg viewBox="0 0 100 100"><use href="#a-r"/></svg></div>
+    <div class="row" style="border-bottom:1.5px solid rgba(255,255,255,.35)"><div><div class="n">Waiting Area</div><div class="s">Family lounge</div></div><svg viewBox="0 0 100 100"><use href="#a-up"/></svg></div>
+    <svg class="logo" viewBox="0 0 1243 102"><use href="#eh-logo"/></svg>
+  </div>
+</div>
+
+<!-- ===================== COMPOSITION 2: room id by a door ===================== -->
+<div id="c-room" class="wall warm" style="width:1200px;height:1324px">
+  <!-- door frame -->
+  <div style="position:absolute;left:640px;top:0;width:560px;height:1324px;background:linear-gradient(90deg,#c9c4bb,#d8d3ca 8%,#d2cdc4);box-shadow:inset 18px 0 24px rgba(0,0,0,.08)"></div>
+  <div style="position:absolute;left:640px;top:0;width:22px;height:1324px;background:linear-gradient(90deg,#b8b2a8,#e9e5df)"></div>
+  <div style="position:absolute;left:700px;top:0;width:500px;height:1324px;background:linear-gradient(90deg,#9c7a5a,#b08c69 40%,#a4815f);box-shadow:inset 10px 0 18px rgba(0,0,0,.18)"></div>
+  <div style="position:absolute;left:740px;top:690px;width:120px;height:18px;border-radius:9px;background:linear-gradient(180deg,#e9ecef,#9aa1a8);box-shadow:0 4px 8px rgba(0,0,0,.25)"></div>
+  <div style="position:absolute;left:744px;top:672px;width:34px;height:54px;border-radius:6px;background:linear-gradient(90deg,#c9ced3,#eef0f2,#aab0b6);box-shadow:0 3px 6px rgba(0,0,0,.2)"></div>
+  <div class="sign room" style="left:90px;top:360px;width:500px;height:500px">
+    <div class="eyebrow">Room</div>
+    <div class="num">412</div>
+    <div class="lbl">Exam</div>
+    <!-- braille: number sign, 4, 1, 2 -->
+    <div class="braille">
+      <div class="cell"><i></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+      <div class="cell"><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i></i><i></i></div>
+      <div class="cell"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="cell"><i class="on"></i><i></i><i class="on"></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== COMPOSITION 3: exterior pair ===================== -->
+<div id="c-exterior" class="wall" style="width:1200px;height:1324px;background:linear-gradient(180deg,#d9dcdf,#cfd3d7)">
+  <div class="sign panel tall" style="left:85px;top:300px;width:500px;height:700px;padding:40px 42px">
+    <div class="name">Parking<br>Garage</div>
+    <div class="circle"><span class="ms">local_parking</span></div>
+  </div>
+  <div class="sign panel tall t" style="left:615px;top:300px;width:500px;height:700px;padding:40px 42px">
+    <div class="name">Emergency<br>Entrance</div>
+    <div class="circle"><span class="ms">emergency</span></div>
+  </div>
+  <div class="sign arrow" style="left:615px;top:140px;width:140px;height:140px;background:var(--tangelo)"><svg><use href="#a-r"/></svg></div>
+  <div class="sign arrow" style="left:85px;top:140px;width:140px;height:140px"><svg><use href="#a-l"/></svg></div>
+</div>
+
+<!-- ===================== COMPOSITION 4: overhead blade ===================== -->
+<div id="c-overhead" class="wall ceiling" style="width:2400px;height:900px">
+  <div class="rod" style="left:520px;top:0;height:330px"></div>
+  <div class="rod" style="left:1874px;top:0;height:330px"></div>
+  <div class="sign blade" style="left:300px;top:330px;width:1800px">
+    <div class="cell2"><svg viewBox="0 0 100 100"><use href="#a-l"/></svg><span class="n">Main Lobby</span><span class="ms">door_front</span></div>
+    <div class="cell2"><svg viewBox="0 0 100 100"><use href="#a-up"/></svg><span class="n">Cardiology</span><span class="ms">cardiology</span></div>
+    <div class="cell2"><svg viewBox="0 0 100 100"><use href="#a-r"/></svg><span class="n">Elevators</span><span class="ms">elevator</span></div>
+  </div>
+</div>
+
+<!-- logo symbol (white via fill) -->
+<svg width="0" height="0" style="position:absolute"><defs><symbol id="eh-logo" viewBox="0 0 1243 102"><path d="M12.0367 85.659L0.358168 97.3602C-0.407741 98.1276 0.135596 99.4459 1.22227 99.4459H90.5064C103.677 99.4459 116.312 94.2053 125.627 84.8719L137.305 73.1707C138.071 72.4033 137.528 71.085 136.441 71.085H47.1572C33.9862 71.085 21.352 76.3256 12.0367 85.659Z"/><path d="M55.772 14.783L44.0935 26.4842C43.3276 27.2516 43.871 28.57 44.9576 28.57H134.242C147.413 28.57 160.047 23.3294 169.362 13.9959L181.041 2.29474C181.807 1.52734 181.263 0.208984 180.177 0.208984H90.8926C77.7215 0.208984 65.0873 5.4496 55.772 14.783Z"/><path d="M33.8681 50.2264L22.1897 61.9276C21.4237 62.695 21.9671 64.0133 23.0538 64.0133H112.338C125.509 64.0133 138.143 58.7727 147.458 49.4393L159.137 37.7381C159.903 36.9707 159.36 35.6523 158.273 35.6523H68.9887C55.8177 35.6523 43.1834 40.893 33.8681 50.2264Z"/><path d="M223.86 0.144531H290.474V13.2494H238.425V42.7057H286.704V55.6793H238.425V86.3491H290.749V99.4539H223.866V0.144531H223.86Z"/><path d="M301.904 29.1872H315.926V38.9142C320.784 30.945 328.201 26.8916 338.714 26.8916C355.708 26.8916 365.141 37.832 365.141 56.0725V99.4404H351.119V58.7748C351.119 45.9389 345.862 39.7275 334.937 39.7275C323.206 39.7275 315.92 48.1033 315.92 61.3459V99.4469H301.898V29.1872H301.904Z"/><path d="M373.559 64.3172C373.559 43.2432 387.719 26.8917 409.027 26.8917C420.352 26.8917 428.849 31.483 434.38 38.3765V0.137695H448.403V99.4471H434.511V89.8513C428.98 96.8759 420.352 101.474 409.027 101.474C387.856 101.474 373.559 85.26 373.559 64.3172ZM434.917 64.3172C434.917 50.1302 425.209 39.5899 411.456 39.5899C397.702 39.5899 387.994 50.2613 387.994 64.3172C387.994 78.3731 397.165 88.6379 411.456 88.6379C425.746 88.6379 434.917 78.3665 434.917 64.3172Z"/><path d="M458.588 64.4548C458.588 42.8365 473.285 26.8916 493.512 26.8916C513.74 26.8916 527.088 41.6165 527.088 63.1037C527.088 64.8615 527.088 66.6193 526.82 68.7772H473.285C474.771 82.8265 483.536 89.451 494.724 89.451C505.106 89.451 511.848 85.2599 515.757 76.3462L526.139 85.3976C519.534 96.4757 507.26 101.474 494.449 101.474C472.604 101.474 458.582 86.2044 458.582 64.4548H458.588ZM512.123 58.2369V58.0992C512.123 46.3455 504.844 38.9142 493.244 38.9142C483.399 38.9142 475.307 45.2633 473.422 58.2369H512.123Z"/><path d="M535.409 81.2064C535.409 69.1838 544.58 62.4281 559.545 59.7258C579.635 56.2102 582.601 55.4034 582.601 48.6477C582.601 41.2164 575.72 38.1074 567.092 38.1074C556.979 38.1074 549.424 43.781 549.424 54.3212L536.751 49.4545C538.636 36.0807 551.048 26.8916 567.092 26.8916C585.16 26.8916 596.354 35.2674 596.354 50.8056V85.9354L598.645 99.4469H586.371L583.268 90.5267C578.012 97.6891 568.971 101.474 559.132 101.474C545.11 101.474 535.402 93.5045 535.402 81.2064H535.409ZM582.607 71.2106V64.3171C580.584 66.0749 576.676 66.8816 563.322 69.4528C555.368 70.9416 550.242 73.7751 550.242 80.5308C550.242 86.2044 554.556 90.5267 562.242 90.5267C575.459 90.5267 582.601 82.1509 582.601 71.204L582.607 71.2106Z"/><path d="M599.032 29.1875H614.54L635.978 83.3646L657.417 29.1875H672.52L643.395 99.4472H628.424L599.025 29.1875H599.032Z"/><path d="M671.683 64.1862C671.683 42.1612 688.002 26.8984 709.304 26.8984C730.605 26.8984 747.193 42.1677 747.193 64.1862C747.193 86.2047 730.743 101.474 709.304 101.474C687.865 101.474 671.683 86.2047 671.683 64.1862ZM732.635 64.1862C732.635 49.3236 722.927 39.7343 709.304 39.7343C695.681 39.7343 686.11 49.3236 686.11 64.1862C686.11 79.0488 696.087 88.5069 709.304 88.5069C722.521 88.5069 732.635 79.0488 732.635 64.1862Z"/><path d="M755.533 29.1874H769.555V41.0788C774.949 30.2696 783.852 27.7051 790.726 27.7051C792.886 27.7051 794.234 27.8428 796.257 28.3807V42.5677C793.829 41.8921 791.675 41.4855 789.109 41.4855C777.646 41.4855 769.555 48.6479 769.555 65.3995V99.4471H755.533V29.1874Z"/><path d="M888.952 56.6173H840.811V99.4473H826.246V0.144531H840.811V43.6502H888.952V0.144531H903.517V99.4539H888.952V56.6238V56.6173Z"/><path d="M912.885 64.4548C912.885 42.8365 927.582 26.8916 947.809 26.8916C968.037 26.8916 981.385 41.6165 981.385 63.1037C981.385 64.8615 981.385 66.6193 981.117 68.7772H927.582C929.068 82.8265 937.833 89.451 949.021 89.451C959.403 89.451 966.145 85.2599 970.054 76.3462L980.436 85.3976C973.831 96.4757 961.557 101.474 948.746 101.474C926.901 101.474 912.879 86.2044 912.879 64.4548H912.885ZM966.42 58.2369V58.0992C966.42 46.3455 959.141 38.9142 947.541 38.9142C937.696 38.9142 929.604 45.2633 927.719 58.2369H966.42Z"/><path d="M989.705 81.2064C989.705 69.1838 998.876 62.4281 1013.84 59.7258C1033.93 56.2102 1036.9 55.4034 1036.9 48.6477C1036.9 41.2164 1030.02 38.1074 1021.39 38.1074C1011.27 38.1074 1003.72 43.781 1003.72 54.3212L991.047 49.4545C992.932 36.0807 1005.34 26.8916 1021.39 26.8916C1039.46 26.8916 1050.65 35.2674 1050.65 50.8056V85.9354L1052.94 99.4469H1040.67L1037.56 90.5267C1032.31 97.6891 1023.27 101.474 1013.43 101.474C999.407 101.474 989.698 93.5045 989.698 81.2064H989.705ZM1036.9 71.2106V64.3171C1034.88 66.0749 1030.97 66.8816 1017.62 69.4528C1009.66 70.9416 1004.54 73.7751 1004.54 80.5308C1004.54 86.2044 1008.85 90.5267 1016.54 90.5267C1029.75 90.5267 1036.9 82.1509 1036.9 71.204L1036.9 71.2106Z"/><path d="M1064.59 0.144531H1078.61V99.4539H1064.59V0.144531Z"/><path d="M1099.29 79.5866V41.4856H1086.75V29.1875H1099.29V13.5181L1113.31 2.84668V29.1941H1133.27V41.4921H1113.31V77.7042C1113.31 86.7556 1116.82 88.3756 1124.1 88.3756C1126.26 88.3756 1129.9 87.969 1132.05 87.4311V99.8604C1129.89 100.674 1124.23 101.212 1122.08 101.212C1107.24 101.212 1099.29 95.1314 1099.29 79.5932V79.5866Z"/><path d="M1142.04 0.144531H1156.06V38.7834C1160.37 31.621 1167.52 26.892 1178.84 26.892C1195.84 26.892 1205.27 37.8324 1205.27 56.0729V99.4408H1191.25V58.7752C1191.25 45.9393 1185.99 39.7279 1175.07 39.7279C1163.34 39.7279 1156.05 47.6971 1156.05 61.3463V99.4473H1142.03V0.144531H1142.04Z"/><path d="M1230.89 11.3831V0.0961948H1233.92L1236.95 8.78586L1240.07 0.0961948H1243V11.3831H1240.94V5.29076C1240.94 4.79909 1240.95 4.3288 1240.97 3.87989C1240.99 3.4096 1241.01 3.01413 1241.04 2.69348H1240.91L1237.65 11.3831H1235.95L1232.86 2.69348H1232.73C1232.77 3.0355 1232.79 3.43098 1232.79 3.87989C1232.81 4.3288 1232.83 4.77771 1232.83 5.22663V11.3831H1230.89ZM1223.65 11.4793C1222.94 11.4793 1222.25 11.4045 1221.59 11.2549C1220.92 11.1052 1220.41 10.9342 1220.04 10.7418V8.78586C1220.56 9.04239 1221.14 9.26684 1221.78 9.45923C1222.42 9.65162 1223.04 9.74782 1223.62 9.74782C1224.28 9.74782 1224.83 9.65162 1225.26 9.45923C1225.71 9.24546 1225.93 8.83931 1225.93 8.24076C1225.93 7.8346 1225.79 7.52463 1225.51 7.31086C1225.26 7.07572 1224.69 6.79782 1223.81 6.47717C1223.01 6.17789 1222.37 5.87862 1221.88 5.57934C1221.4 5.25869 1221.05 4.89529 1220.81 4.48913C1220.6 4.08297 1220.49 3.60199 1220.49 3.04619C1220.49 2.23388 1220.79 1.52844 1221.39 0.929891C1222.02 0.309964 1223 0 1224.36 0C1224.98 0 1225.6 0.0748185 1226.22 0.224455C1226.87 0.352716 1227.41 0.523731 1227.87 0.7375L1227.32 2.43695C1226.91 2.26594 1226.46 2.10561 1225.97 1.95598C1225.49 1.80634 1224.96 1.73152 1224.36 1.73152C1223.75 1.73152 1223.31 1.8384 1223.04 2.05217C1222.76 2.26594 1222.62 2.58659 1222.62 3.01413C1222.62 3.33478 1222.69 3.60199 1222.84 3.81576C1222.99 4.00815 1223.25 4.18985 1223.62 4.36087C1224 4.53188 1224.53 4.74565 1225.19 5.00217C1225.94 5.28007 1226.52 5.57934 1226.93 5.9C1227.34 6.19927 1227.63 6.5413 1227.8 6.92608C1227.97 7.28949 1228.06 7.72771 1228.06 8.24076C1228.06 8.98894 1227.88 9.60887 1227.51 10.1005C1227.17 10.5708 1226.66 10.9235 1226 11.1587C1225.33 11.3725 1224.55 11.4793 1223.65 11.4793Z"/></symbol></defs></svg>
+</body></html>
