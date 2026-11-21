@@ -343,7 +343,7 @@
 }
 
 .project-aa-body p + p,
-p.project-aa-body + p.project-aa-body { margin-top: 1.4em; }
+p.project-aa-body + p.project-aa-body { margin-top: 1.6em; }
 
 .project-aa-cta {
   display: inline-flex;
